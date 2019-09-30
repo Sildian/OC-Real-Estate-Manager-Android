@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_menu_title">18sp</dimen>
+    <dimen name="text_size_menu_item">16sp</dimen>
+    <dimen name="text_size_title">13sp</dimen>
+    <dimen name="text_size_body">10sp</dimen>
+    <dimen name="components_margin_small">4dp</dimen>
+    <dimen name="components_margin_medium">6dp</dimen>
+    <dimen name="components_margin_large">8dp</dimen>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Menu-->
+    <string name="menu_toolbar_add">Ajouter</string>
+    <string name="menu_toolbar_edit">Modifier</string>
+    <string name="menu_toolbar_search">Rechercher</string>
+    <string name="menu_navigation_bottom_list">Liste</string>
+    <string name="menu_navigation_bottom_map">Carte</string>
+    <string name="menu_navigation_bottom_loan">Emprunt</string>
+
+</resources>
