@@ -1,4 +1,6 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.utils;
+
+import com.openclassrooms.realestatemanager.utils.Utils;
 
 import org.junit.Test;
 

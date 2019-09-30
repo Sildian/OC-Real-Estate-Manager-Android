@@ -1,8 +1,10 @@
-package com.openclassrooms.realestatemanager;
+package com.openclassrooms.realestatemanager.utils;
 
 import android.content.Context;
 
 import androidx.test.platform.app.InstrumentationRegistry;
+
+import com.openclassrooms.realestatemanager.utils.Utils;
 
 import org.junit.Test;
 
