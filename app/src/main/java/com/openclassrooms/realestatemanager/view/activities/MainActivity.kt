@@ -1,6 +1,6 @@
-package com.openclassrooms.realestatemanager.view
+package com.openclassrooms.realestatemanager.view.activities
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -9,11 +9,12 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import com.openclassrooms.realestatemanager.R
+import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
-    lateinit var toolbar: Toolbar
-    lateinit var bottomNavigationBar: BottomNavigationView
+    private val toolbar by lazy {activity_main_toolbar as Toolbar}
+    private val bottomNavigationBar by lazy {activity_main_navigation_bottom}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +32,11 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         //TODO Add actions
         if(item!!.groupId==R.id.menu_toolbar_group){
             when(item.itemId){
-                R.id.menu_toolbar_add-> Log.d("TAG_MENU", "Add")
+                R.id.menu_toolbar_add-> {
+                    Log.d("TAG_MENU", "Add")
+                    val propertyEditIntent= Intent(this, PropertyEditActivity::class.java)
+                    startActivity(propertyEditIntent)
+                }
                 R.id.menu_toolbar_edit-> Log.d("TAG_MENU", "Edit")
                 R.id.menu_toolbar_search-> Log.d("TAG_MENU", "Search")
             }
@@ -52,12 +57,10 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     }
 
     private fun initializeToolbar(){
-        this.toolbar=findViewById(R.id.activity_main_toolbar)
         setSupportActionBar(this.toolbar)
     }
 
     private fun initializeBottomNavigationBar(){
-        this.bottomNavigationBar=findViewById(R.id.activity_main_navigation_bottom)
         this.bottomNavigationBar.setOnNavigationItemSelectedListener (this)
     }
 }

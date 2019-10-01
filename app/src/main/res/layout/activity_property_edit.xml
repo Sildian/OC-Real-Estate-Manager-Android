@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.activities.PropertyEditActivity"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar_main"
+        android:id="@+id/activity_property_edit_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <fragment
+        android:id="@+id/activity_property_edit_fragment"
+        android:name="com.openclassrooms.realestatemanager.view.fragments.PropertyEditFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
