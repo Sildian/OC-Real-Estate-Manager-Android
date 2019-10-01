@@ -10,4 +10,23 @@
     <string name="menu_navigation_bottom_map">Map</string>
     <string name="menu_navigation_bottom_loan">Loan</string>
 
+    <!--Text labels-->
+    <string name="label_property_pictures">Pictures</string>
+    <string name="label_property_extras">Extras</string>
+
+    <!--Text hints-->
+    <string name="hint_property_ad_title">Ad title</string>
+    <string name="hint_property_price">Price</string>
+    <string name="hint_property_type">Type</string>
+    <string name="hint_property_description">Description</string>
+    <string name="hint_property_size">Size</string>
+    <string name="hint_property_size_unit">sqm</string>
+    <string name="hint_property_nb_rooms">Rooms</string>
+    <string name="hint_property_nb_bedrooms">Bedrooms</string>
+    <string name="hint_property_nb_bathrooms">Bathrooms</string>
+    <string name="hint_property_address">Address</string>
+    <string name="hint_property_postal_code">Postal code</string>
+    <string name="hint_property_city">City</string>
+    <string name="hint_property_country">Country</string>
+
 </resources>

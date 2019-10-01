@@ -9,4 +9,23 @@
     <string name="menu_navigation_bottom_map">Carte</string>
     <string name="menu_navigation_bottom_loan">Emprunt</string>
 
+    <!--Text labels-->
+    <string name="label_property_pictures">Photos</string>
+    <string name="label_property_extras">Les +</string>
+
+    <!--Text hints-->
+    <string name="hint_property_ad_title">Titre de l\'annonce</string>
+    <string name="hint_property_price">Prix</string>
+    <string name="hint_property_type">Type</string>
+    <string name="hint_property_description">Description</string>
+    <string name="hint_property_size">Surface</string>
+    <string name="hint_property_size_unit">m2</string>
+    <string name="hint_property_nb_rooms">Pièces</string>
+    <string name="hint_property_nb_bedrooms">Chambres</string>
+    <string name="hint_property_nb_bathrooms">Salles de bain</string>
+    <string name="hint_property_address">Addresse</string>
+    <string name="hint_property_postal_code">Code postal</string>
+    <string name="hint_property_city">Ville</string>
+    <string name="hint_property_country">Pays</string>
+
 </resources>
