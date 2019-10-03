@@ -40,14 +40,14 @@ class SQLiteDatabaseTest{
 
     @Test
     fun given_houseAndCondo_when_getAllPropertyTypes_then_check_results(){
-        val house=PropertyType(srcName="house")
-        val condo=PropertyType(srcName="condo")
+        val house=PropertyType(name="house")
+        val condo=PropertyType(name="condo")
         this.database.propertyTypeDAO.insertPropertyType(house)
         this.database.propertyTypeDAO.insertPropertyType(condo)
         val propertyTypes=LiveDataTestUtil.getValue(this.database.propertyTypeDAO.getAllPropertyTypes())
         assertTrue(propertyTypes.size==2)
-        assertEquals("house", propertyTypes[0].srcName)
-        assertEquals("condo", propertyTypes[1].srcName)
+        assertEquals("house", propertyTypes[0].name)
+        assertEquals("condo", propertyTypes[1].name)
         assertEquals(1, propertyTypes[0].id)
         assertEquals(2, propertyTypes[1].id)
     }

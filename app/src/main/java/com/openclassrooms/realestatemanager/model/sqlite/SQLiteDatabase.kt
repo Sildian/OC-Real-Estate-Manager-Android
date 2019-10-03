@@ -56,19 +56,19 @@ abstract class SQLiteDatabase:RoomDatabase() {
 
         private fun prepopulatePropertyType(db:SupportSQLiteDatabase){
             val contentValues = ContentValues()
-            contentValues.put("srcName", "house")
+            contentValues.put("name", "House")
             db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("srcName", "condo")
+            contentValues.put("name", "Condo")
             db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("srcName", "town_home")
+            contentValues.put("name", "Town home")
             db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("srcName", "multi_family")
+            contentValues.put("name", "Multi family")
             db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("srcName", "land")
+            contentValues.put("name", "Land")
             db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("srcName", "manufactured")
+            contentValues.put("name", "Manufactured")
             db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("srcName", "other")
+            contentValues.put("name", "Other")
             db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
         }
     }

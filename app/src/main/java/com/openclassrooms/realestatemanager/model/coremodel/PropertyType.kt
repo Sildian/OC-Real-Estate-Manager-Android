@@ -10,5 +10,10 @@ import androidx.room.PrimaryKey
 @Entity
 data class PropertyType (
         @PrimaryKey(autoGenerate = true) val id:Int?=null,
-        val srcName:String?=null
-)
+        val name:String?=null
+){
+
+    override fun toString(): String {
+        return if(this.name!=null) this.name else ""
+    }
+}
