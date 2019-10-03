@@ -1,7 +1,7 @@
-package com.openclassrooms.realestatemanager.model
+package com.openclassrooms.realestatemanager.model.coremodel
 
 /**************************************************************************************************
- * Property type (house, condo, etc...)
+ * Extra (air conditioning, garage, etc...)
  *************************************************************************************************/
 
-data class PropertyType (val id:Int?=null, val srcName:String?=null)
+data class Extra (val id:Int?=null, val srcName:String?=null)

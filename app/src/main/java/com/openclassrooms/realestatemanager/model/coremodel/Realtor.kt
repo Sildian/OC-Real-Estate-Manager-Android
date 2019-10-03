@@ -1,7 +1,7 @@
-package com.openclassrooms.realestatemanager.model
+package com.openclassrooms.realestatemanager.model.coremodel
 
 /**************************************************************************************************
- * Extra (air conditioning, garage, etc...)
+ * Realtor
  *************************************************************************************************/
 
-data class Extra (val id:Int?=null, val srcName:String?=null)
+data class Realtor (val id:String?=null, val name:String?=null, val pictureUrl:String?=null)

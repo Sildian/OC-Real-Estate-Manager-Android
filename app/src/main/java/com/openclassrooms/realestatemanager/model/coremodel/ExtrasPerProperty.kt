@@ -1,7 +1,7 @@
-package com.openclassrooms.realestatemanager.model
+package com.openclassrooms.realestatemanager.model.coremodel
 
 /**************************************************************************************************
- * Pictures per property
+ * Extra per property (air conditioning, garage, etc...)
  *************************************************************************************************/
 
-data class PicturesPerProperty (val propertyId:String?=null, val picturePath:String?=null)
+data class ExtrasPerProperty (val propertyId:String?=null, val extraId:Int?=null)
