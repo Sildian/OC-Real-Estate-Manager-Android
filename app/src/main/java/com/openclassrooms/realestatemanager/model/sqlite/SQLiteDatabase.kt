@@ -8,24 +8,39 @@ import androidx.room.Room
 import androidx.room.OnConflictStrategy
 import android.content.ContentValues
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.openclassrooms.realestatemanager.model.coremodel.Extra
+import com.openclassrooms.realestatemanager.model.sqlite.dao.ExtraDAO
+import com.openclassrooms.realestatemanager.model.sqlite.dao.PropertyTypeDAO
 
 /**************************************************************************************************
  * SQLite Database management
  *************************************************************************************************/
 
-@Database(entities=arrayOf(PropertyType::class), version=1, exportSchema = false)
+@Database(entities=arrayOf(PropertyType::class, Extra::class), version=1, exportSchema = false)
 
 abstract class SQLiteDatabase:RoomDatabase() {
 
     /**DAO items**/
 
     abstract val propertyTypeDAO: PropertyTypeDAO
+    abstract val extraDAO: ExtraDAO
 
     companion object {
 
         /**Database instance**/
 
         @Volatile private var INSTANCE: SQLiteDatabase? = null
+
+        /**Data used to prepopulate the database**/
+
+        private const val CLASS_NAME_PROPERTY_TYPE="PropertyType"
+        private const val CLASS_NAME_EXTRA="Extra"
+        private const val FIELD_NAME="name"
+        private val DATA_PROPERTY_TYPE=listOf(
+                "House", "Condo", "Town home", "Multi-family", "Land", "Manufactured", "Other")
+        private val DATA_EXTRA=listOf(
+                "Nearby transports", "Nearby school", "Nearby supermarket", "Nearby hospital",
+                "Elevator", "Air conditioning", "Garage", "Swimming pool")
 
         /**Creates an instance of the database**/
 
@@ -49,27 +64,18 @@ abstract class SQLiteDatabase:RoomDatabase() {
             return object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
-                    prepopulatePropertyType(db)
+                    prepopulateData(db, CLASS_NAME_PROPERTY_TYPE, FIELD_NAME, DATA_PROPERTY_TYPE)
+                    prepopulateData(db, CLASS_NAME_EXTRA, FIELD_NAME, DATA_EXTRA)
                 }
             }
         }
 
-        private fun prepopulatePropertyType(db:SupportSQLiteDatabase){
+        private fun prepopulateData(db:SupportSQLiteDatabase, className:String, fieldName:String, values:List<String>){
             val contentValues = ContentValues()
-            contentValues.put("name", "House")
-            db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("name", "Condo")
-            db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("name", "Town home")
-            db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("name", "Multi family")
-            db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("name", "Land")
-            db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("name", "Manufactured")
-            db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
-            contentValues.put("name", "Other")
-            db.insert("PropertyType", OnConflictStrategy.IGNORE, contentValues)
+            for(value in values){
+                contentValues.put(fieldName, value)
+                db.insert(className, OnConflictStrategy.IGNORE, contentValues)
+            }
         }
     }
 }

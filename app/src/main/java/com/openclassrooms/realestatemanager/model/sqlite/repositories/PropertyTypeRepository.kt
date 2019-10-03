@@ -1,13 +1,14 @@
-package com.openclassrooms.realestatemanager.model.sqlite
+package com.openclassrooms.realestatemanager.model.sqlite.repositories
 
 import androidx.lifecycle.LiveData
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
+import com.openclassrooms.realestatemanager.model.sqlite.dao.PropertyTypeDAO
 
 /**************************************************************************************************
  * Repository for PropertyType
  *************************************************************************************************/
 
-class PropertyTypeRepository (val propertyTypeDAO:PropertyTypeDAO){
+class PropertyTypeRepository (val propertyTypeDAO: PropertyTypeDAO){
 
     fun getAllPropertyTypes(): LiveData<List<PropertyType>> = propertyTypeDAO.getAllPropertyTypes()
 }

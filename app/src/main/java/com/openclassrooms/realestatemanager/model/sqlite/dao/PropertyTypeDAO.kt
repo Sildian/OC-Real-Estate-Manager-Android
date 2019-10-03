@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.model.sqlite
+package com.openclassrooms.realestatemanager.model.sqlite.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

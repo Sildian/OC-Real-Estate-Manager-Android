@@ -16,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_property_ad_title"
-            style="@style/TextInputLayoutTheme"
             android:layout_margin="@dimen/components_margin"
             app:counterEnabled="true"
             app:counterMaxLength="30">
@@ -42,7 +41,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/hint_property_price"
-                style="@style/TextInputLayoutTheme"
                 android:layout_margin="@dimen/components_margin"
                 app:helperTextEnabled="true"
                 app:helperText="$">
@@ -93,7 +91,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_property_description"
-            style="@style/TextInputLayoutTheme"
             android:layout_margin="@dimen/components_margin"
             app:counterEnabled="true"
             app:counterMaxLength="500">
@@ -119,7 +116,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/hint_property_size"
-                style="@style/TextInputLayoutTheme"
                 android:layout_margin="@dimen/components_margin"
                 app:helperTextEnabled="true"
                 app:helperText="@string/hint_property_size_unit"
@@ -139,7 +135,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/hint_property_nb_rooms"
-                style="@style/TextInputLayoutTheme"
                 android:layout_margin="@dimen/components_margin"
                 app:startIconDrawable="@drawable/ic_nb_rooms_black">
 
@@ -165,7 +160,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/hint_property_nb_bedrooms"
-                style="@style/TextInputLayoutTheme"
                 android:layout_margin="@dimen/components_margin"
                 app:startIconDrawable="@drawable/ic_nb_bedrooms_black">
 
@@ -183,7 +177,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/hint_property_nb_bathrooms"
-                style="@style/TextInputLayoutTheme"
                 android:layout_margin="@dimen/components_margin"
                 app:startIconDrawable="@drawable/ic_nb_bathrooms_black">
 
@@ -207,6 +200,7 @@
             android:text="@string/label_property_extras"/>
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/fragment_property_edit_extras"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -216,7 +210,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_property_address"
-            style="@style/TextInputLayoutTheme"
             android:layout_margin="@dimen/components_margin">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -238,7 +231,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:hint="@string/hint_property_postal_code"
-                style="@style/TextInputLayoutTheme"
                 android:layout_margin="@dimen/components_margin">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -255,7 +247,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:hint="@string/hint_property_city"
-                style="@style/TextInputLayoutTheme"
                 android:layout_margin="@dimen/components_margin">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -273,7 +264,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_property_country"
-            style="@style/TextInputLayoutTheme"
             android:layout_margin="@dimen/components_margin">
 
             <com.google.android.material.textfield.TextInputEditText

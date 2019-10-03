@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="textInputStyle">@style/TextInputLayoutTheme</item>
+        <item name="chipStyle">@style/ChipThemeStandard</item>
     </style>
 
     <!-- Toolbar theme -->
@@ -31,6 +33,13 @@
     <style name="TextInputLayoutThemeDropdownMenu" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="boxStrokeColor">@color/colorAccent</item>
         <item name="hintTextColor">@color/colorAccent</item>
+    </style>
+
+    <!--Chip theme standard-->
+    <style name="ChipThemeStandard" parent="@style/Widget.MaterialComponents.Chip.Entry">
+        <item name="chipBackgroundColor">@color/chip_color_background</item>
+        <item name="android:textColor">@color/chip_color_text</item>
+        <item name="closeIconTint">@android:color/white</item>
     </style>
 
 </resources>
