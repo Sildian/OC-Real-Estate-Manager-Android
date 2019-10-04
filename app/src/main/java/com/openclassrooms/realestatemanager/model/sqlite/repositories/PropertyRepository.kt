@@ -14,7 +14,7 @@ class PropertyRepository (val propertyDAO: PropertyDAO){
 
     fun getProperty(id:Int):LiveData<Property> = this.propertyDAO.getProperty(id)
 
-    fun insertProperty(property:Property){
-        this.propertyDAO.insertProperty(property)
+    fun insertProperty(property:Property):Long{
+        return this.propertyDAO.insertProperty(property)
     }
 }

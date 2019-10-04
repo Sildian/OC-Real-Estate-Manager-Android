@@ -1,17 +1,11 @@
 package com.openclassrooms.realestatemanager.model.sqlite
 
 import android.content.Context
-import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
 import android.content.ContentValues
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.openclassrooms.realestatemanager.model.coremodel.Extra
-import com.openclassrooms.realestatemanager.model.coremodel.Property
-import com.openclassrooms.realestatemanager.model.coremodel.Realtor
-import com.openclassrooms.realestatemanager.model.sqlite.dao.ExtraDAO
-import com.openclassrooms.realestatemanager.model.sqlite.dao.PropertyDAO
-import com.openclassrooms.realestatemanager.model.sqlite.dao.PropertyTypeDAO
-import com.openclassrooms.realestatemanager.model.sqlite.dao.RealtorDAO
+import com.openclassrooms.realestatemanager.model.coremodel.*
+import com.openclassrooms.realestatemanager.model.sqlite.dao.*
 import com.openclassrooms.realestatemanager.utils.DateConverter
 
 /**************************************************************************************************
@@ -19,7 +13,7 @@ import com.openclassrooms.realestatemanager.utils.DateConverter
  *************************************************************************************************/
 
 @Database(entities=arrayOf(
-        Property::class, Realtor::class, PropertyType::class, Extra::class),
+        Property::class, Realtor::class, PropertyType::class, Extra::class, ExtrasPerProperty::class),
         version=1,
         exportSchema = false)
 
@@ -33,6 +27,7 @@ abstract class SQLiteDatabase:RoomDatabase() {
     abstract val realtorDAO: RealtorDAO
     abstract val propertyTypeDAO: PropertyTypeDAO
     abstract val extraDAO: ExtraDAO
+    abstract val extrasPerPropertyDAO:ExtrasPerPropertyDAO
 
     companion object {
 

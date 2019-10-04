@@ -8,10 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.After
 import org.junit.Rule
 import androidx.room.Room
-import com.openclassrooms.realestatemanager.model.coremodel.Extra
-import com.openclassrooms.realestatemanager.model.coremodel.Property
-import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
-import com.openclassrooms.realestatemanager.model.coremodel.Realtor
+import com.openclassrooms.realestatemanager.model.coremodel.*
 
 class SQLiteDatabaseTest{
 
@@ -127,5 +124,37 @@ class SQLiteDatabaseTest{
         this.database.extraDAO.insertExtra(garage)
         val extra=LiveDataTestUtil.getValue(this.database.extraDAO.getExtra(2))
         assertEquals("Garage", extra.name)
+    }
+
+    /**ExtrasPerProperty**/
+
+    @Test
+    fun given_GarageAndPoolInHouse_when_getPropertyExtras_then_checkResult(){
+        val garage=Extra(name="Garage")
+        val pool=Extra(name="Swimming pool")
+        val house=Property(adTitle="House", price=500000)
+        this.database.extraDAO.insertExtra(garage)
+        this.database.extraDAO.insertExtra(pool)
+        this.database.propertyDAO.insertProperty(house)
+        this.database.extrasPerPropertyDAO.insertPropertyExtra(ExtrasPerProperty(1, 1))
+        this.database.extrasPerPropertyDAO.insertPropertyExtra(ExtrasPerProperty(1, 2))
+        val extras=LiveDataTestUtil.getValue(this.database.extrasPerPropertyDAO.getPropertyExtras(1))
+        assertTrue(extras.size==2)
+    }
+
+    @Test
+    fun given_GarageAndPoolInHouse_when_getPropertyExtrasAfterDeleteGarage_then_checkResult(){
+        val garage=Extra(name="Garage")
+        val pool=Extra(name="Swimming pool")
+        val house=Property(adTitle="House", price=500000)
+        this.database.extraDAO.insertExtra(garage)
+        this.database.extraDAO.insertExtra(pool)
+        this.database.propertyDAO.insertProperty(house)
+        this.database.extrasPerPropertyDAO.insertPropertyExtra(ExtrasPerProperty(1, 1))
+        this.database.extrasPerPropertyDAO.insertPropertyExtra(ExtrasPerProperty(1, 2))
+        this.database.extrasPerPropertyDAO.deletePropertyExtra(ExtrasPerProperty(1, 1))
+        val extras=LiveDataTestUtil.getValue(this.database.extrasPerPropertyDAO.getPropertyExtras(1))
+        assertTrue(extras.size==1)
+        extras[0].extraId==1
     }
 }

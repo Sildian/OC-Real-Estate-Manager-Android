@@ -77,7 +77,7 @@ class PropertyEditFragment : Fragment() {
     }
 
     private fun initializeTypeTextDropdown(){
-        this.propertyTypeViewModel.getAllPropertyTypes().observe(this, Observer<List<PropertyType>>{
+        this.propertyTypeViewModel.getAllPropertyTypes().observe(this, Observer{
             val adapter=ArrayAdapter<PropertyType>(context!!, R.layout.dropdown_menu_standard, it)
             this.typeTextDropdown.setAdapter(adapter)
             this.typeTextDropdown.setOnItemClickListener({ parent, view, position, id ->
@@ -87,7 +87,7 @@ class PropertyEditFragment : Fragment() {
     }
 
     private fun initializeExtrasChipGroup(){
-        this.extraViewModel.gelAllExtra().observe(this, Observer<List<Extra>>{
+        this.extraViewModel.gelAllExtra().observe(this, Observer{
 
             this.extrasChips.clear()
             this.extrasChipGroup.removeAllViews()
@@ -104,9 +104,9 @@ class PropertyEditFragment : Fragment() {
 
     /**Data management**/
 
-    fun saveProperty(){
+    //TODO Improve all these methods
 
-        //TODO Improve
+    fun saveProperty(){
 
         val property=Property()
         property.adTitle=this.adTitleText.text.toString()
@@ -121,13 +121,21 @@ class PropertyEditFragment : Fragment() {
         property.postalCode=this.postalCodeText.text.toString()
         property.city=this.cityText.text.toString()
         property.country=this.countryText.text.toString()
-        this.propertyViewModel.insertProperty(property)
+        val propertyId=this.propertyViewModel.insertProperty(property)
+        savePropertyExtras(propertyId.toInt())
         activity!!.finish()
     }
 
-    fun loadProperty(){
+    private fun savePropertyExtras(propertyId:Int){
+        for(chip in this.extrasChips){
+            if(chip.isChecked){
+                val extraId=(chip.tag as Extra).id!!.toInt()
+                this.propertyViewModel.insertPropertyExtra(propertyId, extraId)
+            }
+        }
+    }
 
-        //TODO Improve
+    fun loadProperty(){
 
         this.propertyViewModel.getAllProperties().observe(this, Observer {
             if(it.isNotEmpty()){
@@ -141,6 +149,7 @@ class PropertyEditFragment : Fragment() {
                 this.nbRoomsText.setText(property.nbRooms.toString())
                 this.nbBedroomsText.setText(property.nbBedrooms.toString())
                 this.nbBathroomsText.setText(property.nbBathrooms.toString())
+                loadPropertyExtras(property.id!!)
                 this.addressText.setText(property.address)
                 this.postalCodeText.setText(property.postalCode)
                 this.cityText.setText(property.city)
@@ -149,9 +158,18 @@ class PropertyEditFragment : Fragment() {
         })
     }
 
-    fun loadPropertyType(id:Int){
+    private fun loadPropertyType(id:Int){
         val propertyType=this.typeTextDropdown.adapter.getItem(id-1)
         this.typeTextDropdown.setText(propertyType.toString(), false)
         this.typeTextDropdown.tag=propertyType
+    }
+
+    private fun loadPropertyExtras(propertyId:Int){
+
+        this.propertyViewModel.getPropertyExtras(propertyId).observe(this, Observer {
+            for(extra in it){
+                this.extrasChips[extra.extraId-1].isChecked=true
+            }
+        })
     }
 }
