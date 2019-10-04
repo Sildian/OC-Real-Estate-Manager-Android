@@ -10,11 +10,11 @@ import com.openclassrooms.realestatemanager.model.sqlite.dao.PropertyDAO
 
 class PropertyRepository (val propertyDAO: PropertyDAO){
 
-    fun getAllProperties(): LiveData<List<Property>> = propertyDAO.getAllProperties()
+    fun getAllProperties(): LiveData<List<Property>> = this.propertyDAO.getAllProperties()
 
-    fun getProperty(id:String):LiveData<Property> = propertyDAO.getProperty(id)
+    fun getProperty(id:Int):LiveData<Property> = this.propertyDAO.getProperty(id)
 
     fun insertProperty(property:Property){
-        propertyDAO.insertProperty(property)
+        this.propertyDAO.insertProperty(property)
     }
 }

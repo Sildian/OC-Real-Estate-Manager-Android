@@ -23,7 +23,7 @@ class ViewModelFactory(
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(PropertyViewModel::class.java)) {
-            return PropertyViewModel(propertyRepository, propertyTypeRepository, realtorRepository, executor) as T
+            return PropertyViewModel(propertyRepository, executor) as T
         }
         if (modelClass.isAssignableFrom(RealtorViewModel::class.java)) {
             return RealtorViewModel(realtorRepository, executor) as T

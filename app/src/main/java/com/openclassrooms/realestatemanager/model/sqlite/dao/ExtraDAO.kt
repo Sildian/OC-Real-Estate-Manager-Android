@@ -16,6 +16,9 @@ interface ExtraDAO {
     @Query("SELECT * FROM Extra")
     fun getAllExtras(): LiveData<List<Extra>>
 
+    @Query("SELECT * FROM Extra WHERE id=:id")
+    fun getExtra(id:Int):LiveData<Extra>
+
     @Insert
     fun insertExtra(extra:Extra)
 }

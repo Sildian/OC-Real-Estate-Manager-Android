@@ -10,5 +10,7 @@ import com.openclassrooms.realestatemanager.model.sqlite.dao.ExtraDAO
 
 class ExtraRepository(val extraDAO: ExtraDAO){
 
-    fun gelAllExtras(): LiveData<List<Extra>> = extraDAO.getAllExtras()
+    fun gelAllExtras(): LiveData<List<Extra>> = this.extraDAO.getAllExtras()
+
+    fun getExtra(id:Int):LiveData<Extra> = this.extraDAO.getExtra(id)
 }

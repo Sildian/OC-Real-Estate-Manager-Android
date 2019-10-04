@@ -14,7 +14,7 @@ import java.util.*
         ForeignKey(entity=Realtor::class, parentColumns = arrayOf("id"), childColumns = arrayOf("realtorId"))))
 
 data class Property(
-        @PrimaryKey val id:String="",
+        @PrimaryKey (autoGenerate = true) var id:Int?=null,
         var adTitle:String?=null,
         var typeId:Int?=null,
         var price:Int?=null,

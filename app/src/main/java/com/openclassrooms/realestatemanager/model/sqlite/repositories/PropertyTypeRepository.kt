@@ -10,5 +10,7 @@ import com.openclassrooms.realestatemanager.model.sqlite.dao.PropertyTypeDAO
 
 class PropertyTypeRepository (val propertyTypeDAO: PropertyTypeDAO){
 
-    fun getAllPropertyTypes(): LiveData<List<PropertyType>> = propertyTypeDAO.getAllPropertyTypes()
+    fun getAllPropertyTypes(): LiveData<List<PropertyType>> = this.propertyTypeDAO.getAllPropertyTypes()
+
+    fun getPropertyType(id:Int):LiveData<PropertyType> = this.propertyTypeDAO.getPropertyType(id)
 }

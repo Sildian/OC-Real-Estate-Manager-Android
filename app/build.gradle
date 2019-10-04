@@ -56,7 +56,11 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.1.1"
     //Room tests
     androidTestImplementation "android.arch.core:core-testing:1.1.1"
+
+    //Firebase
+    implementation 'com.google.firebase:firebase-analytics:17.2.0'
 }
 repositories {
     mavenCentral()
 }
+apply plugin: 'com.google.gms.google-services'

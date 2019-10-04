@@ -43,7 +43,7 @@ class SQLiteDatabaseTest{
 
     @Test
     fun given_superVilla_when_getAllProperties_then_checkResults(){
-        val superVilla=Property("VILLA01", adTitle="Super villa", price=1000000)
+        val superVilla=Property(adTitle="Super villa", price=1000000)
         this.database.propertyDAO.insertProperty(superVilla)
         val properties=LiveDataTestUtil.getValue(this.database.propertyDAO.getAllProperties())
         assertEquals("Super villa", properties[0].adTitle)
@@ -52,9 +52,9 @@ class SQLiteDatabaseTest{
 
     @Test
     fun given_superVilla_when_getProperty_then_checkResult(){
-        val superVilla=Property("VILLA01", adTitle="Super villa", price=1000000)
+        val superVilla=Property(adTitle="Super villa", price=1000000)
         this.database.propertyDAO.insertProperty(superVilla)
-        val property=LiveDataTestUtil.getValue(this.database.propertyDAO.getProperty("VILLA01"))
+        val property=LiveDataTestUtil.getValue(this.database.propertyDAO.getProperty(1))
         assertEquals("Super villa", property.adTitle)
         assertEquals(1000000, property.price)
     }
@@ -67,6 +67,14 @@ class SQLiteDatabaseTest{
         this.database.realtorDAO.insertRealtor(jedi)
         val realtors=LiveDataTestUtil.getValue(this.database.realtorDAO.getAllRealtors())
         assertEquals("Obiwan Kenobi", realtors[0].name)
+    }
+
+    @Test
+    fun given_ObiwanKenobi_when_getRealtor_then_check_result(){
+        val jedi= Realtor("MASTER01", "Obiwan Kenobi")
+        this.database.realtorDAO.insertRealtor(jedi)
+        val realtor=LiveDataTestUtil.getValue(this.database.realtorDAO.getRealtor("MASTER01"))
+        assertEquals("Obiwan Kenobi", realtor.name)
     }
 
     /**PropertyType**/
@@ -85,6 +93,16 @@ class SQLiteDatabaseTest{
         assertEquals(2, propertyTypes[1].id)
     }
 
+    @Test
+    fun given_condo_when_getPropertyType_then_check_result(){
+        val house=PropertyType(name="House")
+        val condo=PropertyType(name="Condo")
+        this.database.propertyTypeDAO.insertPropertyType(house)
+        this.database.propertyTypeDAO.insertPropertyType(condo)
+        val propertyType=LiveDataTestUtil.getValue(this.database.propertyTypeDAO.getPropertyType(2))
+        assertEquals("Condo", propertyType.name)
+    }
+
     /**Extra**/
 
     @Test
@@ -99,5 +117,15 @@ class SQLiteDatabaseTest{
         assertEquals("Garage", extras[1].name)
         assertEquals(1, extras[0].id)
         assertEquals(2, extras[1].id)
+    }
+
+    @Test
+    fun given_Garage_when_getExtra_then_check_result(){
+        val nearSchool= Extra(name="Near school")
+        val garage=Extra(name="Garage")
+        this.database.extraDAO.insertExtra(nearSchool)
+        this.database.extraDAO.insertExtra(garage)
+        val extra=LiveDataTestUtil.getValue(this.database.extraDAO.getExtra(2))
+        assertEquals("Garage", extra.name)
     }
 }

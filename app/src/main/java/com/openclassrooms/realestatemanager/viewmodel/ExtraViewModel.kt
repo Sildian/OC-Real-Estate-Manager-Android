@@ -15,5 +15,7 @@ class ExtraViewModel (
         val executor:Executor)
     : ViewModel()
 {
-    fun gelAllExtra(): LiveData<List<Extra>> = extraRepository.gelAllExtras()
+    fun gelAllExtra(): LiveData<List<Extra>> = this.extraRepository.gelAllExtras()
+
+    fun getExtra(id:Int):LiveData<Extra> = this.extraRepository.getExtra(id)
 }

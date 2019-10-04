@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "197032805399",
+    "firebase_url": "https://oc-real-estate-manager.firebaseio.com",
+    "project_id": "oc-real-estate-manager",
+    "storage_bucket": "oc-real-estate-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197032805399:android:8165fd117a57a10678c852",
+        "android_client_info": {
+          "package_name": "com.openclassrooms.realestatemanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "197032805399-c2qjk91iueo94292vjrp49bnlkej5apd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_w7am4VnAmuwOgwqI5C2FgqKShE4fudM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "197032805399-c2qjk91iueo94292vjrp49bnlkej5apd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

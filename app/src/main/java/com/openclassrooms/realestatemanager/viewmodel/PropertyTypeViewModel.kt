@@ -11,9 +11,11 @@ import java.util.concurrent.Executor
  *************************************************************************************************/
 
 class PropertyTypeViewModel(
-        val PropertyTypeRepository: PropertyTypeRepository,
+        val propertyTypeRepository: PropertyTypeRepository,
         val executor: Executor)
     :ViewModel()
 {
-    fun getAllPropertyTypes(): LiveData<List<PropertyType>> = this.PropertyTypeRepository.getAllPropertyTypes()
+    fun getAllPropertyTypes(): LiveData<List<PropertyType>> = this.propertyTypeRepository.getAllPropertyTypes()
+
+    fun getPropertyType(id:Int):LiveData<PropertyType> = this.propertyTypeRepository.getPropertyType(id)
 }

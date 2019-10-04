@@ -15,9 +15,11 @@ class RealtorViewModel(
         val executor:Executor)
     : ViewModel()
 {
-    fun getAllRealtors(): LiveData<List<Realtor>> = realtorRepository.getAllRealtors()
+    fun getAllRealtors(): LiveData<List<Realtor>> = this.realtorRepository.getAllRealtors()
+
+    fun getRealtor(id:String):LiveData<Realtor> = this.realtorRepository.getRealtor(id)
 
     fun insertRealtor(realtor:Realtor){
-        executor.execute { realtorRepository.insertRealtor(realtor) }
+        this.executor.execute { this.realtorRepository.insertRealtor(realtor) }
     }
 }

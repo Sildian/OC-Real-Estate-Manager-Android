@@ -18,7 +18,7 @@ interface PropertyDAO {
     fun getAllProperties(): LiveData<List<Property>>
 
     @Query("SELECT * FROM Property WHERE id=:id")
-    fun getProperty(id:String):LiveData<Property>
+    fun getProperty(id:Int):LiveData<Property>
 
     @Insert
     fun insertProperty(property:Property)

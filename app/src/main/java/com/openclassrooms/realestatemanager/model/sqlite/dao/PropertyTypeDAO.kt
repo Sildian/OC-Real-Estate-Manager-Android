@@ -16,6 +16,9 @@ interface PropertyTypeDAO {
     @Query("SELECT * FROM PropertyType")
     fun getAllPropertyTypes(): LiveData<List<PropertyType>>
 
+    @Query("SELECT * FROM PropertyType WHERE id=:id")
+    fun getPropertyType(id:Int):LiveData<PropertyType>
+
     @Insert
     fun insertPropertyType(propertyType: PropertyType)
 }

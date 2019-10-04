@@ -16,6 +16,9 @@ interface RealtorDAO {
     @Query("SELECT * FROM Realtor")
     fun getAllRealtors(): LiveData<List<Realtor>>
 
+    @Query("SELECT * FROM Realtor WHERE id=:id")
+    fun getRealtor(id:String):LiveData<Realtor>
+
     @Insert
     fun insertRealtor(realtor:Realtor)
 }

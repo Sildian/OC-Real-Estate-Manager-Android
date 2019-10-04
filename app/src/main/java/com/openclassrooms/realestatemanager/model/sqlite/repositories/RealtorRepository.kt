@@ -10,9 +10,11 @@ import com.openclassrooms.realestatemanager.model.sqlite.dao.RealtorDAO
 
 class RealtorRepository (val realtorDAO: RealtorDAO){
 
-    fun getAllRealtors(): LiveData<List<Realtor>> = realtorDAO.getAllRealtors()
+    fun getAllRealtors(): LiveData<List<Realtor>> = this.realtorDAO.getAllRealtors()
+
+    fun getRealtor(id:String):LiveData<Realtor> = this.realtorDAO.getRealtor(id)
 
     fun insertRealtor(realtor:Realtor){
-        realtorDAO.insertRealtor(realtor)
+        this.realtorDAO.insertRealtor(realtor)
     }
 }

@@ -81,7 +81,7 @@ class PropertyEditFragment : Fragment() {
             val adapter=ArrayAdapter<PropertyType>(context!!, R.layout.dropdown_menu_standard, it)
             this.typeTextDropdown.setAdapter(adapter)
             this.typeTextDropdown.setOnItemClickListener({ parent, view, position, id ->
-                parent.setTag(adapter.getItem(position))
+                this.typeTextDropdown.tag=adapter.getItem(position)
             })
         })
     }
@@ -108,16 +108,50 @@ class PropertyEditFragment : Fragment() {
 
         //TODO Improve
 
-        val property=Property("P1", this.adTitleText.text.toString())
+        val property=Property()
+        property.adTitle=this.adTitleText.text.toString()
+        property.price=Integer.parseInt(this.priceText.text.toString())
+        property.typeId=(this.typeTextDropdown.tag as PropertyType).id
+        property.description=this.descriptionText.text.toString()
+        property.size=Integer.parseInt(this.sizeText.text.toString())
+        property.nbRooms=Integer.parseInt(this.nbRoomsText.text.toString())
+        property.nbBedrooms=Integer.parseInt(this.nbBedroomsText.text.toString())
+        property.nbBathrooms=Integer.parseInt(this.nbBathroomsText.text.toString())
+        property.address=this.addressText.text.toString()
+        property.postalCode=this.postalCodeText.text.toString()
+        property.city=this.cityText.text.toString()
+        property.country=this.countryText.text.toString()
         this.propertyViewModel.insertProperty(property)
+        activity!!.finish()
     }
 
     fun loadProperty(){
 
-        //TODO Remove or improve
+        //TODO Improve
 
         this.propertyViewModel.getAllProperties().observe(this, Observer {
-            if(it.isNotEmpty()) this.adTitleText.setText(it[it.size-1].adTitle)
+            if(it.isNotEmpty()){
+                val property=it[it.size-1]
+                this.adTitleText.setText(property.adTitle)
+                this.priceText.setText(property.price.toString())
+                val typeId=property.typeId
+                if(typeId!=null) loadPropertyType(typeId)
+                this.descriptionText.setText(property.description)
+                this.sizeText.setText(property.size.toString())
+                this.nbRoomsText.setText(property.nbRooms.toString())
+                this.nbBedroomsText.setText(property.nbBedrooms.toString())
+                this.nbBathroomsText.setText(property.nbBathrooms.toString())
+                this.addressText.setText(property.address)
+                this.postalCodeText.setText(property.postalCode)
+                this.cityText.setText(property.city)
+                this.countryText.setText(property.country)
+            }
         })
+    }
+
+    fun loadPropertyType(id:Int){
+        val propertyType=this.typeTextDropdown.adapter.getItem(id-1)
+        this.typeTextDropdown.setText(propertyType.toString(), false)
+        this.typeTextDropdown.tag=propertyType
     }
 }

@@ -14,17 +14,15 @@ import java.util.concurrent.Executor
 
 class PropertyViewModel (
         val propertyRepository:PropertyRepository,
-        val propertyTypeRepository:PropertyTypeRepository,
-        val realtorRepository: RealtorRepository,
         val executor: Executor)
     : ViewModel()
 {
 
-    fun getAllProperties(): LiveData<List<Property>> =propertyRepository.getAllProperties()
+    fun getAllProperties(): LiveData<List<Property>> =this.propertyRepository.getAllProperties()
 
-    fun getProperty(id:String): LiveData<Property> =propertyRepository.getProperty(id)
+    fun getProperty(id:Int): LiveData<Property> =this.propertyRepository.getProperty(id)
 
     fun insertProperty(property:Property){
-        executor.execute { propertyRepository.insertProperty(property) }
+        this.executor.execute { this.propertyRepository.insertProperty(property) }
     }
 }
