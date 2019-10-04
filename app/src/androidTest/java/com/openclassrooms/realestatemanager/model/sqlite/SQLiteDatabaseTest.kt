@@ -9,7 +9,9 @@ import org.junit.After
 import org.junit.Rule
 import androidx.room.Room
 import com.openclassrooms.realestatemanager.model.coremodel.Extra
+import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
+import com.openclassrooms.realestatemanager.model.coremodel.Realtor
 
 class SQLiteDatabaseTest{
 
@@ -35,6 +37,36 @@ class SQLiteDatabaseTest{
     @Throws(Exception::class)
     fun closeDatabase() {
         this.database.close()
+    }
+
+    /**Property**/
+
+    @Test
+    fun given_superVilla_when_getAllProperties_then_checkResults(){
+        val superVilla=Property("VILLA01", adTitle="Super villa", price=1000000)
+        this.database.propertyDAO.insertProperty(superVilla)
+        val properties=LiveDataTestUtil.getValue(this.database.propertyDAO.getAllProperties())
+        assertEquals("Super villa", properties[0].adTitle)
+        assertEquals(1000000, properties[0].price)
+    }
+
+    @Test
+    fun given_superVilla_when_getProperty_then_checkResult(){
+        val superVilla=Property("VILLA01", adTitle="Super villa", price=1000000)
+        this.database.propertyDAO.insertProperty(superVilla)
+        val property=LiveDataTestUtil.getValue(this.database.propertyDAO.getProperty("VILLA01"))
+        assertEquals("Super villa", property.adTitle)
+        assertEquals(1000000, property.price)
+    }
+
+    /**Realtor**/
+
+    @Test
+    fun given_ObiwanKenobi_when_getAllRealtors_then_check_results(){
+        val jedi= Realtor("MASTER01", "Obiwan Kenobi")
+        this.database.realtorDAO.insertRealtor(jedi)
+        val realtors=LiveDataTestUtil.getValue(this.database.realtorDAO.getAllRealtors())
+        assertEquals("Obiwan Kenobi", realtors[0].name)
     }
 
     /**PropertyType**/

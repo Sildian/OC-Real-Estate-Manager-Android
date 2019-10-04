@@ -1,13 +1,20 @@
 package com.openclassrooms.realestatemanager.model.coremodel
 
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import java.util.*
 
 /**************************************************************************************************
  * Property
  *************************************************************************************************/
 
+@Entity(foreignKeys = arrayOf(
+        ForeignKey(entity=PropertyType::class, parentColumns = arrayOf("id"), childColumns = arrayOf("typeId")),
+        ForeignKey(entity=Realtor::class, parentColumns = arrayOf("id"), childColumns = arrayOf("realtorId"))))
+
 data class Property(
-        val id:String?=null,
+        @PrimaryKey val id:String="",
         var adTitle:String?=null,
         var typeId:Int?=null,
         var price:Int?=null,

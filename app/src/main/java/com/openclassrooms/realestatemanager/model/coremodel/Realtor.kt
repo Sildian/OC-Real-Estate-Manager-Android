@@ -1,7 +1,20 @@
 package com.openclassrooms.realestatemanager.model.coremodel
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 /**************************************************************************************************
  * Realtor
  *************************************************************************************************/
 
-data class Realtor (val id:String?=null, val name:String?=null, val pictureUrl:String?=null)
+@Entity
+data class Realtor (
+        @PrimaryKey val id:String="",
+        val name:String?=null,
+        val pictureUrl:String?=null
+){
+
+    override fun toString(): String {
+        return if(this.name!=null) this.name else ""
+    }
+}

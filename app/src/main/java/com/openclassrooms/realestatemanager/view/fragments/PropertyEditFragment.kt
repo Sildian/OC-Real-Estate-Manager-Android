@@ -12,11 +12,9 @@ import com.google.android.material.chip.Chip
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.coremodel.Extra
+import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
-import com.openclassrooms.realestatemanager.viewmodel.ExtraViewModel
-import com.openclassrooms.realestatemanager.viewmodel.PropertyTypeViewModel
-import com.openclassrooms.realestatemanager.viewmodel.ViewModelFactory
-import com.openclassrooms.realestatemanager.viewmodel.ViewModelInjection
+import com.openclassrooms.realestatemanager.viewmodel.*
 import kotlinx.android.synthetic.main.fragment_property_edit.view.*
 
 /**************************************************************************************************
@@ -46,7 +44,9 @@ class PropertyEditFragment : Fragment() {
     /**Data**/
 
     private lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var propertyViewModel: PropertyViewModel
     private lateinit var propertyTypeViewModel:PropertyTypeViewModel
+    private lateinit var realtorViewModel: RealtorViewModel
     private lateinit var extraViewModel: ExtraViewModel
 
     /**Life cycle**/
@@ -56,6 +56,9 @@ class PropertyEditFragment : Fragment() {
         initializeData()
         initializeTypeTextDropdown()
         initializeExtrasChipGroup()
+
+        //TODO Remove this line
+        loadProperty()
         return layout
     }
 
@@ -63,6 +66,10 @@ class PropertyEditFragment : Fragment() {
 
     private fun initializeData(){
         this.viewModelFactory=ViewModelInjection.provideViewModelFactory(context!!)
+        this.propertyViewModel=ViewModelProviders.of(
+                this, this.viewModelFactory).get(PropertyViewModel::class.java)
+        this.realtorViewModel=ViewModelProviders.of(
+                this, this.viewModelFactory).get(RealtorViewModel::class.java)
         this.propertyTypeViewModel= ViewModelProviders.of(
                 this, this.viewModelFactory).get(PropertyTypeViewModel::class.java)
         this.extraViewModel=ViewModelProviders.of(
@@ -73,6 +80,9 @@ class PropertyEditFragment : Fragment() {
         this.propertyTypeViewModel.getAllPropertyTypes().observe(this, Observer<List<PropertyType>>{
             val adapter=ArrayAdapter<PropertyType>(context!!, R.layout.dropdown_menu_standard, it)
             this.typeTextDropdown.setAdapter(adapter)
+            this.typeTextDropdown.setOnItemClickListener({ parent, view, position, id ->
+                parent.setTag(adapter.getItem(position))
+            })
         })
     }
 
@@ -85,10 +95,29 @@ class PropertyEditFragment : Fragment() {
             for(extra in it){
                 val chip=layoutInflater.inflate(R.layout.chip_standard, this.extrasChipGroup, false) as Chip
                 chip.tag=extra
-                chip.setText(extra.toString())
+                chip.text=extra.toString()
                 this.extrasChips.add(chip)
                 this.extrasChipGroup.addView(chip)
             }
+        })
+    }
+
+    /**Data management**/
+
+    fun saveProperty(){
+
+        //TODO Improve
+
+        val property=Property("P1", this.adTitleText.text.toString())
+        this.propertyViewModel.insertProperty(property)
+    }
+
+    fun loadProperty(){
+
+        //TODO Remove or improve
+
+        this.propertyViewModel.getAllProperties().observe(this, Observer {
+            if(it.isNotEmpty()) this.adTitleText.setText(it[it.size-1].adTitle)
         })
     }
 }

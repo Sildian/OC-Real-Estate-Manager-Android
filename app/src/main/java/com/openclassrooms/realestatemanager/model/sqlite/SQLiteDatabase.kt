@@ -1,27 +1,36 @@
 package com.openclassrooms.realestatemanager.model.sqlite
 
 import android.content.Context
-import androidx.room.Database
-import androidx.room.RoomDatabase
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
-import androidx.room.Room
-import androidx.room.OnConflictStrategy
 import android.content.ContentValues
+import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.openclassrooms.realestatemanager.model.coremodel.Extra
+import com.openclassrooms.realestatemanager.model.coremodel.Property
+import com.openclassrooms.realestatemanager.model.coremodel.Realtor
 import com.openclassrooms.realestatemanager.model.sqlite.dao.ExtraDAO
+import com.openclassrooms.realestatemanager.model.sqlite.dao.PropertyDAO
 import com.openclassrooms.realestatemanager.model.sqlite.dao.PropertyTypeDAO
+import com.openclassrooms.realestatemanager.model.sqlite.dao.RealtorDAO
+import com.openclassrooms.realestatemanager.utils.DateConverter
 
 /**************************************************************************************************
  * SQLite Database management
  *************************************************************************************************/
 
-@Database(entities=arrayOf(PropertyType::class, Extra::class), version=1, exportSchema = false)
+@Database(entities=arrayOf(
+        Property::class, Realtor::class, PropertyType::class, Extra::class),
+        version=1,
+        exportSchema = false)
+
+@TypeConverters(DateConverter::class)
 
 abstract class SQLiteDatabase:RoomDatabase() {
 
     /**DAO items**/
 
+    abstract val propertyDAO: PropertyDAO
+    abstract val realtorDAO: RealtorDAO
     abstract val propertyTypeDAO: PropertyTypeDAO
     abstract val extraDAO: ExtraDAO
 

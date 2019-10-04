@@ -24,13 +24,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        menuInflater.inflate(R.menu.menu_toolbar_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         //TODO Add actions
-        if(item!!.groupId==R.id.menu_toolbar_group){
+        if(item!=null&&item.groupId==R.id.menu_toolbar_group){
             when(item.itemId){
                 R.id.menu_toolbar_add-> {
                     Log.d("TAG_MENU", "Add")
