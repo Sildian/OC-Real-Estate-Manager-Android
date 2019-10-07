@@ -30,4 +30,8 @@
     <string name="hint_property_city">City</string>
     <string name="hint_property_country">Country</string>
 
+    <!--Images content descriptions-->
+    <string name="content_description_picture">Picture</string>
+    <string name="content_description_button">Button</string>
+
 </resources>

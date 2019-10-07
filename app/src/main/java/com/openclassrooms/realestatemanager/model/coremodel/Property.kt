@@ -19,6 +19,7 @@ data class Property(
         var typeId:Int?=null,
         var price:Int?=null,
         var realtorId:String?=null,
+        var picturesPaths:List<String> = arrayListOf(),
         var description:String?=null,
         var size:Int?=null,
         var nbRooms:Int?=null,

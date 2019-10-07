@@ -6,4 +6,5 @@
     <dimen name="text_size_body">18sp</dimen>
     <dimen name="components_margin">16dp</dimen>
     <dimen name="picture_size_small">60dp</dimen>
+    <dimen name="picture_size_medium">160dp</dimen>
 </resources>

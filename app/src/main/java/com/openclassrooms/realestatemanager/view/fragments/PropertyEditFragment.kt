@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.view.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,17 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.coremodel.Extra
 import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
+import com.openclassrooms.realestatemanager.view.activities.PropertyEditActivity
+import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
+import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
 import com.openclassrooms.realestatemanager.viewmodel.*
 import kotlinx.android.synthetic.main.fragment_property_edit.view.*
 
@@ -21,14 +27,16 @@ import kotlinx.android.synthetic.main.fragment_property_edit.view.*
  * Allows the user to create or edit a property
  *************************************************************************************************/
 
-class PropertyEditFragment : Fragment() {
+class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
 
     /**UI components**/
 
     private lateinit var layout:View
+    private lateinit var pictureAdapter:PictureAdapter
     private val adTitleText by lazy {layout.fragment_property_edit_ad_title }
     private val priceText by lazy {layout.fragment_property_edit_price}
     private val typeTextDropdown by lazy {layout.fragment_property_edit_type}
+    private val picturesRecyclerView by lazy {layout.fragment_property_edit_pictures}
     private val descriptionText by lazy {layout.fragment_property_edit_description}
     private val sizeText by lazy {layout.fragment_property_edit_size}
     private val nbRoomsText by lazy {layout.fragment_property_edit_nb_rooms}
@@ -48,6 +56,7 @@ class PropertyEditFragment : Fragment() {
     private lateinit var propertyTypeViewModel:PropertyTypeViewModel
     private lateinit var realtorViewModel: RealtorViewModel
     private lateinit var extraViewModel: ExtraViewModel
+    private val picturesPaths:ArrayList<String?> = arrayListOf(null)
 
     /**Life cycle**/
 
@@ -55,11 +64,26 @@ class PropertyEditFragment : Fragment() {
         this.layout=inflater.inflate(R.layout.fragment_property_edit, container, false)
         initializeData()
         initializeTypeTextDropdown()
+        initializePicturesRecyclerView()
         initializeExtrasChipGroup()
 
         //TODO Remove this line
         loadProperty()
         return layout
+    }
+
+    /**Listens UI events on picturesRecyclerView**/
+
+    override fun onDeleteButtonClick(position: Int) {
+        removePicture(position)
+    }
+
+    override fun onAddPictureButtonClick(position: Int) {
+        (activity as PropertyEditActivity).startAddPictureIntent()
+    }
+
+    override fun onTakePictureButtonClick(position: Int) {
+        (activity as PropertyEditActivity).startTakePictureIntent()
     }
 
     /**Initializations**/
@@ -84,6 +108,13 @@ class PropertyEditFragment : Fragment() {
                 this.typeTextDropdown.tag=adapter.getItem(position)
             })
         })
+    }
+
+    private fun initializePicturesRecyclerView(){
+        this.pictureAdapter= PictureAdapter(this.picturesPaths, true, this)
+        this.picturesRecyclerView.adapter=this.pictureAdapter
+        this.picturesRecyclerView.layoutManager=
+                LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
     }
 
     private fun initializeExtrasChipGroup(){
@@ -112,6 +143,7 @@ class PropertyEditFragment : Fragment() {
         property.adTitle=this.adTitleText.text.toString()
         property.price=Integer.parseInt(this.priceText.text.toString())
         property.typeId=(this.typeTextDropdown.tag as PropertyType).id
+        property.picturesPaths=this.picturesPaths.filterNotNull()
         property.description=this.descriptionText.text.toString()
         property.size=Integer.parseInt(this.sizeText.text.toString())
         property.nbRooms=Integer.parseInt(this.nbRoomsText.text.toString())
@@ -144,6 +176,7 @@ class PropertyEditFragment : Fragment() {
                 this.priceText.setText(property.price.toString())
                 val typeId=property.typeId
                 if(typeId!=null) loadPropertyType(typeId)
+                loadPropertyPictures(property.picturesPaths)
                 this.descriptionText.setText(property.description)
                 this.sizeText.setText(property.size.toString())
                 this.nbRoomsText.setText(property.nbRooms.toString())
@@ -158,10 +191,17 @@ class PropertyEditFragment : Fragment() {
         })
     }
 
-    private fun loadPropertyType(id:Int){
-        val propertyType=this.typeTextDropdown.adapter.getItem(id-1)
+    private fun loadPropertyType(typeId:Int){
+        val propertyType=this.typeTextDropdown.adapter.getItem(typeId-1)
         this.typeTextDropdown.setText(propertyType.toString(), false)
         this.typeTextDropdown.tag=propertyType
+    }
+
+    private fun loadPropertyPictures(picturesPaths:List<String>){
+        this.picturesPaths.clear()
+        this.picturesPaths.addAll(picturesPaths)
+        this.picturesPaths.add(null)
+        this.pictureAdapter.notifyDataSetChanged()
     }
 
     private fun loadPropertyExtras(propertyId:Int){
@@ -171,5 +211,17 @@ class PropertyEditFragment : Fragment() {
                 this.extrasChips[extra.extraId-1].isChecked=true
             }
         })
+    }
+
+    /**Adds / removes pictures**/
+
+    fun addPicture(picturePath:String){
+        this.picturesPaths.add(picturePath)
+        this.pictureAdapter.notifyDataSetChanged()
+    }
+
+    fun removePicture(position:Int){
+        this.picturesPaths.removeAt(position)
+        this.pictureAdapter.notifyDataSetChanged()
     }
 }
