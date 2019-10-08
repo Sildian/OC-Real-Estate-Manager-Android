@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.openclassrooms.realestatemanager.R
 import kotlinx.android.synthetic.main.list_pictures_item.view.*
 
 /************************************************************************************************
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.list_pictures_item.view.*
 
 class PictureViewHolder (
         val view: View,
-        val isEditable:Boolean,
+        val editable:Boolean,
         val listener:Listener
 )
     : RecyclerView.ViewHolder(view) {
@@ -45,16 +46,24 @@ class PictureViewHolder (
 
     fun update(picturePath:String?){
 
-        if(isEditable){
+        /*If editable, enables the buttons to edit the picture (add a new picture or delete an existing picture)*/
+
+        if(editable){
             if(picturePath==null){
+                this.picture.setImageResource(R.drawable.ic_picture_gray)
                 this.deleteButton.visibility=View.INVISIBLE
+                this.addPictureButton.visibility=View.VISIBLE
+                this.takePictureButton.visibility=View.VISIBLE
             }
             else{
                 Glide.with(view).load(picturePath).apply(RequestOptions.centerCropTransform()).into(this.picture)
+                this.deleteButton.visibility=View.VISIBLE
                 this.addPictureButton.visibility=View.INVISIBLE
                 this.takePictureButton.visibility=View.INVISIBLE
             }
         }
+
+        /*Else, disables the buttons*/
 
         else{
             Glide.with(view).load(picturePath).apply(RequestOptions.centerCropTransform()).into(this.picture)

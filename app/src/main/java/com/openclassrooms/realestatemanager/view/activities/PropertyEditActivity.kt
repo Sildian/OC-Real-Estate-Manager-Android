@@ -3,17 +3,15 @@ package com.openclassrooms.realestatemanager.view.activities
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.view.fragments.PropertyEditFragment
 import kotlinx.android.synthetic.main.activity_property_edit.*
-import java.util.*
 
 /**************************************************************************************************
  * Allows the user to create or edit a property
@@ -95,16 +93,16 @@ class PropertyEditActivity : BaseActivity() {
             if(takePictureIntent.resolveActivity(packageManager)!=null){
                 startActivityForResult(takePictureIntent, KEY_REQUEST_TAKE_PICTURE)
             }else{
-                //TODO handle
+                Toast.makeText(this, R.string.toast_photo_unavailable, Toast.LENGTH_LONG).show()
             }
         }else{
-            //TODO handle
+            Toast.makeText(this, R.string.toast_photo_unavailable, Toast.LENGTH_LONG).show()
         }
     }
 
     /**Handles intents results**/
 
-    fun handleNewPictureResult(data:Intent?){
+    private fun handleNewPictureResult(data:Intent?){
         val picturePath:String?=data?.data.toString()
         if(picturePath!=null) this.fragment.addPicture(picturePath)
     }

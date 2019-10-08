@@ -29,6 +29,9 @@
     <string name="hint_property_city">Ville</string>
     <string name="hint_property_country">Pays</string>
 
+    <!--Toasts / Snackbars-->
+    <string name="toast_photo_unavailable">Votre appareil ne peut pas prendre de photos</string>
+
     <!--Images content descriptions-->
     <string name="content_description_picture">Image</string>
     <string name="content_description_button">Bouton</string>

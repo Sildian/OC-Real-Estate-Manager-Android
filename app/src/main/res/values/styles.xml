@@ -36,10 +36,9 @@
     </style>
 
     <!--Chip theme standard-->
-    <style name="ChipThemeStandard" parent="@style/Widget.MaterialComponents.Chip.Entry">
+    <style name="ChipThemeStandard" parent="@style/Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">@color/chip_color_background</item>
         <item name="android:textColor">@color/chip_color_text</item>
-        <item name="closeIconTint">@android:color/white</item>
     </style>
 
 </resources>

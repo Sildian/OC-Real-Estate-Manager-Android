@@ -167,7 +167,7 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
         }
     }
 
-    fun loadProperty(){
+    private fun loadProperty(){
 
         this.propertyViewModel.getAllProperties().observe(this, Observer {
             if(it.isNotEmpty()){
@@ -216,7 +216,7 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
     /**Adds / removes pictures**/
 
     fun addPicture(picturePath:String){
-        this.picturesPaths.add(picturePath)
+        this.picturesPaths.add(this.picturesPaths.size-1, picturePath)
         this.pictureAdapter.notifyDataSetChanged()
     }
 
