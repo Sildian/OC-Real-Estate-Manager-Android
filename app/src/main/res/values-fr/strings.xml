@@ -11,8 +11,11 @@
     <string name="menu_navigation_bottom_loan">Emprunt</string>
 
     <!--Text labels-->
+    <string name="label_property_main_information">Informations principales</string>
     <string name="label_property_pictures">Photos</string>
     <string name="label_property_extras">Les +</string>
+    <string name="label_property_location">Emplacement</string>
+    <string name="label_property_other_information">Autres informations</string>
     <string name="label_property_sold">Vendu</string>
 
     <!--Text hints-->

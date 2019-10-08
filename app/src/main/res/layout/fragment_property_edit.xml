@@ -12,6 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!--Head information-->
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,11 +75,13 @@
 
         </LinearLayout>
 
+        <!--Pictures-->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/components_margin"
-            android:textSize="@dimen/text_size_body"
+            android:textSize="@dimen/text_size_title"
             android:textColor="@color/colorAccent"
             android:text="@string/label_property_pictures"/>
 
@@ -86,6 +90,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/components_margin"/>
+
+        <!--Main information-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorAccent"
+            android:text="@string/label_property_main_information"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -207,11 +221,13 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!--Extras-->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/components_margin"
-            android:textSize="@dimen/text_size_body"
+            android:textSize="@dimen/text_size_title"
             android:textColor="@color/colorAccent"
             android:text="@string/label_property_extras"/>
 
@@ -222,6 +238,16 @@
             android:layout_margin="@dimen/components_margin">
 
         </com.google.android.material.chip.ChipGroup>
+
+        <!--Location-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorAccent"
+            android:text="@string/label_property_location"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -292,6 +318,16 @@
                 android:textSize="@dimen/text_size_body" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <!--Other information-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorAccent"
+            android:text="@string/label_property_other_information"/>
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -12,8 +12,11 @@
     <string name="menu_navigation_bottom_loan">Loan</string>
 
     <!--Text labels-->
+    <string name="label_property_main_information">Main information</string>
     <string name="label_property_pictures">Pictures</string>
     <string name="label_property_extras">Extras</string>
+    <string name="label_property_location">Location</string>
+    <string name="label_property_other_information">Other information</string>
     <string name="label_property_sold">Sold</string>
 
     <!--Text hints-->
