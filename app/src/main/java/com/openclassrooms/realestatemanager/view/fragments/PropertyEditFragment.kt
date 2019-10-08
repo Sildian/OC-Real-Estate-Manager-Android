@@ -1,12 +1,13 @@
 package com.openclassrooms.realestatemanager.view.fragments
 
 import android.os.Bundle
-import android.util.Log
+import android.text.InputType
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.DatePicker
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +18,10 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.coremodel.Extra
 import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
+import com.openclassrooms.realestatemanager.model.coremodel.Realtor
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.activities.PropertyEditActivity
+import com.openclassrooms.realestatemanager.view.customviews.DatePickerFragment
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
 import com.openclassrooms.realestatemanager.viewmodel.*
@@ -42,12 +46,17 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
     private val nbRoomsText by lazy {layout.fragment_property_edit_nb_rooms}
     private val nbBedroomsText by lazy {layout.fragment_property_edit_nb_bedrooms}
     private val nbBathroomsText by lazy {layout.fragment_property_edit_nb_bathrooms}
+    private val buildDateText by lazy {layout.fragment_property_edit_build_date}
     private val extrasChipGroup by lazy {layout.fragment_property_edit_extras}
     private val extrasChips=ArrayList<Chip>()
     private val addressText by lazy {layout.fragment_property_edit_address}
     private val postalCodeText by lazy {layout.fragment_property_edit_postal_code}
     private val cityText by lazy {layout.fragment_property_edit_city}
     private val countryText by lazy {layout.fragment_property_edit_country}
+    private val realtorTextDropDown by lazy {layout.fragment_property_edit_realtor}
+    private val adDateText by lazy {layout.fragment_property_edit_ad_date}
+    private val soldSwitch by lazy {layout.fragment_property_edit_sold}
+    private val saleDateText by lazy {layout.fragment_property_edit_sale_date}
 
     /**Data**/
 
@@ -66,6 +75,10 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
         initializeTypeTextDropdown()
         initializePicturesRecyclerView()
         initializeExtrasChipGroup()
+        initializeRealtorTextDropdown()
+        initializeBuildDateText()
+        initializeAdDateText()
+        initializeSaleDateText()
 
         //TODO Remove this line
         loadProperty()
@@ -87,6 +100,8 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
     }
 
     /**Initializations**/
+
+    //TODO Improve
 
     private fun initializeData(){
         this.viewModelFactory=ViewModelInjection.provideViewModelFactory(context!!)
@@ -133,6 +148,43 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
         })
     }
 
+    private fun initializeRealtorTextDropdown(){
+        this.realtorViewModel.getAllRealtors().observe(this, Observer{
+            val adapter=ArrayAdapter<Realtor>(context!!, R.layout.dropdown_menu_standard, it)
+            this.realtorTextDropDown.setAdapter(adapter)
+            this.realtorTextDropDown.setOnItemClickListener({ parent, view, position, id ->
+                this.realtorTextDropDown.tag=adapter.getItem(position)
+            })
+        })
+    }
+
+    private fun initializeBuildDateText(){
+        this.buildDateText.inputType= InputType.TYPE_NULL
+        this.buildDateText.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus) {
+                DatePickerFragment(this.buildDateText).show(activity!!.supportFragmentManager, "datePicker")
+            }
+        }
+    }
+
+    private fun initializeAdDateText(){
+        this.adDateText.inputType= InputType.TYPE_NULL
+        this.adDateText.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus) {
+                DatePickerFragment(this.adDateText).show(activity!!.supportFragmentManager, "datePicker")
+            }
+        }
+    }
+
+    private fun initializeSaleDateText(){
+        this.saleDateText.inputType= InputType.TYPE_NULL
+        this.saleDateText.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus) {
+                DatePickerFragment(this.saleDateText).show(activity!!.supportFragmentManager, "datePicker")
+            }
+        }
+    }
+
     /**Data management**/
 
     //TODO Improve all these methods
@@ -149,10 +201,16 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
         property.nbRooms=Integer.parseInt(this.nbRoomsText.text.toString())
         property.nbBedrooms=Integer.parseInt(this.nbBedroomsText.text.toString())
         property.nbBathrooms=Integer.parseInt(this.nbBathroomsText.text.toString())
+        property.buildDate= Utils.getDateFromString(this.buildDateText.text.toString())
         property.address=this.addressText.text.toString()
         property.postalCode=this.postalCodeText.text.toString()
         property.city=this.cityText.text.toString()
         property.country=this.countryText.text.toString()
+        property.realtorId=(this.realtorTextDropDown.tag as Realtor).id
+        property.adDate=Utils.getDateFromString(this.adDateText.text.toString())
+        property.sold=this.soldSwitch.isChecked
+        if(!this.saleDateText.text.isNullOrEmpty())
+            property.saleDate=Utils.getDateFromString(this.saleDateText.text.toString())
         val propertyId=this.propertyViewModel.insertProperty(property)
         savePropertyExtras(propertyId.toInt())
         activity!!.finish()
@@ -182,11 +240,18 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
                 this.nbRoomsText.setText(property.nbRooms.toString())
                 this.nbBedroomsText.setText(property.nbBedrooms.toString())
                 this.nbBathroomsText.setText(property.nbBathrooms.toString())
+                this.buildDateText.setText(Utils.getStringFromDate(property.buildDate))
                 loadPropertyExtras(property.id!!)
                 this.addressText.setText(property.address)
                 this.postalCodeText.setText(property.postalCode)
                 this.cityText.setText(property.city)
                 this.countryText.setText(property.country)
+                val realtorId=property.realtorId
+                if(realtorId!=null)loadPropertyRealtor(realtorId)
+                this.adDateText.setText(Utils.getStringFromDate(property.adDate))
+                this.soldSwitch.isChecked=property.sold
+                if(property.saleDate!=null)
+                    this.saleDateText.setText(Utils.getStringFromDate(property.saleDate))
             }
         })
     }
@@ -213,7 +278,14 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
         })
     }
 
-    /**Adds / removes pictures**/
+    private fun loadPropertyRealtor(realtorId:String){
+        this.realtorViewModel.getRealtor(realtorId).observe(this, Observer{
+            this.realtorTextDropDown.setText(it.toString(), false)
+            this.realtorTextDropDown.tag=it
+        })
+    }
+
+    /**Pictures management**/
 
     fun addPicture(picturePath:String){
         this.picturesPaths.add(this.picturesPaths.size-1, picturePath)

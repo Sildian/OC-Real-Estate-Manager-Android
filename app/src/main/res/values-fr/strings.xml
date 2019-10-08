@@ -13,6 +13,7 @@
     <!--Text labels-->
     <string name="label_property_pictures">Photos</string>
     <string name="label_property_extras">Les +</string>
+    <string name="label_property_sold">Vendu</string>
 
     <!--Text hints-->
     <string name="hint_property_ad_title">Titre de l\'annonce</string>
@@ -24,10 +25,14 @@
     <string name="hint_property_nb_rooms">Pièces</string>
     <string name="hint_property_nb_bedrooms">Chambres</string>
     <string name="hint_property_nb_bathrooms">Salles de bain</string>
+    <string name="hint_property_build_date">Date construction</string>
     <string name="hint_property_address">Addresse</string>
     <string name="hint_property_postal_code">Code postal</string>
     <string name="hint_property_city">Ville</string>
     <string name="hint_property_country">Pays</string>
+    <string name="hint_property_realtor">Agent</string>
+    <string name="hint_property_ad_date">Date annonce</string>
+    <string name="hint_property_sale_date">Date vente</string>
 
     <!--Toasts / Snackbars-->
     <string name="toast_photo_unavailable">Votre appareil ne peut pas prendre de photos</string>

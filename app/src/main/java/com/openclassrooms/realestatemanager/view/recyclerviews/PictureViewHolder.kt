@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.list_pictures_item.view.*
 
 /************************************************************************************************
  * Displays a picture related to a property,
- * and also allows to delete or add new pictures
+ * and also allows to delete or add new pictures when editable is true
  ***********************************************************************************************/
 
 class PictureViewHolder (

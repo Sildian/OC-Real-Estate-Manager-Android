@@ -32,13 +32,21 @@
     <!--TextInputLayout theme with Dropdown menu-->
     <style name="TextInputLayoutThemeDropdownMenu" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
         <item name="boxStrokeColor">@color/colorAccent</item>
-        <item name="hintTextColor">@color/colorAccent</item>
+        <item name="hintTextColor">@color/colorAccent</item>"
     </style>
 
     <!--Chip theme standard-->
-    <style name="ChipThemeStandard" parent="@style/Widget.MaterialComponents.Chip.Choice">
+    <style name="ChipThemeStandard" parent="@style/Widget.MaterialComponents.Chip.Filter">
         <item name="chipBackgroundColor">@color/chip_color_background</item>
         <item name="android:textColor">@color/chip_color_text</item>
+    </style>
+
+    <!-- DatePicker theme -->
+    <style name="DatePickerTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="buttonBarButtonStyle">@style/Widget.MaterialComponents.Button.TextButton.Dialog</item>
     </style>
 
 </resources>
