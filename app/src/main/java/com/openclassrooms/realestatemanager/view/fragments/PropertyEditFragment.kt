@@ -2,12 +2,13 @@ package com.openclassrooms.realestatemanager.view.fragments
 
 import android.os.Bundle
 import android.text.InputType
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.DatePicker
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +22,7 @@ import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
 import com.openclassrooms.realestatemanager.model.coremodel.Realtor
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.activities.PropertyEditActivity
-import com.openclassrooms.realestatemanager.view.customviews.DatePickerFragment
+import com.openclassrooms.realestatemanager.view.dialogs.DatePickerFragment
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
 import com.openclassrooms.realestatemanager.viewmodel.*
@@ -57,6 +58,8 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
     private val adDateText by lazy {layout.fragment_property_edit_ad_date}
     private val soldSwitch by lazy {layout.fragment_property_edit_sold}
     private val saleDateText by lazy {layout.fragment_property_edit_sale_date}
+    private val cancelButton by lazy {layout.fragment_property_edit_button_cancel}
+    private val saveButton by lazy {layout.fragment_property_edit_button_save}
 
     /**Data**/
 
@@ -79,6 +82,7 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
         initializeBuildDateText()
         initializeAdDateText()
         initializeSaleDateText()
+        initializeButtons()
 
         //TODO Remove this line
         loadProperty()
@@ -183,6 +187,11 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
                 DatePickerFragment(this.saleDateText).show(activity!!.supportFragmentManager, "datePicker")
             }
         }
+    }
+
+    private fun initializeButtons(){
+        this.cancelButton.setOnClickListener { activity!!.finish() }
+        this.saveButton.setOnClickListener { saveProperty() }
     }
 
     /**Data management**/

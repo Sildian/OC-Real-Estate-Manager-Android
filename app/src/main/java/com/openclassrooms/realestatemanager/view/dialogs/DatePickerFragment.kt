@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.view.customviews
+package com.openclassrooms.realestatemanager.view.dialogs
 
 import android.app.DatePickerDialog
 import android.app.Dialog

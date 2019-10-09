@@ -10,6 +10,10 @@
     <string name="menu_navigation_bottom_map">Carte</string>
     <string name="menu_navigation_bottom_loan">Emprunt</string>
 
+    <!--Buttons-->
+    <string name="button_save">Enregistrer</string>
+    <string name="button_cancel">Annuler</string>
+
     <!--Text labels-->
     <string name="label_property_main_information">Informations principales</string>
     <string name="label_property_pictures">Photos</string>

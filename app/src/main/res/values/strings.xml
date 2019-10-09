@@ -11,6 +11,10 @@
     <string name="menu_navigation_bottom_map">Map</string>
     <string name="menu_navigation_bottom_loan">Loan</string>
 
+    <!--Buttons-->
+    <string name="button_save">Save</string>
+    <string name="button_cancel">Cancel</string>
+
     <!--Text labels-->
     <string name="label_property_main_information">Main information</string>
     <string name="label_property_pictures">Pictures</string>

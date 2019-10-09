@@ -36,9 +36,10 @@
     </style>
 
     <!--Chip theme standard-->
-    <style name="ChipThemeStandard" parent="@style/Widget.MaterialComponents.Chip.Filter">
+    <style name="ChipThemeStandard" parent="@style/Widget.MaterialComponents.Chip.Entry">
         <item name="chipBackgroundColor">@color/chip_color_background</item>
         <item name="android:textColor">@color/chip_color_text</item>
+        <item name="closeIconVisible">false</item>
     </style>
 
     <!-- DatePicker theme -->
