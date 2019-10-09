@@ -65,4 +65,9 @@ public class UtilsTest {
         String date="05/10/19";
         assertEquals(date, Utils.getDate(year, month, day));
     }
+
+    @Test
+    public void given_1000000_when_getFormatedFigure_then_check_result_1000000(){
+        assertEquals("1 000 000", Utils.getFormatedFigure(1000000));
+    }
 }

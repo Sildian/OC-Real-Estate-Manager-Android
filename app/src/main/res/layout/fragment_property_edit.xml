@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_property_ad_title"
-                android:layout_margin="@dimen/components_margin"
+                android:layout_margin="@dimen/components_margin_medium"
                 app:counterEnabled="true"
                 app:counterMaxLength="30">
 
@@ -52,9 +52,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/hint_property_price"
-                    android:layout_margin="@dimen/components_margin"
+                    android:layout_margin="@dimen/components_margin_medium"
                     app:helperTextEnabled="true"
-                    app:helperText="$">
+                    app:helperText="@string/currency">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_edit_price"
@@ -71,7 +71,7 @@
                     android:layout_weight="1"
                     android:hint="@string/hint_property_type"
                     style="@style/TextInputLayoutThemeDropdownMenu"
-                    android:layout_margin="@dimen/components_margin">
+                    android:layout_margin="@dimen/components_margin_medium">
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_property_edit_type"
@@ -89,7 +89,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin"
+                android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorAccent"
                 android:text="@string/label_property_pictures"
@@ -99,14 +99,14 @@
                 android:id="@+id/fragment_property_edit_pictures"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin"/>
+                android:layout_margin="@dimen/components_margin_medium"/>
 
             <!--Main information-->
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin"
+                android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorAccent"
                 android:text="@string/label_property_main_information"
@@ -116,7 +116,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_property_description"
-                android:layout_margin="@dimen/components_margin"
+                android:layout_margin="@dimen/components_margin_medium"
                 app:counterEnabled="true"
                 app:counterMaxLength="500">
 
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/hint_property_size"
-                    android:layout_margin="@dimen/components_margin"
+                    android:layout_margin="@dimen/components_margin_medium"
                     app:helperTextEnabled="true"
                     app:helperText="@string/hint_property_size_unit"
                     app:startIconDrawable="@drawable/ic_size_black">
@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/hint_property_nb_rooms"
-                    android:layout_margin="@dimen/components_margin"
+                    android:layout_margin="@dimen/components_margin_medium"
                     app:startIconDrawable="@drawable/ic_nb_rooms_black">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/hint_property_nb_bedrooms"
-                    android:layout_margin="@dimen/components_margin"
+                    android:layout_margin="@dimen/components_margin_medium"
                     app:startIconDrawable="@drawable/ic_nb_bedrooms_black">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -202,7 +202,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/hint_property_nb_bathrooms"
-                    android:layout_margin="@dimen/components_margin"
+                    android:layout_margin="@dimen/components_margin_medium"
                     app:startIconDrawable="@drawable/ic_nb_bathrooms_black">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -221,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_property_build_date"
                 style="@style/TextInputLayoutThemeDropdownMenu"
-                android:layout_margin="@dimen/components_margin">
+                android:layout_margin="@dimen/components_margin_medium">
 
                 <AutoCompleteTextView
                     android:id="@+id/fragment_property_edit_build_date"
@@ -237,7 +237,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin"
+                android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorAccent"
                 android:text="@string/label_property_extras"
@@ -247,7 +247,7 @@
                 android:id="@+id/fragment_property_edit_extras"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin">
+                android:layout_margin="@dimen/components_margin_medium">
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -256,7 +256,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin"
+                android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorAccent"
                 android:text="@string/label_property_location"
@@ -266,7 +266,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_property_address"
-                android:layout_margin="@dimen/components_margin">
+                android:layout_margin="@dimen/components_margin_medium">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fragment_property_edit_address"
@@ -288,7 +288,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/hint_property_postal_code"
-                    android:layout_margin="@dimen/components_margin">
+                    android:layout_margin="@dimen/components_margin_medium">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_edit_postal_code"
@@ -304,7 +304,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:hint="@string/hint_property_city"
-                    android:layout_margin="@dimen/components_margin">
+                    android:layout_margin="@dimen/components_margin_medium">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_edit_city"
@@ -321,7 +321,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_property_country"
-                android:layout_margin="@dimen/components_margin">
+                android:layout_margin="@dimen/components_margin_medium">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fragment_property_edit_country"
@@ -337,7 +337,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin"
+                android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorAccent"
                 android:text="@string/label_property_other_information"
@@ -354,7 +354,7 @@
                     android:layout_weight="1"
                     android:hint="@string/hint_property_realtor"
                     style="@style/TextInputLayoutThemeDropdownMenu"
-                    android:layout_margin="@dimen/components_margin">
+                    android:layout_margin="@dimen/components_margin_medium">
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_property_edit_realtor"
@@ -371,7 +371,7 @@
                     android:layout_weight="1"
                     android:hint="@string/hint_property_ad_date"
                     style="@style/TextInputLayoutThemeDropdownMenu"
-                    android:layout_margin="@dimen/components_margin">
+                    android:layout_margin="@dimen/components_margin_medium">
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_property_edit_ad_date"
@@ -394,7 +394,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_margin="@dimen/components_margin"
+                    android:layout_margin="@dimen/components_margin_medium"
                     android:textSize="@dimen/text_size_body"
                     android:text="@string/label_property_sold"/>
 
@@ -404,7 +404,7 @@
                     android:layout_weight="1"
                     android:hint="@string/hint_property_sale_date"
                     style="@style/TextInputLayoutThemeDropdownMenu"
-                    android:layout_margin="@dimen/components_margin">
+                    android:layout_margin="@dimen/components_margin_medium">
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_property_edit_sale_date"
@@ -442,7 +442,7 @@
             android:id="@+id/fragment_property_edit_button_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/components_margin"
+            android:layout_margin="@dimen/components_margin_medium"
             android:layout_weight="1"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:text="@string/button_cancel"
@@ -452,7 +452,7 @@
             android:id="@+id/fragment_property_edit_button_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/components_margin"
+            android:layout_margin="@dimen/components_margin_medium"
             android:layout_weight="1"
             style="@style/Widget.MaterialComponents.Button"
             android:text="@string/button_save"

@@ -6,6 +6,7 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -97,5 +98,15 @@ public class Utils {
         calendar.set(Calendar.DAY_OF_MONTH, day);
         DateFormat dateFormat=SimpleDateFormat.getDateInstance(DateFormat.SHORT);
         return dateFormat.format(calendar.getTime());
+    }
+
+    /**Gets a formated figure with thousands separators
+     * @param figure : the figure (int)
+     * @return the formated figure (String)
+     */
+
+    public static String getFormatedFigure(long figure){
+        NumberFormat numberFormat=NumberFormat.getNumberInstance();
+        return numberFormat.format(figure);
     }
 }

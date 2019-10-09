@@ -2,9 +2,11 @@
 <resources>
     <dimen name="text_size_menu_title">19sp</dimen>
     <dimen name="text_size_menu_item">17sp</dimen>
+    <dimen name="text_size_important">27sp</dimen>
     <dimen name="text_size_title">17sp</dimen>
     <dimen name="text_size_body">14sp</dimen>
-    <dimen name="components_margin">8dp</dimen>
+    <dimen name="components_margin_small">4dp</dimen>
+    <dimen name="components_margin_medium">8dp</dimen>
     <dimen name="picture_size_small">40dp</dimen>
     <dimen name="picture_size_medium">120dp</dimen>
 </resources>

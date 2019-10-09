@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="@dimen/components_margin_medium"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="@dimen/picture_size_medium"
+            android:layout_height="@dimen/picture_size_medium"
+            app:cardElevation="2dp">
+
+            <ImageView
+                android:id="@+id/list_properties_item_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_small"
+                tools:srcCompat="@tools:sample/avatars[12]"
+                android:contentDescription="@string/content_description_picture"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/list_properties_item_ad_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_small"
+                android:textSize="@dimen/text_size_body"
+                android:textStyle="bold"
+                android:text="@string/hint_property_ad_title"/>
+
+            <TextView
+                android:id="@+id/list_properties_item_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_small"
+                android:textSize="@dimen/text_size_body"
+                android:text="@string/hint_property_city"/>
+
+            <TextView
+                android:id="@+id/list_properties_item_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_small"
+                android:textSize="@dimen/text_size_important"
+                android:textColor="@color/colorAccent"
+                android:text="@string/hint_property_price"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

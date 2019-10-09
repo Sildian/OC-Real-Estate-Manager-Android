@@ -48,4 +48,7 @@
     <string name="content_description_picture">Image</string>
     <string name="content_description_button">Bouton</string>
 
+    <!--Others-->
+    <string name="currency">$</string>
+
 </resources>
