@@ -49,4 +49,7 @@
     <string name="content_description_picture">Picture</string>
     <string name="content_description_button">Button</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

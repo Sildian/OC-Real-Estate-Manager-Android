@@ -1,16 +1,15 @@
 package com.openclassrooms.realestatemanager.view.fragments
 
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.text.InputType
-import android.text.TextWatcher
-import androidx.fragment.app.Fragment
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import androidx.core.widget.addTextChangedListener
+import android.widget.Toast
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
@@ -21,22 +20,32 @@ import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
 import com.openclassrooms.realestatemanager.model.coremodel.Realtor
 import com.openclassrooms.realestatemanager.utils.Utils
-import com.openclassrooms.realestatemanager.view.activities.PropertyEditActivity
-import com.openclassrooms.realestatemanager.view.dialogs.DatePickerFragment
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
-import com.openclassrooms.realestatemanager.viewmodel.*
 import kotlinx.android.synthetic.main.fragment_property_edit.view.*
 
 /**************************************************************************************************
  * Allows the user to create or edit a property
  *************************************************************************************************/
 
-class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
+class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener {
 
-    /**UI components**/
+    /*********************************************************************************************
+     * Static items
+     ********************************************************************************************/
 
-    private lateinit var layout:View
+    companion object {
+
+        /**Requests keys for intents**/
+
+        const val KEY_REQUEST_ADD_PICTURE = 101
+        const val KEY_REQUEST_TAKE_PICTURE = 102
+    }
+
+    /*********************************************************************************************
+     * UI components
+     ********************************************************************************************/
+
     private lateinit var pictureAdapter:PictureAdapter
     private val adTitleText by lazy {layout.fragment_property_edit_ad_title }
     private val priceText by lazy {layout.fragment_property_edit_price}
@@ -61,20 +70,13 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
     private val cancelButton by lazy {layout.fragment_property_edit_button_cancel}
     private val saveButton by lazy {layout.fragment_property_edit_button_save}
 
-    /**Data**/
-
-    private lateinit var viewModelFactory: ViewModelFactory
-    private lateinit var propertyViewModel: PropertyViewModel
-    private lateinit var propertyTypeViewModel:PropertyTypeViewModel
-    private lateinit var realtorViewModel: RealtorViewModel
-    private lateinit var extraViewModel: ExtraViewModel
-    private val picturesPaths:ArrayList<String?> = arrayListOf(null)
-
-    /**Life cycle**/
+    /*********************************************************************************************
+     * Life cycle
+     ********************************************************************************************/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        this.layout=inflater.inflate(R.layout.fragment_property_edit, container, false)
-        initializeData()
+        super.onCreateView(inflater, container, savedInstanceState)
+
         initializeTypeTextDropdown()
         initializePicturesRecyclerView()
         initializeExtrasChipGroup()
@@ -84,48 +86,25 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
         initializeSaleDateText()
         initializeButtons()
 
-        //TODO Remove this line
+        //TODO change this to check if a property id was received by the intent
         loadProperty()
+
         return layout
     }
 
-    /**Listens UI events on picturesRecyclerView**/
+    /*********************************************************************************************
+     * PropertyBaseFragment
+     ********************************************************************************************/
 
-    override fun onDeleteButtonClick(position: Int) {
-        removePicture(position)
-    }
+    override fun getLayoutId() = R.layout.fragment_property_edit
 
-    override fun onAddPictureButtonClick(position: Int) {
-        (activity as PropertyEditActivity).startAddPictureIntent()
-    }
-
-    override fun onTakePictureButtonClick(position: Int) {
-        (activity as PropertyEditActivity).startTakePictureIntent()
-    }
-
-    /**Initializations**/
-
-    //TODO Improve
-
-    private fun initializeData(){
-        this.viewModelFactory=ViewModelInjection.provideViewModelFactory(context!!)
-        this.propertyViewModel=ViewModelProviders.of(
-                this, this.viewModelFactory).get(PropertyViewModel::class.java)
-        this.realtorViewModel=ViewModelProviders.of(
-                this, this.viewModelFactory).get(RealtorViewModel::class.java)
-        this.propertyTypeViewModel= ViewModelProviders.of(
-                this, this.viewModelFactory).get(PropertyTypeViewModel::class.java)
-        this.extraViewModel=ViewModelProviders.of(
-                this, this.viewModelFactory).get(ExtraViewModel::class.java)
-    }
+    /*********************************************************************************************
+     * Initializations
+     ********************************************************************************************/
 
     private fun initializeTypeTextDropdown(){
         this.propertyTypeViewModel.getAllPropertyTypes().observe(this, Observer{
-            val adapter=ArrayAdapter<PropertyType>(context!!, R.layout.dropdown_menu_standard, it)
-            this.typeTextDropdown.setAdapter(adapter)
-            this.typeTextDropdown.setOnItemClickListener({ parent, view, position, id ->
-                this.typeTextDropdown.tag=adapter.getItem(position)
-            })
+            initializeTextDropDown(this.typeTextDropdown, R.layout.dropdown_menu_standard, it)
         })
     }
 
@@ -138,55 +117,26 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
 
     private fun initializeExtrasChipGroup(){
         this.extraViewModel.gelAllExtra().observe(this, Observer{
-
-            this.extrasChips.clear()
-            this.extrasChipGroup.removeAllViews()
-
-            for(extra in it){
-                val chip=layoutInflater.inflate(R.layout.chip_standard, this.extrasChipGroup, false) as Chip
-                chip.tag=extra
-                chip.text=extra.toString()
-                this.extrasChips.add(chip)
-                this.extrasChipGroup.addView(chip)
-            }
+            initializeChipGroup(this.extrasChipGroup, this.extrasChips, R.layout.chip_standard, it)
         })
     }
 
     private fun initializeRealtorTextDropdown(){
         this.realtorViewModel.getAllRealtors().observe(this, Observer{
-            val adapter=ArrayAdapter<Realtor>(context!!, R.layout.dropdown_menu_standard, it)
-            this.realtorTextDropDown.setAdapter(adapter)
-            this.realtorTextDropDown.setOnItemClickListener({ parent, view, position, id ->
-                this.realtorTextDropDown.tag=adapter.getItem(position)
-            })
+            initializeTextDropDown(this.realtorTextDropDown, R.layout.dropdown_menu_standard, it)
         })
     }
 
     private fun initializeBuildDateText(){
-        this.buildDateText.inputType= InputType.TYPE_NULL
-        this.buildDateText.setOnFocusChangeListener { v, hasFocus ->
-            if(hasFocus) {
-                DatePickerFragment(this.buildDateText).show(activity!!.supportFragmentManager, "datePicker")
-            }
-        }
+        initializeDateText(this.buildDateText)
     }
 
     private fun initializeAdDateText(){
-        this.adDateText.inputType= InputType.TYPE_NULL
-        this.adDateText.setOnFocusChangeListener { v, hasFocus ->
-            if(hasFocus) {
-                DatePickerFragment(this.adDateText).show(activity!!.supportFragmentManager, "datePicker")
-            }
-        }
+        initializeDateText(this.adDateText)
     }
 
     private fun initializeSaleDateText(){
-        this.saleDateText.inputType= InputType.TYPE_NULL
-        this.saleDateText.setOnFocusChangeListener { v, hasFocus ->
-            if(hasFocus) {
-                DatePickerFragment(this.saleDateText).show(activity!!.supportFragmentManager, "datePicker")
-            }
-        }
+        initializeDateText(this.saleDateText)
     }
 
     private fun initializeButtons(){
@@ -194,11 +144,43 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
         this.saveButton.setOnClickListener { saveProperty() }
     }
 
-    /**Data management**/
+    /*********************************************************************************************
+     * Listens UI events on picturesRecyclerView
+     ********************************************************************************************/
 
-    //TODO Improve all these methods
+    override fun onDeleteButtonClick(position: Int) {
+        removePicture(position)
+    }
+
+    override fun onAddPictureButtonClick(position: Int) {
+        startAddPictureIntent()
+    }
+
+    override fun onTakePictureButtonClick(position: Int) {
+        startTakePictureIntent()
+    }
+
+    /*********************************************************************************************
+     * Pictures management
+     ********************************************************************************************/
+
+    fun addPicture(picturePath:String){
+        this.picturesPaths.add(this.picturesPaths.size-1, picturePath)
+        this.pictureAdapter.notifyDataSetChanged()
+    }
+
+    fun removePicture(position:Int){
+        this.picturesPaths.removeAt(position)
+        this.pictureAdapter.notifyDataSetChanged()
+    }
+
+    /*********************************************************************************************
+     * Data management
+     ********************************************************************************************/
 
     fun saveProperty(){
+
+        //TODO add a control checking that data are valid before saving
 
         val property=Property()
         property.adTitle=this.adTitleText.text.toString()
@@ -279,7 +261,6 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
     }
 
     private fun loadPropertyExtras(propertyId:Int){
-
         this.propertyViewModel.getPropertyExtras(propertyId).observe(this, Observer {
             for(extra in it){
                 this.extrasChips[extra.extraId-1].isChecked=true
@@ -294,15 +275,51 @@ class PropertyEditFragment : Fragment(), PictureViewHolder.Listener {
         })
     }
 
-    /**Pictures management**/
+    /*********************************************************************************************
+     * Intents management
+     ********************************************************************************************/
 
-    fun addPicture(picturePath:String){
-        this.picturesPaths.add(this.picturesPaths.size-1, picturePath)
-        this.pictureAdapter.notifyDataSetChanged()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode== Activity.RESULT_OK){
+            when(requestCode){
+                KEY_REQUEST_ADD_PICTURE ->handleNewPictureResult(data)
+                KEY_REQUEST_TAKE_PICTURE ->handleNewPictureResult(data)
+            }
+        }
     }
 
-    fun removePicture(position:Int){
-        this.picturesPaths.removeAt(position)
-        this.pictureAdapter.notifyDataSetChanged()
+    /*********************************************************************************************
+     * Starts intents
+     ********************************************************************************************/
+
+    fun startAddPictureIntent(){
+        val addPictureIntent= Intent(Intent.ACTION_OPEN_DOCUMENT).apply{
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type="image/*"
+        }
+        startActivityForResult(addPictureIntent, KEY_REQUEST_ADD_PICTURE)
+    }
+
+    fun startTakePictureIntent(){
+        if(activity!!.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
+            val takePictureIntent= Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            if(takePictureIntent.resolveActivity(activity!!.packageManager)!=null){
+                startActivityForResult(takePictureIntent, KEY_REQUEST_TAKE_PICTURE)
+            }else{
+                Toast.makeText(context, R.string.toast_photo_unavailable, Toast.LENGTH_LONG).show()
+            }
+        }else{
+            Toast.makeText(context, R.string.toast_photo_unavailable, Toast.LENGTH_LONG).show()
+        }
+    }
+
+    /*********************************************************************************************
+     * Handles intents results
+     ********************************************************************************************/
+
+    private fun handleNewPictureResult(data: Intent?){
+        val picturePath:String?=data?.data.toString()
+        if(picturePath!=null) addPicture(picturePath)
     }
 }
