@@ -30,8 +30,8 @@ public class UtilsTest {
 
     @Test
     public void given_5oct2019_when_getDateFromString_then_check_result_5oct2019(){
-        Locale.setDefault(Locale.FRANCE);
-        String dateString="05/10/2019";
+        Locale.setDefault(Locale.US);
+        String dateString="10/5/19";
         Calendar calendar=Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2019);
         calendar.set(Calendar.MONTH, 9);
@@ -46,7 +46,7 @@ public class UtilsTest {
 
     @Test
     public void given_5oct2019_when_getStringFromDate_then_check_result_5oct2019(){
-        Locale.setDefault(Locale.FRANCE);
+        Locale.setDefault(Locale.US);
         Calendar calendar=Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2019);
         calendar.set(Calendar.MONTH, 9);
@@ -56,23 +56,23 @@ public class UtilsTest {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         Date date=calendar.getTime();
-        String dateString="05/10/19";
+        String dateString="10/5/19";
         assertEquals(dateString, Utils.getStringFromDate(date));
     }
 
     @Test
     public void given_5oct2019_when_getDate_then_check_result_5oct2019(){
-        Locale.setDefault(Locale.FRANCE);
+        Locale.setDefault(Locale.US);
         int year=2019;
         int month=9;
         int day=5;
-        String date="05/10/19";
+        String date="10/5/19";
         assertEquals(date, Utils.getDate(year, month, day));
     }
 
     @Test
     public void given_1000000_when_getFormatedFigure_then_check_result_1000000(){
-        Locale.setDefault(Locale.FRANCE);
-        assertEquals("1 000 000", Utils.getFormatedFigure(1000000));
+        Locale.setDefault(Locale.US);
+        assertEquals("1,000,000", Utils.getFormatedFigure(1000000));
     }
 }
