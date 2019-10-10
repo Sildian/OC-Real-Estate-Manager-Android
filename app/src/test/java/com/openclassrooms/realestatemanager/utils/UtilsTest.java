@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import static org.junit.Assert.*;
 
@@ -29,6 +30,7 @@ public class UtilsTest {
 
     @Test
     public void given_5oct2019_when_getDateFromString_then_check_result_5oct2019(){
+        Locale.setDefault(Locale.FRANCE);
         String dateString="05/10/2019";
         Calendar calendar=Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2019);
@@ -44,6 +46,7 @@ public class UtilsTest {
 
     @Test
     public void given_5oct2019_when_getStringFromDate_then_check_result_5oct2019(){
+        Locale.setDefault(Locale.FRANCE);
         Calendar calendar=Calendar.getInstance();
         calendar.set(Calendar.YEAR, 2019);
         calendar.set(Calendar.MONTH, 9);
@@ -59,6 +62,7 @@ public class UtilsTest {
 
     @Test
     public void given_5oct2019_when_getDate_then_check_result_5oct2019(){
+        Locale.setDefault(Locale.FRANCE);
         int year=2019;
         int month=9;
         int day=5;
@@ -68,6 +72,7 @@ public class UtilsTest {
 
     @Test
     public void given_1000000_when_getFormatedFigure_then_check_result_1000000(){
+        Locale.setDefault(Locale.FRANCE);
         assertEquals("1 000 000", Utils.getFormatedFigure(1000000));
     }
 }
