@@ -7,6 +7,7 @@
     <dimen name="text_size_body">15sp</dimen>
     <dimen name="components_margin_small">4dp</dimen>
     <dimen name="components_margin_medium">8dp</dimen>
+    <dimen name="components_margin_large">16dp</dimen>
     <dimen name="picture_size_small">40dp</dimen>
     <dimen name="picture_size_medium">120dp</dimen>
 </resources>

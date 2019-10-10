@@ -35,7 +35,7 @@ class PropertyAdapter (
 
     /**Listens UI events**/
 
-    override fun onItemClick(position: Int) {
-        this.listener.onItemClick(position)
+    override fun onPropertyClick(position: Int, propertyId:Int) {
+        this.listener.onPropertyClick(position, propertyId)
     }
 }

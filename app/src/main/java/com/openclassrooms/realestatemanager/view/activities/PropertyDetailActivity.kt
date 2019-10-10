@@ -1,25 +1,26 @@
 package com.openclassrooms.realestatemanager.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.view.fragments.PropertyEditFragment
-import kotlinx.android.synthetic.main.activity_property_edit.*
+import com.openclassrooms.realestatemanager.view.fragments.PropertyDetailFragment
+import kotlinx.android.synthetic.main.activity_property_detail.*
 
 /**************************************************************************************************
- * Allows the user to create or edit a property
+ * Displays all information about a property
  *************************************************************************************************/
 
-class PropertyEditActivity : BaseActivity() {
+class PropertyDetailActivity : BaseActivity() {
 
     /*********************************************************************************************
      * UI components
      ********************************************************************************************/
 
-    private val toolbar by lazy {activity_property_edit_toolbar as Toolbar }
-    private val fragment by lazy {activity_property_edit_fragment as PropertyEditFragment }
+    private val toolbar by lazy {activity_property_detail_toolbar as Toolbar }
+    private val fragment by lazy {activity_property_detail_fragment as PropertyDetailFragment }
 
     /*********************************************************************************************
      * Data
@@ -33,7 +34,7 @@ class PropertyEditActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_property_edit)
+        setContentView(R.layout.activity_property_detail)
         initializeDataReceivedByIntent()
         initializeToolbar()
     }
@@ -43,16 +44,15 @@ class PropertyEditActivity : BaseActivity() {
      ********************************************************************************************/
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_toolbar_property_edit, menu)
+        menuInflater.inflate(R.menu.menu_toolbar_property_detail, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
-        if(item!=null&&item.groupId==R.id.menu_toolbar_edit_group){
+        if(item!=null&&item.groupId==R.id.menu_toolbar_detail_group){
 
             when(item.itemId){
-                R.id.menu_toolbar_save-> this.fragment.saveProperty()
+                R.id.menu_toolbar_edit->startPropertyEditActivity()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -71,5 +71,15 @@ class PropertyEditActivity : BaseActivity() {
     private fun initializeToolbar(){
         setSupportActionBar(this.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    }
+
+    /*********************************************************************************************
+     * Intents management
+     ********************************************************************************************/
+
+    fun startPropertyEditActivity(){
+        val propertyEditIntent= Intent(this, PropertyEditActivity::class.java)
+        propertyEditIntent.putExtra(KEY_BUNDLE_PROPERTY_ID, this.propertyId)
+        startActivity(propertyEditIntent)
     }
 }

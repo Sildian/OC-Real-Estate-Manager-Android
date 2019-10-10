@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group
-        android:id="@+id/menu_toolbar_group">
+        android:id="@+id/menu_toolbar_detail_group">
         <item
-            android:id="@+id/menu_toolbar_search"
-            android:icon="@drawable/ic_search_white"
+            android:id="@+id/menu_toolbar_edit"
+            android:icon="@drawable/ic_edit_white"
             app:showAsAction="ifRoom"
-            android:title="@string/menu_toolbar_search">
+            android:title="@string/menu_toolbar_edit">
         </item>
     </group>
 </menu>

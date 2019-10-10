@@ -23,7 +23,7 @@ class PropertyViewHolder(
     /**Interface allowing to listen UI events**/
 
     interface Listener{
-        fun onItemClick(position:Int)
+        fun onPropertyClick(position:Int, propertyId:Int)
     }
 
     /**UI components**/
@@ -33,15 +33,24 @@ class PropertyViewHolder(
     private val cityText by lazy {view.list_properties_item_city}
     private val priceText by lazy {view.list_properties_item_price}
 
+    /**Data**/
+
+    private var propertyId:Int?=null
+
     /**Sends UI events to the listener**/
 
     init{
-        this.view.setOnClickListener { this.listener.onItemClick(adapterPosition) }
+        this.view.setOnClickListener {
+            if (this.propertyId != null) {
+                this.listener.onPropertyClick(adapterPosition, this.propertyId!!.toInt())
+            }
+        }
     }
 
     /**UI update**/
 
     fun update(property: Property){
+        this.propertyId=property.id
         Glide.with(this.view).load(property.picturesPaths[0]).apply(RequestOptions.centerCropTransform()).into(this.picture)
         this.adTitleText.setText(property.adTitle)
         this.cityText.setText(property.city)

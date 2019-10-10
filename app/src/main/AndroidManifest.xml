@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activities.PropertyEditActivity"
+        <activity android:name=".view.activities.PropertyDetailActivity"
             android:parentActivityName=".view.activities.MainActivity"></activity>
+        <activity
+            android:name=".view.activities.PropertyEditActivity"
+            android:parentActivityName=".view.activities.PropertyDetailActivity" />
         <activity android:name=".view.activities.BaseActivity" />
         <activity android:name=".view.activities.MainActivity">
             <intent-filter>
@@ -20,11 +23,13 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-feature android:name="android.hardware.camera"
-        android:required="false" />
 
 </manifest>

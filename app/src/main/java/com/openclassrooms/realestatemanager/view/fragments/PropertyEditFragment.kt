@@ -36,7 +36,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
     companion object {
 
-        /**Requests keys for intents**/
+        /**Requests keys for internal intents**/
 
         const val KEY_REQUEST_ADD_PICTURE = 101
         const val KEY_REQUEST_TAKE_PICTURE = 102
@@ -77,6 +77,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
+        /*Initializes all the UI components*/
+
         initializeTypeTextDropdown()
         initializePicturesRecyclerView()
         initializeExtrasChipGroup()
@@ -86,10 +88,11 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         initializeSaleDateText()
         initializeButtons()
 
-        //TODO change this to check if a property id was received by the intent
-        loadProperty()
+        /*If a property id exists, then loads the property's data*/
 
-        return layout
+        if(this.propertyId!=null) loadProperty()
+
+        return this.layout
     }
 
     /*********************************************************************************************
@@ -148,7 +151,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
      * Listens UI events on picturesRecyclerView
      ********************************************************************************************/
 
-    override fun onDeleteButtonClick(position: Int) {
+    override fun onDeletePictureButtonClick(position: Int) {
         removePicture(position)
     }
 
@@ -216,34 +219,32 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         }
     }
 
-    private fun loadProperty(){
+    private fun loadProperty() {
 
-        this.propertyViewModel.getAllProperties().observe(this, Observer {
-            if(it.isNotEmpty()){
-                val property=it[it.size-1]
-                this.adTitleText.setText(property.adTitle)
-                this.priceText.setText(property.price.toString())
-                val typeId=property.typeId
-                if(typeId!=null) loadPropertyType(typeId)
-                loadPropertyPictures(property.picturesPaths)
-                this.descriptionText.setText(property.description)
-                this.sizeText.setText(property.size.toString())
-                this.nbRoomsText.setText(property.nbRooms.toString())
-                this.nbBedroomsText.setText(property.nbBedrooms.toString())
-                this.nbBathroomsText.setText(property.nbBathrooms.toString())
-                this.buildDateText.setText(Utils.getStringFromDate(property.buildDate))
-                loadPropertyExtras(property.id!!)
-                this.addressText.setText(property.address)
-                this.postalCodeText.setText(property.postalCode)
-                this.cityText.setText(property.city)
-                this.countryText.setText(property.country)
-                val realtorId=property.realtorId
-                if(realtorId!=null)loadPropertyRealtor(realtorId)
-                this.adDateText.setText(Utils.getStringFromDate(property.adDate))
-                this.soldSwitch.isChecked=property.sold
-                if(property.saleDate!=null)
-                    this.saleDateText.setText(Utils.getStringFromDate(property.saleDate))
-            }
+        this.propertyViewModel.getProperty(this.propertyId!!.toInt()).observe(this, Observer {
+            val property = it
+            this.adTitleText.setText(property.adTitle)
+            this.priceText.setText(property.price.toString())
+            val typeId = property.typeId
+            if (typeId != null) loadPropertyType(typeId)
+            loadPropertyPictures(property.picturesPaths)
+            this.descriptionText.setText(property.description)
+            this.sizeText.setText(property.size.toString())
+            this.nbRoomsText.setText(property.nbRooms.toString())
+            this.nbBedroomsText.setText(property.nbBedrooms.toString())
+            this.nbBathroomsText.setText(property.nbBathrooms.toString())
+            this.buildDateText.setText(Utils.getStringFromDate(property.buildDate))
+            loadPropertyExtras(property.id!!)
+            this.addressText.setText(property.address)
+            this.postalCodeText.setText(property.postalCode)
+            this.cityText.setText(property.city)
+            this.countryText.setText(property.country)
+            val realtorId = property.realtorId
+            if (realtorId != null) loadPropertyRealtor(realtorId)
+            this.adDateText.setText(Utils.getStringFromDate(property.adDate))
+            this.soldSwitch.isChecked = property.sold
+            if (property.saleDate != null)
+                this.saleDateText.setText(Utils.getStringFromDate(property.saleDate))
         })
     }
 

@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.view.fragments
 
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.view.activities.MainActivity
 import com.openclassrooms.realestatemanager.view.recyclerviews.PropertyAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PropertyViewHolder
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel
@@ -74,7 +74,7 @@ class ListFragment : Fragment(), PropertyViewHolder.Listener {
      * Listens UI events
      ********************************************************************************************/
 
-    override fun onItemClick(position: Int) {
-        //TODO implement
+    override fun onPropertyClick(position: Int, propertyId:Int) {
+        (activity as MainActivity).startPropertyDetailActivity(propertyId)
     }
 }

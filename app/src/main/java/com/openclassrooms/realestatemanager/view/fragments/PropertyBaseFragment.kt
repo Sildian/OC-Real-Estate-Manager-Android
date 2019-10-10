@@ -11,6 +11,7 @@ import android.widget.AutoCompleteTextView
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.view.dialogs.DatePickerFragment
 import com.openclassrooms.realestatemanager.viewmodel.*
 
@@ -36,6 +37,7 @@ abstract class PropertyBaseFragment : Fragment() {
      * Data
      ********************************************************************************************/
 
+    protected var propertyId:Int?=null
     protected lateinit var viewModelFactory: ViewModelFactory
     protected lateinit var propertyViewModel: PropertyViewModel
     protected lateinit var propertyTypeViewModel: PropertyTypeViewModel
@@ -50,6 +52,7 @@ abstract class PropertyBaseFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         this.layout=inflater.inflate(getLayoutId(), container, false)
         initializeData()
+        initializeDataReceivedByIntent()
         return this.layout
     }
 
@@ -67,6 +70,12 @@ abstract class PropertyBaseFragment : Fragment() {
                 this, this.viewModelFactory).get(PropertyTypeViewModel::class.java)
         this.extraViewModel= ViewModelProviders.of(
                 this, this.viewModelFactory).get(ExtraViewModel::class.java)
+    }
+
+    private fun initializeDataReceivedByIntent(){
+        if(activity!!.intent!=null&&activity!!.intent.hasExtra(BaseActivity.KEY_BUNDLE_PROPERTY_ID)) {
+            this.propertyId = activity!!.intent.getIntExtra(BaseActivity.KEY_BUNDLE_PROPERTY_ID, 0)
+        }
     }
 
     /*********************************************************************************************
