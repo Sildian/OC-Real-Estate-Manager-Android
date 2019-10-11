@@ -34,3 +34,8 @@ data class Property(
         var saleDate:Date?=null,
         var sold:Boolean=false
         )
+{
+        fun getFullAddress():String{
+                return this.address+"\n"+this.postalCode+"\n"+this.city+"\n"+this.country
+        }
+}

@@ -32,6 +32,7 @@ class PropertyViewHolder(
     private val adTitleText by lazy {view.list_properties_item_ad_title}
     private val cityText by lazy {view.list_properties_item_city}
     private val priceText by lazy {view.list_properties_item_price}
+    private val soldText by lazy {view.list_properties_item_sold}
 
     /**Data**/
 
@@ -54,12 +55,18 @@ class PropertyViewHolder(
         Glide.with(this.view).load(property.picturesPaths[0]).apply(RequestOptions.centerCropTransform()).into(this.picture)
         this.adTitleText.setText(property.adTitle)
         this.cityText.setText(property.city)
-        updatePrice(property.price)
+        updatePriceText(property.price)
+        updateSoldText(property.sold)
     }
 
-    fun updatePrice(price:Int?){
+    private fun updatePriceText(price:Int?){
         val currency=this.view.resources.getString(R.string.currency)
         val priceToDisplay=Utils.getFormatedFigure(if(price!=null) price.toLong() else 0)+" $currency"
         this.priceText.setText(priceToDisplay)
+    }
+
+    private fun updateSoldText(sold:Boolean){
+        if(sold) this.soldText.visibility=View.VISIBLE
+        else this.soldText.visibility=View.GONE
     }
 }
