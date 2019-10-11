@@ -143,7 +143,7 @@ class SQLiteDatabaseTest{
     }
 
     @Test
-    fun given_GarageAndPoolInHouse_when_getPropertyExtrasAfterDeleteGarage_then_checkResult(){
+    fun given_GarageAndPoolInHouse_when_getPropertyExtrasAfterDelete_then_checkResultsIsNull(){
         val garage=Extra(name="Garage")
         val pool=Extra(name="Swimming pool")
         val house=Property(adTitle="House", price=500000)
@@ -152,9 +152,8 @@ class SQLiteDatabaseTest{
         this.database.propertyDAO.insertProperty(house)
         this.database.extrasPerPropertyDAO.insertPropertyExtra(ExtrasPerProperty(1, 1))
         this.database.extrasPerPropertyDAO.insertPropertyExtra(ExtrasPerProperty(1, 2))
-        this.database.extrasPerPropertyDAO.deletePropertyExtra(ExtrasPerProperty(1, 1))
+        this.database.extrasPerPropertyDAO.deletePropertyExtra(1)
         val extras=LiveDataTestUtil.getValue(this.database.extrasPerPropertyDAO.getPropertyExtras(1))
-        assertTrue(extras.size==1)
-        extras[0].extraId==1
+        assertTrue(extras.isEmpty())
     }
 }

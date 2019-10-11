@@ -17,4 +17,8 @@ class PropertyRepository (val propertyDAO: PropertyDAO){
     fun insertProperty(property:Property):Long{
         return this.propertyDAO.insertProperty(property)
     }
+
+    fun updateProperty(property:Property){
+        this.propertyDAO.updateProperty(property)
+    }
 }

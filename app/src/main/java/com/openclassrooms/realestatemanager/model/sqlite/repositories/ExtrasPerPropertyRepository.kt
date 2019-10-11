@@ -17,7 +17,7 @@ class ExtrasPerPropertyRepository (val extrasPerPropertyDAO : ExtrasPerPropertyD
         this.extrasPerPropertyDAO.insertPropertyExtra(propertyExtra)
     }
 
-    fun deletePropertyExtra(propertyExtra: ExtrasPerProperty){
-        this.extrasPerPropertyDAO.deletePropertyExtra(propertyExtra)
+    fun deletePropertyExtra(propertyId:Int){
+        this.extrasPerPropertyDAO.deletePropertyExtra(propertyId)
     }
 }

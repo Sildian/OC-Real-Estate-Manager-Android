@@ -40,6 +40,10 @@ class PropertyViewModel (
         return propertyId
     }
 
+    fun updateProperty(property:Property){
+        executor.execute { this.propertyRepository.updateProperty(property) }
+    }
+
     /**ExtrasPerProperty access**/
 
     fun getPropertyExtras(propertyId:Int):LiveData<List<ExtrasPerProperty>> =
@@ -50,9 +54,9 @@ class PropertyViewModel (
             this.extrasPerPropertyRepository.insertPropertyExtra(ExtrasPerProperty(propertyId, extraId))}
     }
 
-    fun deletePropertyExtra(propertyId: Int, extraId: Int){
+    fun deletePropertyExtra(propertyId: Int){
         this.executor.execute{
-            this.extrasPerPropertyRepository.deletePropertyExtra(ExtrasPerProperty(propertyId, extraId))
+            this.extrasPerPropertyRepository.deletePropertyExtra(propertyId)
         }
     }
 }

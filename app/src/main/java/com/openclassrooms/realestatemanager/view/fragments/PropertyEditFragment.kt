@@ -205,12 +205,19 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         property.sold=this.soldSwitch.isChecked
         if(!this.saleDateText.text.isNullOrEmpty())
             property.saleDate=Utils.getDateFromString(this.saleDateText.text.toString())
-        val propertyId=this.propertyViewModel.insertProperty(property)
-        savePropertyExtras(propertyId.toInt())
+        if(this.propertyId==null) {
+            this.propertyId = this.propertyViewModel.insertProperty(property).toInt()
+        }else{
+            property.id=this.propertyId
+            this.propertyViewModel.updateProperty(property)
+        }
+        val propertyId=this.propertyId
+        savePropertyExtras(propertyId!!.toInt())
         activity!!.finish()
     }
 
     private fun savePropertyExtras(propertyId:Int){
+        this.propertyViewModel.deletePropertyExtra(propertyId)
         for(chip in this.extrasChips){
             if(chip.isChecked){
                 val extraId=(chip.tag as Extra).id!!.toInt()
@@ -290,10 +297,6 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         }
     }
 
-    /*********************************************************************************************
-     * Starts intents
-     ********************************************************************************************/
-
     fun startAddPictureIntent(){
         val addPictureIntent= Intent(Intent.ACTION_OPEN_DOCUMENT).apply{
             addCategory(Intent.CATEGORY_OPENABLE)
@@ -314,10 +317,6 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             Toast.makeText(context, R.string.toast_photo_unavailable, Toast.LENGTH_LONG).show()
         }
     }
-
-    /*********************************************************************************************
-     * Handles intents results
-     ********************************************************************************************/
 
     private fun handleNewPictureResult(data: Intent?){
         val picturePath:String?=data?.data.toString()
