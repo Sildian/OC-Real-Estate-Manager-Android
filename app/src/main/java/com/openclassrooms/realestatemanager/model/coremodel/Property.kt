@@ -36,6 +36,6 @@ data class Property(
         )
 {
         fun getFullAddress():String{
-                return this.address+"\n"+this.postalCode+"\n"+this.city+"\n"+this.country
+                return this.address+"\n"+this.postalCode+" "+this.city+"\n"+this.country
         }
 }

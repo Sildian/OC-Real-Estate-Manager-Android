@@ -50,6 +50,8 @@
     <string name="content_description_button">Button</string>
 
     <!--Others-->
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="currency">$</string>
 
     <!-- TODO: Remove or change this placeholder text -->

@@ -44,6 +44,7 @@ abstract class PropertyBaseFragment : Fragment() {
     protected lateinit var extraViewModel: ExtraViewModel
     protected var propertyId:Int?=null
     protected val picturesPaths:ArrayList<String?> = arrayListOf(null)
+    protected val extras:ArrayList<String> = arrayListOf()
 
     /*********************************************************************************************
      * Life cycle

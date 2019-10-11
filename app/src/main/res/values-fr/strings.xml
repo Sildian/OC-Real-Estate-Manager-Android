@@ -49,6 +49,8 @@
     <string name="content_description_button">Bouton</string>
 
     <!--Others-->
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
     <string name="currency">$</string>
 
 </resources>
