@@ -8,7 +8,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.chip.Chip
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.utils.Utils
@@ -16,12 +20,24 @@ import com.openclassrooms.realestatemanager.view.recyclerviews.CheckedTextAdapte
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
 import kotlinx.android.synthetic.main.fragment_property_detail.view.*
+import java.util.*
 
 /**************************************************************************************************
  * Displays all information about a property
  *************************************************************************************************/
 
-class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listener {
+class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listener, OnMapReadyCallback {
+
+    /*********************************************************************************************
+     * Static items
+     ********************************************************************************************/
+
+    companion object {
+
+        /**Bundles for internal calls**/
+
+        const val KEY_BUNDLE_MAP_VIEW="KEY_BUNDLE_MAP_VIEW"
+    }
 
     /*********************************************************************************************
      * UI components
@@ -41,10 +57,16 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     private val buildDateText by lazy {layout.fragment_property_detail_build_date}
     private val ExtrasRecyclerView by lazy {layout.fragment_property_detail_extras}
     private val locationText by lazy {layout.fragment_property_detail_location}
+    private val mapView by lazy {layout.fragment_property_detail_map}
     private val realtorText by lazy {layout.fragment_property_detail_realtor}
     private val adDateText by lazy {layout.fragment_property_detail_ad_date}
     private val soldText by lazy {layout.fragment_property_detail_sold}
-    private val saleDateText by lazy {layout.fragment_property_detail_sale_date}
+
+    /*********************************************************************************************
+     * Map management
+     ********************************************************************************************/
+
+    private lateinit var map:GoogleMap
 
     /*********************************************************************************************
      * Life cycle
@@ -54,6 +76,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
         super.onCreateView(inflater, container, savedInstanceState)
         initializePicturesRecyclerView()
         initializeExtrasRecyclerView()
+        initializeMapView(savedInstanceState)
         loadProperty()
         return this.layout
     }
@@ -82,6 +105,15 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
                 GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
     }
 
+    private fun initializeMapView(savedInstanceState: Bundle?){
+        var mapViewBundle:Bundle?=null
+        if(savedInstanceState!=null){
+            mapViewBundle=savedInstanceState.getBundle(KEY_BUNDLE_MAP_VIEW)
+        }
+        this.mapView.onCreate(mapViewBundle)
+        this.mapView.getMapAsync(this)
+    }
+
     /*********************************************************************************************
      * Listens UI events on picturesRecyclerView
      ********************************************************************************************/
@@ -96,6 +128,23 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
 
     override fun onTakePictureButtonClick(position: Int) {
         //Nothing
+    }
+
+    /*********************************************************************************************
+     * Listens GoogleMap events
+     ********************************************************************************************/
+
+    override fun onMapReady(map: GoogleMap?) {
+        if(map!=null){
+            this.map=map
+
+            //TEST
+
+            val location= LatLng(-34.0, 151.0)
+            this.map.addMarker(MarkerOptions().position(location))
+            this.map.moveCamera(CameraUpdateFactory.newLatLng(location))
+
+        }
     }
 
     /*********************************************************************************************
@@ -123,13 +172,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
             this.locationText.setText(property.getFullAddress())
             loadRealtor(property.realtorId.toString())
             this.adDateText.setText(Utils.getStringFromDate(property.adDate))
-            if(property.sold){
-                this.soldText.setText(R.string.yes)
-            }else{
-                this.soldText.setText(R.string.no)
-            }
-            if (property.saleDate != null)
-                this.saleDateText.setText(Utils.getStringFromDate(property.saleDate))
+            updateSoldStatus(property.sold, property.saleDate)
         })
     }
 
@@ -165,5 +208,17 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
         this.realtorViewModel.getRealtor(realtorId).observe(this, Observer {
             this.realtorText.setText(it.name)
         })
+    }
+
+    private fun updateSoldStatus(sold:Boolean, saleDate: Date?){
+        if(sold){
+            this.soldText.visibility=View.VISIBLE
+            val saleDateToDisplay=Utils.getStringFromDate(saleDate)
+            val textToDisplay=resources.getString(R.string.label_property_sold_on)+" $saleDateToDisplay"
+            this.soldText.setText(textToDisplay)
+        }
+        else{
+            this.soldText.visibility=View.GONE
+        }
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.PropertyDetailFragment">
 
     <LinearLayout
@@ -80,27 +80,59 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/fragment_property_detail_size"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_title"
-                android:text="@string/hint_property_size"
-                android:drawableTop="@drawable/ic_size_black"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/fragment_property_detail_nb_rooms"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textSize="@dimen/text_size_body"
+                    android:textColor="@android:color/black"
+                    android:text="@string/hint_property_size"
+                    android:drawableStart="@drawable/ic_size_black"/>
+
+                <TextView
+                    android:id="@+id/fragment_property_detail_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textSize="@dimen/text_size_important"
+                    android:text="@string/hint_property_size"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_title"
-                android:text="@string/hint_property_nb_rooms"
-                android:drawableTop="@drawable/ic_nb_rooms_black"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textSize="@dimen/text_size_body"
+                    android:textColor="@android:color/black"
+                    android:text="@string/hint_property_nb_rooms"
+                    android:drawableStart="@drawable/ic_nb_rooms_black"/>
+
+                <TextView
+                    android:id="@+id/fragment_property_detail_nb_rooms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textSize="@dimen/text_size_important"
+                    android:text="@string/hint_property_nb_rooms"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -109,38 +141,87 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/fragment_property_detail_nb_bedrooms"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_title"
-                android:text="@string/hint_property_nb_bedrooms"
-                android:drawableTop="@drawable/ic_nb_bedrooms_black"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/fragment_property_detail_nb_bathrooms"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textSize="@dimen/text_size_body"
+                    android:textColor="@android:color/black"
+                    android:text="@string/hint_property_nb_bedrooms"
+                    android:drawableStart="@drawable/ic_nb_bedrooms_black"/>
+
+                <TextView
+                    android:id="@+id/fragment_property_detail_nb_bedrooms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textSize="@dimen/text_size_important"
+                    android:text="@string/hint_property_nb_bedrooms"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_title"
-                android:text="@string/hint_property_nb_bathrooms"
-                android:drawableTop="@drawable/ic_nb_bathrooms_black"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textSize="@dimen/text_size_body"
+                    android:textColor="@android:color/black"
+                    android:text="@string/hint_property_nb_bathrooms"
+                    android:drawableStart="@drawable/ic_nb_bathrooms_black"/>
+
+                <TextView
+                    android:id="@+id/fragment_property_detail_nb_bathrooms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textSize="@dimen/text_size_important"
+                    android:text="@string/hint_property_nb_bathrooms"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/fragment_property_detail_build_date"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/components_margin_medium"
-            android:layout_gravity="center_horizontal"
-            android:textSize="@dimen/text_size_title"
-            android:text="@string/hint_property_build_date" />
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/text_size_body"
+                android:textColor="@android:color/black"
+                android:text="@string/hint_property_build_date"
+                android:drawableStart="@drawable/ic_date_black"/>
+
+            <TextView
+                android:id="@+id/fragment_property_detail_build_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/text_size_important"
+                android:text="@string/hint_property_build_date"/>
+
+        </LinearLayout>
 
         <!--Extras-->
 
@@ -178,6 +259,14 @@
             android:textSize="@dimen/text_size_body"
             android:text="@string/label_property_location"/>
 
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/fragment_property_detail_map"
+            android:layout_width="@dimen/picture_size_medium"
+            android:layout_height="@dimen/picture_size_medium"
+            android:layout_margin="@dimen/components_margin_medium"
+            android:layout_gravity="center_horizontal"
+            map:liteMode="true"/>
+
         <!--Other information-->
 
         <TextView
@@ -198,23 +287,22 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_margin="@dimen/components_margin_medium"
                 android:orientation="vertical"
                 android:gravity="center">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:gravity="center_horizontal"
                     android:textSize="@dimen/text_size_body"
-                    android:text="@string/hint_property_realtor"/>
+                    android:textColor="@android:color/black"
+                    android:text="@string/hint_property_realtor"
+                    android:drawableStart="@drawable/ic_realtor_black"/>
 
                 <TextView
                     android:id="@+id/fragment_property_detail_realtor"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:gravity="center_horizontal"
                     android:textSize="@dimen/text_size_title"
                     android:text="@string/hint_property_realtor"/>
 
@@ -224,23 +312,22 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_margin="@dimen/components_margin_medium"
                 android:orientation="vertical"
                 android:gravity="center">
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/components_margin_medium"
                     android:textSize="@dimen/text_size_body"
-                    android:gravity="center_horizontal"
-                    android:text="@string/hint_property_ad_date"/>
+                    android:textColor="@android:color/black"
+                    android:text="@string/hint_property_ad_date"
+                    android:drawableStart="@drawable/ic_date_black"/>
 
                 <TextView
                     android:id="@+id/fragment_property_detail_ad_date"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:gravity="center_horizontal"
                     android:textSize="@dimen/text_size_title"
                     android:text="@string/hint_property_ad_date"/>
 
@@ -248,64 +335,15 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/fragment_property_detail_sold"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:gravity="center_horizontal"
-                    android:textSize="@dimen/text_size_body"
-                    android:text="@string/label_property_sold"/>
-
-                <TextView
-                    android:id="@+id/fragment_property_detail_sold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:gravity="center_horizontal"
-                    android:textSize="@dimen/text_size_title"
-                    android:text="@string/label_property_sold"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:textSize="@dimen/text_size_body"
-                    android:gravity="center_horizontal"
-                    android:text="@string/hint_property_sale_date"/>
-
-                <TextView
-                    android:id="@+id/fragment_property_detail_sale_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:gravity="center_horizontal"
-                    android:textSize="@dimen/text_size_title"
-                    android:text="@string/hint_property_sale_date"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
+                android:layout_margin="@dimen/components_margin_medium"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/text_size_important"
+                android:textColor="@android:color/holo_red_dark"
+                android:text="@string/label_property_sold"/>
 
     </LinearLayout>
 

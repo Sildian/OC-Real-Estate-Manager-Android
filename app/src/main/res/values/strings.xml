@@ -22,6 +22,7 @@
     <string name="label_property_location">Location</string>
     <string name="label_property_other_information">Other information</string>
     <string name="label_property_sold">Sold</string>
+    <string name="label_property_sold_on">Sold on</string>
 
     <!--Text hints-->
     <string name="hint_property_ad_title">Ad title</string>
@@ -50,11 +51,10 @@
     <string name="content_description_button">Button</string>
 
     <!--Others-->
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
     <string name="currency">$</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

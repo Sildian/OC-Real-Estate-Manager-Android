@@ -8,6 +8,6 @@
     android:gravity="center_vertical"
     android:textSize="@dimen/text_size_body"
     android:text="@string/label_property_extras"
-    android:drawableStart="@drawable/ic_check_blue">
+    android:drawableStart="@drawable/ic_check_black">
 
 </TextView>
