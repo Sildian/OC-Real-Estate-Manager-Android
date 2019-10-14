@@ -1,6 +1,9 @@
 package com.openclassrooms.realestatemanager.view.fragments
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.ResultReceiver
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.utils.LocationService
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.recyclerviews.CheckedTextAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
@@ -63,7 +67,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     private val soldText by lazy {layout.fragment_property_detail_sold}
 
     /*********************************************************************************************
-     * Map management
+     * Map
      ********************************************************************************************/
 
     private lateinit var map:GoogleMap
@@ -137,14 +141,16 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     override fun onMapReady(map: GoogleMap?) {
         if(map!=null){
             this.map=map
-
-            //TEST
-
-            val location= LatLng(-34.0, 151.0)
-            this.map.addMarker(MarkerOptions().position(location))
-            this.map.moveCamera(CameraUpdateFactory.newLatLng(location))
-
         }
+    }
+
+    /*********************************************************************************************
+     * Map management
+     ********************************************************************************************/
+
+    private fun updateMap(location:LatLng){
+        this.map.addMarker(MarkerOptions().position(location))
+        this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
     }
 
     /*********************************************************************************************
@@ -169,7 +175,8 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
             this.nbBathroomsText.setText(property.nbBathrooms.toString())
             this.buildDateText.setText(Utils.getStringFromDate(property.buildDate))
             if(property.id!=null) loadPropertyExtras(property.id!!.toInt())
-            this.locationText.setText(property.getFullAddress())
+            this.locationText.setText(property.getFullAddressToDisplay())
+            startLocationService(property.getFullAddressToFetchLocation())
             loadRealtor(property.realtorId.toString())
             this.adDateText.setText(Utils.getStringFromDate(property.adDate))
             updateSoldStatus(property.sold, property.saleDate)
@@ -219,6 +226,33 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
         }
         else{
             this.soldText.visibility=View.GONE
+        }
+    }
+
+    /*********************************************************************************************
+     * Intents management
+     ********************************************************************************************/
+
+    private fun startLocationService(address:String){
+        val locationServiceIntent= Intent(activity, LocationService::class.java)
+        locationServiceIntent.putExtra(LocationService.KEY_BUNDLE_ADDRESS, address)
+        locationServiceIntent.putExtra(LocationService.KEY_BUNDLE_RECEIVER, LocationResultReceiver(Handler()))
+        activity!!.startService(locationServiceIntent)
+    }
+
+    /*********************************************************************************************
+     * This internal class receives results from LocationService
+     ********************************************************************************************/
+
+    internal inner class LocationResultReceiver(handler: Handler) : ResultReceiver(handler) {
+
+        override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
+
+            if(resultCode==LocationService.RESULT_SUCCESS&&resultData!=null){
+                val latitude=resultData.getDouble(LocationService.KEY_BUNDLE_LATITUDE)
+                val longitude=resultData.getDouble(LocationService.KEY_BUNDLE_LONGITUDE)
+                updateMap(LatLng(latitude, longitude))
+            }
         }
     }
 }

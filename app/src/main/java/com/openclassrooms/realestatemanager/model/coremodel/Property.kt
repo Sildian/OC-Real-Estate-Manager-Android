@@ -35,7 +35,11 @@ data class Property(
         var sold:Boolean=false
         )
 {
-        fun getFullAddress():String{
+        fun getFullAddressToDisplay():String{
                 return this.address+"\n"+this.postalCode+" "+this.city+"\n"+this.country
+        }
+
+        fun getFullAddressToFetchLocation():String{
+                return this.address+" "+this.postalCode+" "+this.city+" "+this.country
         }
 }
