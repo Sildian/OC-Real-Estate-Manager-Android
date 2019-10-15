@@ -29,7 +29,7 @@ data class Property(
         var postalCode:String?=null,
         var city:String?=null,
         var country:String?=null,
-        var buildDate:Date?=null,
+        var buildYear: String? =null,
         var adDate: Date?=null,
         var saleDate:Date?=null,
         var sold:Boolean=false

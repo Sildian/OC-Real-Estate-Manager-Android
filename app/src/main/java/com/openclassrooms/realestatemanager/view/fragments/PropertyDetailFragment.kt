@@ -58,7 +58,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     private val nbRoomsText by lazy {layout.fragment_property_detail_nb_rooms}
     private val nbBedroomsText by lazy {layout.fragment_property_detail_nb_bedrooms}
     private val nbBathroomsText by lazy {layout.fragment_property_detail_nb_bathrooms}
-    private val buildDateText by lazy {layout.fragment_property_detail_build_date}
+    private val buildYearText by lazy {layout.fragment_property_detail_build_date}
     private val ExtrasRecyclerView by lazy {layout.fragment_property_detail_extras}
     private val locationText by lazy {layout.fragment_property_detail_location}
     private val mapView by lazy {layout.fragment_property_detail_map}
@@ -110,12 +110,14 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     }
 
     private fun initializeMapView(savedInstanceState: Bundle?){
-        var mapViewBundle:Bundle?=null
-        if(savedInstanceState!=null){
-            mapViewBundle=savedInstanceState.getBundle(KEY_BUNDLE_MAP_VIEW)
+        if(Utils.isInternetAvailable(activity!!)) {
+            var mapViewBundle: Bundle? = null
+            if (savedInstanceState != null) {
+                mapViewBundle = savedInstanceState.getBundle(KEY_BUNDLE_MAP_VIEW)
+            }
+            this.mapView.onCreate(mapViewBundle)
+            this.mapView.getMapAsync(this)
         }
-        this.mapView.onCreate(mapViewBundle)
-        this.mapView.getMapAsync(this)
     }
 
     /*********************************************************************************************
@@ -135,7 +137,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     }
 
     /*********************************************************************************************
-     * Listens GoogleMap events
+     * Map management
      ********************************************************************************************/
 
     override fun onMapReady(map: GoogleMap?) {
@@ -144,13 +146,9 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
         }
     }
 
-    /*********************************************************************************************
-     * Map management
-     ********************************************************************************************/
-
     private fun updateMap(location:LatLng){
         this.map.addMarker(MarkerOptions().position(location))
-        this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+        this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 13f))
     }
 
     /*********************************************************************************************
@@ -173,7 +171,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
             this.nbRoomsText.setText(property.nbRooms.toString())
             this.nbBedroomsText.setText(property.nbBedrooms.toString())
             this.nbBathroomsText.setText(property.nbBathrooms.toString())
-            this.buildDateText.setText(Utils.getStringFromDate(property.buildDate))
+            this.buildYearText.setText(property.buildYear)
             if(property.id!=null) loadPropertyExtras(property.id!!.toInt())
             this.locationText.setText(property.getFullAddressToDisplay())
             startLocationService(property.getFullAddressToFetchLocation())

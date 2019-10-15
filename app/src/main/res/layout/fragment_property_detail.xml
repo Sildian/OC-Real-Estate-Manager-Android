@@ -25,17 +25,19 @@
 
         <TextView
             android:id="@+id/fragment_property_detail_type"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/components_margin_medium"
+            android:gravity="center_horizontal"
             android:textSize="@dimen/text_size_body"
             android:text="@string/hint_property_type"/>
 
         <TextView
             android:id="@+id/fragment_property_detail_price"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/components_margin_medium"
+            android:gravity="center_horizontal"
             android:textSize="@dimen/text_size_important"
             android:text="@string/hint_property_price"/>
 
@@ -238,7 +240,8 @@
             android:id="@+id/fragment_property_detail_extras"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/components_margin_medium"/>
+            android:layout_margin="@dimen/components_margin_medium"
+            android:isScrollContainer="false"/>
 
         <!--Location-->
 

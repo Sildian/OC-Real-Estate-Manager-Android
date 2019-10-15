@@ -220,15 +220,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_property_build_date"
-                style="@style/TextInputLayoutThemeDropdownMenu"
                 android:layout_margin="@dimen/components_margin_medium">
 
-                <AutoCompleteTextView
-                    android:id="@+id/fragment_property_edit_build_date"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fragment_property_edit_build_year"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_body"
-                    android:clickable="false"/>
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:textSize="@dimen/text_size_body" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

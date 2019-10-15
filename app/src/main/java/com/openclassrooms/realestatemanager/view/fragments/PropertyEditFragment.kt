@@ -56,7 +56,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     private val nbRoomsText by lazy {layout.fragment_property_edit_nb_rooms}
     private val nbBedroomsText by lazy {layout.fragment_property_edit_nb_bedrooms}
     private val nbBathroomsText by lazy {layout.fragment_property_edit_nb_bathrooms}
-    private val buildDateText by lazy {layout.fragment_property_edit_build_date}
+    private val buildYearText by lazy {layout.fragment_property_edit_build_year}
     private val extrasChipGroup by lazy {layout.fragment_property_edit_extras}
     private val extrasChips=ArrayList<Chip>()
     private val addressText by lazy {layout.fragment_property_edit_address}
@@ -83,7 +83,6 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         initializePicturesRecyclerView()
         initializeExtrasChipGroup()
         initializeRealtorTextDropdown()
-        initializeBuildDateText()
         initializeAdDateText()
         initializeSaleDateText()
         initializeButtons()
@@ -128,10 +127,6 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         this.realtorViewModel.getAllRealtors().observe(this, Observer{
             initializeTextDropDown(this.realtorTextDropDown, R.layout.dropdown_menu_standard, it)
         })
-    }
-
-    private fun initializeBuildDateText(){
-        initializeDateText(this.buildDateText)
     }
 
     private fun initializeAdDateText(){
@@ -195,7 +190,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         property.nbRooms=Integer.parseInt(this.nbRoomsText.text.toString())
         property.nbBedrooms=Integer.parseInt(this.nbBedroomsText.text.toString())
         property.nbBathrooms=Integer.parseInt(this.nbBathroomsText.text.toString())
-        property.buildDate= Utils.getDateFromString(this.buildDateText.text.toString())
+        property.buildYear= this.buildYearText.text.toString()
         property.address=this.addressText.text.toString()
         property.postalCode=this.postalCodeText.text.toString()
         property.city=this.cityText.text.toString()
@@ -240,7 +235,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             this.nbRoomsText.setText(property.nbRooms.toString())
             this.nbBedroomsText.setText(property.nbBedrooms.toString())
             this.nbBathroomsText.setText(property.nbBathrooms.toString())
-            this.buildDateText.setText(Utils.getStringFromDate(property.buildDate))
+            this.buildYearText.setText(property.buildYear)
             loadPropertyExtras(property.id!!)
             this.addressText.setText(property.address)
             this.postalCodeText.setText(property.postalCode)

@@ -34,7 +34,7 @@
     <string name="hint_property_nb_rooms">Rooms</string>
     <string name="hint_property_nb_bedrooms">Bedrooms</string>
     <string name="hint_property_nb_bathrooms">Bathrooms</string>
-    <string name="hint_property_build_date">Build date</string>
+    <string name="hint_property_build_date">Build year</string>
     <string name="hint_property_address">Address</string>
     <string name="hint_property_postal_code">Postal code</string>
     <string name="hint_property_city">City</string>
