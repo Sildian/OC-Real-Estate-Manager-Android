@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.view.dialogs.SettingsBottomSheetFragment
 import com.openclassrooms.realestatemanager.view.fragments.ListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -29,6 +30,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private lateinit var navigationFragment: Fragment
     private val addButton by lazy {activity_main_button_add}
     private val bottomNavigationBar by lazy {activity_main_navigation_bottom}
+    private lateinit var settingsBottomSheetFragment:SettingsBottomSheetFragment
 
     /*********************************************************************************************
      * Life cycle
@@ -53,12 +55,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        //TODO Add actions
 
         if(item!=null&&item.groupId==R.id.menu_toolbar_group){
 
             when(item.itemId){
-                R.id.menu_toolbar_search-> Log.d("TAG_MENU", "Search")
+                R.id.menu_toolbar_search-> showSettingsBottomSheetFragment()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -105,6 +106,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         this.navigationFragment= ListFragment()
         supportFragmentManager.beginTransaction().replace(
                 R.id.activity_main_fragment_navigation, this.navigationFragment).commit()
+    }
+
+    private fun showSettingsBottomSheetFragment(){
+        this.settingsBottomSheetFragment= SettingsBottomSheetFragment()
+        this.settingsBottomSheetFragment.show(supportFragmentManager, "settingsBottomSheetFragment")
     }
 
     /*********************************************************************************************

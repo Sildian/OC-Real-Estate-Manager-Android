@@ -9,6 +9,7 @@ import org.junit.After
 import org.junit.Rule
 import androidx.room.Room
 import com.openclassrooms.realestatemanager.model.coremodel.*
+import kotlin.math.min
 
 class SQLiteDatabaseTest{
 
@@ -56,6 +57,164 @@ class SQLiteDatabaseTest{
         assertEquals(1000000, property.price)
     }
 
+    @Test
+    fun given_sortByPrice_when_generatePropertyQuery_then_checkResult(){
+
+        val p1=Property(adTitle="House", price=320000, size=90)
+        val p2=Property(adTitle="Small flat", price=80000, size=30)
+        val p3=Property(adTitle="Beautiful flat", price=250000, size=60)
+        this.database.propertyDAO.insertProperty(p1)
+        this.database.propertyDAO.insertProperty(p2)
+        this.database.propertyDAO.insertProperty(p3)
+
+        val orderCriteria="price"
+        val orderDesc=false
+        val properties=LiveDataTestUtil.getValue(
+                this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
+                        orderCriteria=orderCriteria, orderDesc=orderDesc)))
+
+        assertEquals(3, properties.size)
+        assertEquals("Small flat", properties[0].adTitle)
+    }
+
+    @Test
+    fun given_maxPriceMinSizeMaxSize_when_generatePropertyQuery_then_checkResult(){
+
+        val p1=Property(adTitle="Small flat", price=80000, size=30)
+        val p2=Property(adTitle="Beautiful flat", price=250000, size=60)
+        val p3=Property(adTitle="House", price=320000, size=90)
+        this.database.propertyDAO.insertProperty(p1)
+        this.database.propertyDAO.insertProperty(p2)
+        this.database.propertyDAO.insertProperty(p3)
+
+        val maxPrice="300000"
+        val minSize="50"
+        val maxSize="100"
+        val properties=LiveDataTestUtil.getValue(
+                this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
+                        maxPrice=maxPrice, minSize=minSize, maxSize=maxSize)))
+
+        assertEquals(1, properties.size)
+        assertEquals("Beautiful flat", properties[0].adTitle)
+    }
+
+    @Test
+    fun given_typeIdsMinNbRooms_when_generatePropertyQuery_then_checkResult(){
+
+        val type1=PropertyType(name="House")
+        val type2=PropertyType(name="Condo")
+        val type3=PropertyType(name="Town home")
+        this.database.propertyTypeDAO.insertPropertyType(type1)
+        this.database.propertyTypeDAO.insertPropertyType(type2)
+        this.database.propertyTypeDAO.insertPropertyType(type3)
+
+        val p1=Property(adTitle="Small flat", typeId=2, nbRooms=2)
+        val p2=Property(adTitle="Beautiful flat", typeId=3, nbRooms=3)
+        val p3=Property(adTitle="House", typeId=1, nbRooms=5)
+        this.database.propertyDAO.insertProperty(p1)
+        this.database.propertyDAO.insertProperty(p2)
+        this.database.propertyDAO.insertProperty(p3)
+
+        val typeIds=listOf("1", "3")
+        val minNbRooms="3"
+        val properties=LiveDataTestUtil.getValue(
+                this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
+                        typeIds=typeIds, minNbRooms = minNbRooms)))
+
+        assertEquals(2, properties.size)
+        assertEquals("Beautiful flat", properties[0].adTitle)
+        assertEquals("House", properties[1].adTitle)
+    }
+
+    @Test
+    fun given_realtorIdSoldStatus_when_generatePropertyQuery_then_checkResult(){
+
+        val realtor1=Realtor("wedgeAntilles", "Wedge Antilles")
+        val realtor2=Realtor("amiralAckbar", "Amiral Ackbar")
+        this.database.realtorDAO.insertRealtor(realtor1)
+        this.database.realtorDAO.insertRealtor(realtor2)
+
+        val p1=Property(adTitle="Small flat", realtorId="wedgeAntilles", sold=false)
+        val p2=Property(adTitle="Beautiful flat", realtorId="amiralAckbar", sold=true)
+        val p3=Property(adTitle="House", realtorId="wedgeAntilles", sold=true)
+        this.database.propertyDAO.insertProperty(p1)
+        this.database.propertyDAO.insertProperty(p2)
+        this.database.propertyDAO.insertProperty(p3)
+
+        val realtorId="wedgeAntilles"
+        val sold=false
+
+        val properties=LiveDataTestUtil.getValue(
+                this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
+                        realtorId=realtorId, sold=sold)))
+
+        assertEquals(1, properties.size)
+        assertEquals("Small flat", properties[0].adTitle)
+    }
+
+    @Test
+    fun given_realtorIdPostalCode_when_generatePropertyQuery_then_checkResult(){
+
+        val realtor1=Realtor("wedgeAntilles", "Wedge Antilles")
+        val realtor2=Realtor("amiralAckbar", "Amiral Ackbar")
+        this.database.realtorDAO.insertRealtor(realtor1)
+        this.database.realtorDAO.insertRealtor(realtor2)
+
+        val p1=Property(adTitle="Small flat", realtorId="wedgeAntilles", postalCode = "03400")
+        val p2=Property(adTitle="Beautiful flat", realtorId="amiralAckbar", postalCode="59500")
+        val p3=Property(adTitle="House", realtorId="wedgeAntilles", postalCode = "59780")
+        this.database.propertyDAO.insertProperty(p1)
+        this.database.propertyDAO.insertProperty(p2)
+        this.database.propertyDAO.insertProperty(p3)
+
+        val postalCode="59"
+        val realtorId="wedgeAntilles"
+
+        val properties=LiveDataTestUtil.getValue(
+                this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
+                        postalCode=postalCode, realtorId=realtorId)))
+
+        assertEquals(1, properties.size)
+        assertEquals("House", properties[0].adTitle)
+    }
+
+    @Test
+    fun given_extrasIds_when_generatePropertyQuery_then_checkResult(){
+
+        val extra1=Extra(name="Nearby supermarket")
+        val extra2=Extra(name="Garage")
+        val extra3=Extra(name="Swimming pool")
+        this.database.extraDAO.insertExtra(extra1)
+        this.database.extraDAO.insertExtra(extra2)
+        this.database.extraDAO.insertExtra(extra3)
+
+        val p1=Property(adTitle="Small flat")
+        val p2=Property(adTitle="Beautiful flat")
+        val p3=Property(adTitle="House")
+        this.database.propertyDAO.insertProperty(p1)
+        this.database.propertyDAO.insertProperty(p2)
+        this.database.propertyDAO.insertProperty(p3)
+
+        val p1Extra1=ExtrasPerProperty(1, 1)
+        val p2Extra3=ExtrasPerProperty(2, 2)
+        val p3Extra2=ExtrasPerProperty(3, 2)
+        val p3Extra3=ExtrasPerProperty(3, 3)
+        this.database.extrasPerPropertyDAO.insertPropertyExtra(p1Extra1)
+        this.database.extrasPerPropertyDAO.insertPropertyExtra(p2Extra3)
+        this.database.extrasPerPropertyDAO.insertPropertyExtra(p3Extra2)
+        this.database.extrasPerPropertyDAO.insertPropertyExtra(p3Extra3)
+
+        val extrasIds=listOf("1", "3")
+
+        val properties=LiveDataTestUtil.getValue(
+                this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
+                        extrasIds = extrasIds)))
+
+        assertEquals(2, properties.size)
+        assertEquals("Small flat", properties[0].adTitle)
+        assertEquals("House", properties[1].adTitle)
+    }
+
     /**Realtor**/
 
     @Test
@@ -83,7 +242,7 @@ class SQLiteDatabaseTest{
         this.database.propertyTypeDAO.insertPropertyType(house)
         this.database.propertyTypeDAO.insertPropertyType(condo)
         val propertyTypes=LiveDataTestUtil.getValue(this.database.propertyTypeDAO.getAllPropertyTypes())
-        assertTrue(propertyTypes.size==2)
+        assertEquals(2, propertyTypes.size)
         assertEquals("House", propertyTypes[0].name)
         assertEquals("Condo", propertyTypes[1].name)
         assertEquals(1, propertyTypes[0].id)
@@ -109,7 +268,7 @@ class SQLiteDatabaseTest{
         this.database.extraDAO.insertExtra(nearSchool)
         this.database.extraDAO.insertExtra(garage)
         val extras=LiveDataTestUtil.getValue(this.database.extraDAO.getAllExtras())
-        assertTrue(extras.size==2)
+        assertEquals(2, extras.size)
         assertEquals("Near school", extras[0].name)
         assertEquals("Garage", extras[1].name)
         assertEquals(1, extras[0].id)
@@ -139,7 +298,7 @@ class SQLiteDatabaseTest{
         this.database.extrasPerPropertyDAO.insertPropertyExtra(ExtrasPerProperty(1, 1))
         this.database.extrasPerPropertyDAO.insertPropertyExtra(ExtrasPerProperty(1, 2))
         val extras=LiveDataTestUtil.getValue(this.database.extrasPerPropertyDAO.getPropertyExtras(1))
-        assertTrue(extras.size==2)
+        assertEquals(2, extras.size)
     }
 
     @Test
