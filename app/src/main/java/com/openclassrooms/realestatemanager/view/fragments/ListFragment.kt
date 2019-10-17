@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.model.sqlite.SQLQueryGenerator
 import com.openclassrooms.realestatemanager.view.activities.MainActivity
 import com.openclassrooms.realestatemanager.view.recyclerviews.PropertyAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PropertyViewHolder
@@ -62,12 +63,9 @@ class ListFragment : Fragment(), PropertyViewHolder.Listener {
     }
 
     private fun initializePropertiesRecyclerView(){
-        this.propertyViewModel.getAllProperties().observe(this, Observer {
-            this.propertyAdapter= PropertyAdapter(it, this)
-            this.propertiesRecyclerView.adapter=this.propertyAdapter
-            this.propertiesRecyclerView.layoutManager=
-                    LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        })
+        this.propertiesRecyclerView.layoutManager=
+                LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        runSimplePropertyQuery()
     }
 
     /*********************************************************************************************
@@ -76,5 +74,44 @@ class ListFragment : Fragment(), PropertyViewHolder.Listener {
 
     override fun onPropertyClick(position: Int, propertyId:Int) {
         (activity as MainActivity).startPropertyDetailActivity(propertyId)
+    }
+
+    /*********************************************************************************************
+     * Run queries to get and show properties
+     ********************************************************************************************/
+
+    fun runSimplePropertyQuery(){
+
+        this.propertyViewModel.getAllProperties().observe(this, Observer {
+            this.propertyAdapter= PropertyAdapter(it, this)
+            this.propertiesRecyclerView.adapter=this.propertyAdapter
+        })
+    }
+
+    fun runComplexPropertyQuery(minPrice:String?, maxPrice:String?,
+                                typeIds:List<String>,
+                                minSize:String?, maxSize:String?,
+                                minNbRooms:String?, maxNbRooms:String?,
+                                extrasIds:List<String>,
+                                postalCode:String?, city:String?,
+                                sold:Boolean?){
+
+        if(this.propertyViewModel.getAllProperties().hasObservers()) {
+            this.propertyViewModel.getAllProperties().removeObservers(this)
+        }
+
+        this.propertyViewModel.getProperties(SQLQueryGenerator.generatePropertyQuery(
+                minPrice=minPrice, maxPrice=maxPrice,
+                typeIds = typeIds,
+                minSize=minSize, maxSize=maxSize,
+                minNbRooms=minNbRooms, maxNbRooms=maxNbRooms,
+                extrasIds=extrasIds,
+                postalCode=postalCode, city=city,
+                sold=sold))
+                .observe(this, Observer {
+
+            this.propertyAdapter= PropertyAdapter(it, this)
+            this.propertiesRecyclerView.adapter=this.propertyAdapter
+        })
     }
 }

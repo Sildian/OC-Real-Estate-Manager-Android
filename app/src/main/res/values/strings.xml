@@ -23,6 +23,8 @@
     <string name="label_property_other_information">Other information</string>
     <string name="label_property_sold">Sold</string>
     <string name="label_property_sold_on">Sold on</string>
+    <string name="label_property_available">Available</string>
+    <string name="label_property_all">All</string>
 
     <!--Text hints-->
     <string name="hint_property_ad_title">Ad title</string>
@@ -42,6 +44,8 @@
     <string name="hint_property_realtor">Realtor</string>
     <string name="hint_property_ad_date">Ad date</string>
     <string name="hint_property_sale_date">Sale date</string>
+    <string name="hint_min">Min</string>
+    <string name="hint_max">Max</string>
 
     <!--Toasts / Snackbars-->
     <string name="toast_photo_unavailable">Your device cannot take photos</string>

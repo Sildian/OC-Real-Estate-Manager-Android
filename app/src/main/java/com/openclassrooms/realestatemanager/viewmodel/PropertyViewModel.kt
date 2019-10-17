@@ -2,16 +2,13 @@ package com.openclassrooms.realestatemanager.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.sqlite.db.SupportSQLiteQuery
 import com.openclassrooms.realestatemanager.model.coremodel.ExtrasPerProperty
 import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.sqlite.repositories.ExtrasPerPropertyRepository
 import com.openclassrooms.realestatemanager.model.sqlite.repositories.PropertyRepository
-import com.openclassrooms.realestatemanager.model.sqlite.repositories.PropertyTypeRepository
-import com.openclassrooms.realestatemanager.model.sqlite.repositories.RealtorRepository
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import java.util.concurrent.Callable
 
 
@@ -31,6 +28,8 @@ class PropertyViewModel (
     fun getAllProperties(): LiveData<List<Property>> =this.propertyRepository.getAllProperties()
 
     fun getProperty(id:Int): LiveData<Property> =this.propertyRepository.getProperty(id)
+
+    fun getProperties(query:SupportSQLiteQuery) = this.propertyRepository.getProperties(query)
 
     fun insertProperty(property:Property):Long{
         val executorService= Executors.newSingleThreadExecutor()

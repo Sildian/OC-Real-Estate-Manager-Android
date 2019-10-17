@@ -127,4 +127,23 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         val propertyEditIntent= Intent(this, PropertyEditActivity::class.java)
         startActivity(propertyEditIntent)
     }
+
+    /*********************************************************************************************
+     * Run queries to get and show properties
+     ********************************************************************************************/
+
+    fun runComplexPropertyQuery(minPrice:String?, maxPrice:String?,
+                                typeIds:List<String>,
+                                minSize:String?, maxSize:String?,
+                                minNbRooms:String?, maxNbRooms:String?,
+                                extrasIds:List<String>,
+                                postalCode:String?, city:String?,
+                                sold:Boolean?){
+
+        //TODO change this, create a parent Fragment
+
+        (this.navigationFragment as ListFragment).runComplexPropertyQuery(
+                minPrice, maxPrice, typeIds, minSize, maxSize, minNbRooms, maxNbRooms,
+                extrasIds, postalCode, city, sold)
+    }
 }

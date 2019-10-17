@@ -22,6 +22,8 @@
     <string name="label_property_other_information">Autres informations</string>
     <string name="label_property_sold">Vendu</string>
     <string name="label_property_sold_on">Vendu le</string>
+    <string name="label_property_available">Dispo</string>
+    <string name="label_property_all">Tous</string>
 
     <!--Text hints-->
     <string name="hint_property_ad_title">Titre de l\'annonce</string>
@@ -41,6 +43,8 @@
     <string name="hint_property_realtor">Agent</string>
     <string name="hint_property_ad_date">Date annonce</string>
     <string name="hint_property_sale_date">Date vente</string>
+    <string name="hint_min">Min</string>
+    <string name="hint_max">Max</string>
 
     <!--Toasts / Snackbars-->
     <string name="toast_photo_unavailable">Votre appareil ne peut pas prendre de photos</string>
