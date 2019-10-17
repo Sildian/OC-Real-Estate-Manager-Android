@@ -136,14 +136,15 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                                 typeIds:List<String>,
                                 minSize:String?, maxSize:String?,
                                 minNbRooms:String?, maxNbRooms:String?,
+                                minBuildYear:String?, maxBuildYear:String?,
                                 extrasIds:List<String>,
-                                postalCode:String?, city:String?,
+                                postalCode:String?, city:String?, country:String?,
                                 sold:Boolean?){
 
         //TODO change this, create a parent Fragment
 
         (this.navigationFragment as ListFragment).runComplexPropertyQuery(
                 minPrice, maxPrice, typeIds, minSize, maxSize, minNbRooms, maxNbRooms,
-                extrasIds, postalCode, city, sold)
+                minBuildYear, maxBuildYear, extrasIds, postalCode, city, country, sold)
     }
 }

@@ -18,15 +18,17 @@ object SQLQueryGenerator {
             minNbRooms:String?=null, maxNbRooms:String?=null,
             minNbBedrooms:String?=null, maxNbBedrooms:String?=null,
             minNbBathrooms:String?=null, maxNbBathrooms:String?=null,
+            minBuildYear:String?=null, maxBuildYear:String?=null,
             extrasIds:List<String> = emptyList(),
-            postalCode:String?=null, city:String?=null,
+            postalCode:String?=null, city:String?=null, country:String?=null,
             realtorId:String?=null, sold:Boolean?=null,
             orderCriteria:String?=null, orderDesc:Boolean?=null)
             : SupportSQLiteQuery {
 
         val query = generatePropertyQueryString(minPrice, maxPrice, typeIds, minSize, maxSize,
                 minNbRooms, maxNbRooms, minNbBedrooms, maxNbBedrooms, minNbBathrooms, maxNbBathrooms,
-                extrasIds, postalCode, city, realtorId, sold, orderCriteria, orderDesc)
+                minBuildYear, maxBuildYear, extrasIds, postalCode, city, country, realtorId, sold,
+                orderCriteria, orderDesc)
 
         return SimpleSQLiteQuery(query)
     }
@@ -40,8 +42,9 @@ object SQLQueryGenerator {
             minNbRooms:String?=null, maxNbRooms:String?=null,
             minNbBedrooms:String?=null, maxNbBedrooms:String?=null,
             minNbBathrooms:String?=null, maxNbBathrooms:String?=null,
+            minbuildYear:String?=null, maxBuildYear:String?=null,
             extrasIds:List<String> =emptyList(),
-            postalCode:String?=null, city:String?=null,
+            postalCode:String?=null, city:String?=null, country:String?=null,
             realtorId:String?=null, sold:Boolean?=null,
             orderCriteria:String?=null, orderDesc:Boolean?=null)
             :String{
@@ -55,9 +58,11 @@ object SQLQueryGenerator {
         tempFilters.add(generateRangeFilter("nbRooms", minNbRooms, maxNbRooms))
         tempFilters.add(generateRangeFilter("nbBedrooms", minNbBedrooms, maxNbBedrooms))
         tempFilters.add(generateRangeFilter("nbBathrooms", minNbBathrooms, maxNbBathrooms))
+        tempFilters.add(generateRangeFilter("buildYear", minbuildYear, maxBuildYear))
         tempFilters.add(generateListFilter("extraId", extrasIds))
         tempFilters.add(generateLikeFilter("postalCode", postalCode, false, true))
         tempFilters.add(generateSimpleFilter("city", city))
+        tempFilters.add(generateSimpleFilter("country", country))
         tempFilters.add(generateSimpleFilter("realtorId", realtorId))
         tempFilters.add(generateSimpleFilter("sold", sold))
         val filters=tempFilters.filter { it.isNotEmpty() }

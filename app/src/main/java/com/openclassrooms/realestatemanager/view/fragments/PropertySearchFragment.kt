@@ -34,6 +34,8 @@ class PropertySearchFragment : PropertyBaseFragment() {
     private val maxSizeText by lazy {layout.fragment_property_search_size_max}
     private val minNbRoomsText by lazy {layout.fragment_property_search_nb_rooms_min}
     private val maxNbRoomsText by lazy {layout.fragment_property_search_nb_rooms_max}
+    private val minBuildYearText by lazy {layout.fragment_property_search_build_date_min}
+    private val maxBuildYearText by lazy {layout.fragment_property_search_build_date_max}
     private val extrasChipGroup by lazy {layout.fragment_property_search_extras}
     private val extrasChips=ArrayList<Chip>()
     private val postalCodeText by lazy {layout.fragment_property_search_postal_code}
@@ -103,8 +105,9 @@ class PropertySearchFragment : PropertyBaseFragment() {
                     getTypeIdsFromTypesChips(),
                     this.minSizeText.text.toString(), this.maxSizeText.text.toString(),
                     this.minNbRoomsText.text.toString(), this.maxNbRoomsText.text.toString(),
+                    this.minBuildYearText.text.toString(), this.maxBuildYearText.text.toString(),
                     getExtrasIdsFromExtrasChips(),
-                    this.postalCodeText.text.toString(), this.cityText.text.toString(),
+                    this.postalCodeText.text.toString(), this.cityText.text.toString(), this.country.text.toString(),
                     getSoldStatusFromSoldRadioGroup()
                     )
 
