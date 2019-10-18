@@ -11,6 +11,8 @@ import android.widget.AutoCompleteTextView
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.openclassrooms.realestatemanager.model.coremodel.Extra
+import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
 import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.view.dialogs.DatePickerFragment
 import com.openclassrooms.realestatemanager.viewmodel.*
@@ -80,7 +82,7 @@ abstract class PropertyBaseFragment : Fragment() {
     }
 
     /*********************************************************************************************
-     * These methods allow to initialize complex UI components
+     * Complex UI components management
      ********************************************************************************************/
 
     /**Initializes a text including a dropDownMenu
@@ -92,8 +94,13 @@ abstract class PropertyBaseFragment : Fragment() {
     protected fun <T:Any> initializeTextDropDown(
             parentView: AutoCompleteTextView, childLayoutId:Int, data:List<T>){
 
+        /*Populates the dropDown menu with the data*/
+
         val adapter= ArrayAdapter<T>(context!!, childLayoutId, data)
         parentView.setAdapter(adapter)
+
+        /*When the user selects a data, stores this data as tag of the view*/
+
         parentView.setOnItemClickListener({ parent, view, position, id ->
             parentView.tag=adapter.getItem(position)
         })
@@ -136,5 +143,32 @@ abstract class PropertyBaseFragment : Fragment() {
             childViews.add(chip)
             parentView.addView(chip)
         }
+    }
+
+    /**Get item ids from chips. This works only when a core model class is set as tag in the chips
+     * @param chips : the list of chips
+     * @param modelClass : the model class included in the chip's tag
+     * @return a list of ids (Int?)
+     */
+
+    protected fun <T:Any> getIdsFromChips(chips:List<Chip>, modelClass:Class<T>):List<Int?>{
+
+        val list=arrayListOf<Int?>()
+
+        /*Populates the list with each id when the related chip is checked*/
+
+        for(chip in chips){
+            if(chip.isChecked){
+                when{
+
+                    modelClass.isAssignableFrom(PropertyType::class.java)->
+                        list.add((chip.tag as PropertyType).id)
+
+                    modelClass.isAssignableFrom(Extra::class.java)->
+                        list.add((chip.tag as Extra).id)
+                }
+            }
+        }
+        return list
     }
 }

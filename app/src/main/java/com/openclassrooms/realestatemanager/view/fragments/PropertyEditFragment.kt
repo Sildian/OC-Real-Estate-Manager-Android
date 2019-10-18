@@ -208,14 +208,15 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         }
         val propertyId=this.propertyId
         savePropertyExtras(propertyId!!.toInt())
+
         activity!!.finish()
     }
 
     private fun savePropertyExtras(propertyId:Int){
         this.propertyViewModel.deletePropertyExtra(propertyId)
-        for(chip in this.extrasChips){
-            if(chip.isChecked){
-                val extraId=(chip.tag as Extra).id!!.toInt()
+        val extrasIds=getIdsFromChips(this.extrasChips, Extra::class.java)
+        for(extraId in extrasIds){
+            if(extraId!=null) {
                 this.propertyViewModel.insertPropertyExtra(propertyId, extraId)
             }
         }
@@ -236,7 +237,6 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             this.nbBedroomsText.setText(property.nbBedrooms.toString())
             this.nbBathroomsText.setText(property.nbBathrooms.toString())
             this.buildYearText.setText(property.buildYear.toString())
-            loadPropertyExtras(property.id!!)
             this.addressText.setText(property.address)
             this.postalCodeText.setText(property.postalCode)
             this.cityText.setText(property.city)
@@ -248,6 +248,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             if (property.saleDate != null)
                 this.saleDateText.setText(Utils.getStringFromDate(property.saleDate))
         })
+
+        loadPropertyExtras(propertyId!!)
     }
 
     private fun loadPropertyType(typeId:Int){

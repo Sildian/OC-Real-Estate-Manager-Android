@@ -172,13 +172,14 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
             this.nbBedroomsText.setText(property.nbBedrooms.toString())
             this.nbBathroomsText.setText(property.nbBathrooms.toString())
             this.buildYearText.setText(property.buildYear.toString())
-            if(property.id!=null) loadPropertyExtras(property.id!!.toInt())
             this.locationText.setText(property.getFullAddressToDisplay())
             startLocationService(property.getFullAddressToFetchLocation())
             loadRealtor(property.realtorId.toString())
             this.adDateText.setText(Utils.getStringFromDate(property.adDate))
             updateSoldStatus(property.sold, property.saleDate)
         })
+
+        loadPropertyExtras(propertyId!!)
     }
 
     private fun loadPropertyType(typeId:Int){

@@ -1,15 +1,12 @@
 package com.openclassrooms.realestatemanager.view.fragments
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.lifecycle.Observer
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.coremodel.Extra
@@ -121,39 +118,23 @@ class PropertySearchFragment : PropertyBaseFragment() {
 
             (activity!! as MainActivity).runComplexPropertyQuery(
                     this.minPriceText.text.toString(), this.maxPriceText.text.toString(),
-                    getTypeIdsFromTypesChips(),
+                    getIdsFromChips(this.typesChips, PropertyType::class.java).map { it.toString() },
                     this.minSizeText.text.toString(), this.maxSizeText.text.toString(),
                     this.minNbRoomsText.text.toString(), this.maxNbRoomsText.text.toString(),
                     this.minBuildYearText.text.toString(), this.maxBuildYearText.text.toString(),
-                    getExtrasIdsFromExtrasChips(),
+                    getIdsFromChips(this.extrasChips, Extra::class.java).map { it.toString() },
                     this.postalCodeText.text.toString(), this.cityText.text.toString(), this.country.text.toString(),
-                    getDateFromDateTextDropDown(this.adDateTextDropDown),
-                    getSoldStatusFromSoldRadioGroup(), getDateFromDateTextDropDown(this.saleDateTextDropDown)
+                    getOffsetDateFromDateTextDropDown(this.adDateTextDropDown),
+                    getSoldStatusFromSoldRadioGroup(), getOffsetDateFromDateTextDropDown(this.saleDateTextDropDown)
                     )
 
             (parentFragment as SettingsBottomSheetFragment).dismiss()
         }
     }
 
-    private fun getTypeIdsFromTypesChips():List<String>{
-        val list=arrayListOf<String>()
-        for(chip in this.typesChips){
-            if(chip.isChecked){
-                list.add((chip.tag as PropertyType).id.toString())
-            }
-        }
-        return list
-    }
-
-    private fun getExtrasIdsFromExtrasChips():List<String>{
-        val list=arrayListOf<String>()
-        for(chip in this.extrasChips){
-            if(chip.isChecked){
-                list.add((chip.tag as Extra).id.toString())
-            }
-        }
-        return list
-    }
+    /*********************************************************************************************
+     * Gets special information to prepare the search query
+     ********************************************************************************************/
 
     private fun getSoldStatusFromSoldRadioGroup():Boolean?{
         when(soldRadioGroup.checkedRadioButtonId){
@@ -164,10 +145,12 @@ class PropertySearchFragment : PropertyBaseFragment() {
         return null
     }
 
-    private fun getDateFromDateTextDropDown(dateText:EditText):Date?{
+    private fun getOffsetDateFromDateTextDropDown(dateText:EditText):Date?{
 
         val actualDate= Date()
         var targetDate:Date?=null
+
+        /*Offsets the date depending on which item is selected in the dropDown menu*/
 
         if(!dateText.text.isNullOrEmpty()) {
 
