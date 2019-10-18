@@ -65,8 +65,10 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     private val countryText by lazy {layout.fragment_property_edit_country}
     private val realtorTextDropDown by lazy {layout.fragment_property_edit_realtor}
     private val adDateText by lazy {layout.fragment_property_edit_ad_date}
+    private val saleInfoLayout by lazy {layout.fragment_property_edit_sale_info}
     private val soldSwitch by lazy {layout.fragment_property_edit_sold}
     private val saleDateText by lazy {layout.fragment_property_edit_sale_date}
+    private val buttonsBarCardView by lazy {layout.fragment_property_edit_buttons_bar}
     private val cancelButton by lazy {layout.fragment_property_edit_button_cancel}
     private val saveButton by lazy {layout.fragment_property_edit_button_save}
 
@@ -84,7 +86,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         initializeExtrasChipGroup()
         initializeRealtorTextDropdown()
         initializeAdDateText()
-        initializeSaleDateText()
+        initializeSaleInfo()
         initializeButtons()
 
         /*If a property id exists, then loads the property's data*/
@@ -133,11 +135,19 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         initializeDateText(this.adDateText)
     }
 
-    private fun initializeSaleDateText(){
-        initializeDateText(this.saleDateText)
+    private fun initializeSaleInfo(){
+        if(this.propertyId==null){
+            this.saleInfoLayout.visibility=View.GONE
+        }else {
+            initializeDateText(this.saleDateText)
+        }
     }
 
     private fun initializeButtons(){
+
+        //TODO improve for tablet
+
+        this.buttonsBarCardView.visibility=View.GONE
         this.cancelButton.setOnClickListener { activity!!.finish() }
         this.saveButton.setOnClickListener { saveProperty() }
     }

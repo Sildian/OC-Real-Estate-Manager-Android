@@ -93,7 +93,8 @@
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorAccent"
                 android:text="@string/label_property_pictures"
-                android:drawableStart="@drawable/ic_picture_blue"/>
+                android:drawableStart="@drawable/ic_picture_blue"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/fragment_property_edit_pictures"
@@ -110,7 +111,8 @@
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorAccent"
                 android:text="@string/label_property_main_information"
-                android:drawableStart="@drawable/ic_property_blue"/>
+                android:drawableStart="@drawable/ic_property_blue"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -220,7 +222,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_property_build_date"
-                android:layout_margin="@dimen/components_margin_medium">
+                android:layout_margin="@dimen/components_margin_medium"
+                app:startIconDrawable="@drawable/ic_date_black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fragment_property_edit_build_year"
@@ -241,7 +244,8 @@
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorAccent"
                 android:text="@string/label_property_extras"
-                android:drawableStart="@drawable/ic_extras_blue"/>
+                android:drawableStart="@drawable/ic_extras_blue"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/fragment_property_edit_extras"
@@ -260,7 +264,8 @@
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorAccent"
                 android:text="@string/label_property_location"
-                android:drawableStart="@drawable/ic_location_blue"/>
+                android:drawableStart="@drawable/ic_location_blue"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -341,7 +346,8 @@
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorAccent"
                 android:text="@string/label_property_other_information"
-                android:drawableStart="@drawable/ic_info_blue"/>
+                android:drawableStart="@drawable/ic_info_blue"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -385,6 +391,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/fragment_property_edit_sale_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -438,25 +445,25 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/fragment_property_edit_button_cancel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/components_margin_medium"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="@string/button_cancel"
-            android:textSize="@dimen/text_size_body" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragment_property_edit_button_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_medium"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:text="@string/button_cancel"
+                android:textSize="@dimen/text_size_body" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/fragment_property_edit_button_save"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/components_margin_medium"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.Button"
-            android:text="@string/button_save"
-            android:textSize="@dimen/text_size_body" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragment_property_edit_button_save"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_medium"
+                android:layout_weight="1"
+                style="@style/Widget.MaterialComponents.Button"
+                android:text="@string/button_save"
+                android:textSize="@dimen/text_size_body" />
 
         </LinearLayout>
 

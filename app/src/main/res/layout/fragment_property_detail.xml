@@ -50,7 +50,8 @@
             android:textSize="@dimen/text_size_title"
             android:textColor="@color/colorAccent"
             android:text="@string/label_property_pictures"
-            android:drawableStart="@drawable/ic_picture_blue"/>
+            android:drawableStart="@drawable/ic_picture_blue"
+            android:drawablePadding="@dimen/components_margin_small"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_property_detail_pictures"
@@ -67,7 +68,8 @@
             android:textSize="@dimen/text_size_title"
             android:textColor="@color/colorAccent"
             android:text="@string/label_property_main_information"
-            android:drawableStart="@drawable/ic_property_blue"/>
+            android:drawableStart="@drawable/ic_property_blue"
+            android:drawablePadding="@dimen/components_margin_small"/>
 
         <TextView
             android:id="@+id/fragment_property_detail_description"
@@ -234,7 +236,8 @@
             android:textSize="@dimen/text_size_title"
             android:textColor="@color/colorAccent"
             android:text="@string/label_property_extras"
-            android:drawableStart="@drawable/ic_extras_blue"/>
+            android:drawableStart="@drawable/ic_extras_blue"
+            android:drawablePadding="@dimen/components_margin_small"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_property_detail_extras"
@@ -252,7 +255,8 @@
             android:textSize="@dimen/text_size_title"
             android:textColor="@color/colorAccent"
             android:text="@string/label_property_location"
-            android:drawableStart="@drawable/ic_location_blue"/>
+            android:drawableStart="@drawable/ic_location_blue"
+            android:drawablePadding="@dimen/components_margin_small"/>
 
         <TextView
             android:id="@+id/fragment_property_detail_location"
@@ -279,7 +283,8 @@
             android:textSize="@dimen/text_size_title"
             android:textColor="@color/colorAccent"
             android:text="@string/label_property_other_information"
-            android:drawableStart="@drawable/ic_info_blue"/>
+            android:drawableStart="@drawable/ic_info_blue"
+            android:drawablePadding="@dimen/components_margin_small"/>
 
         <LinearLayout
             android:layout_width="match_parent"

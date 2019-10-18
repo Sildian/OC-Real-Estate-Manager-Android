@@ -26,7 +26,8 @@
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
                 android:text="@string/hint_property_price"
-                android:drawableStart="@drawable/ic_currency_black"/>
+                android:drawableStart="@drawable/ic_currency_black"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
@@ -91,7 +92,8 @@
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
                 android:text="@string/hint_property_size"
-                android:drawableStart="@drawable/ic_size_black"/>
+                android:drawableStart="@drawable/ic_size_black"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
@@ -141,7 +143,8 @@
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
                 android:text="@string/hint_property_nb_rooms"
-                android:drawableStart="@drawable/ic_nb_rooms_black"/>
+                android:drawableStart="@drawable/ic_nb_rooms_black"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
@@ -191,7 +194,8 @@
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
                 android:text="@string/hint_property_build_date"
-                android:drawableStart="@drawable/ic_date_black"/>
+                android:drawableStart="@drawable/ic_date_black"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
