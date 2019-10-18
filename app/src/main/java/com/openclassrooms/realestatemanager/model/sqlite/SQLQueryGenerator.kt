@@ -2,6 +2,8 @@ package com.openclassrooms.realestatemanager.model.sqlite
 
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
+import com.openclassrooms.realestatemanager.utils.Utils
+import java.util.*
 
 /**************************************************************************************************
  * Generates complex SQL queries aggregating different filters and sort
@@ -21,14 +23,17 @@ object SQLQueryGenerator {
             minBuildYear:String?=null, maxBuildYear:String?=null,
             extrasIds:List<String> = emptyList(),
             postalCode:String?=null, city:String?=null, country:String?=null,
-            realtorId:String?=null, sold:Boolean?=null,
+            realtorId:String?=null,
+            minAdDate:Date?=null, maxAdDate:Date?=null,
+            sold:Boolean?=null,
+            minSaleDate:Date?=null, maxSaleDate:Date?=null,
             orderCriteria:String?=null, orderDesc:Boolean?=null)
             : SupportSQLiteQuery {
 
         val query = generatePropertyQueryString(minPrice, maxPrice, typeIds, minSize, maxSize,
                 minNbRooms, maxNbRooms, minNbBedrooms, maxNbBedrooms, minNbBathrooms, maxNbBathrooms,
-                minBuildYear, maxBuildYear, extrasIds, postalCode, city, country, realtorId, sold,
-                orderCriteria, orderDesc)
+                minBuildYear, maxBuildYear, extrasIds, postalCode, city, country, realtorId,
+                minAdDate, maxAdDate, sold, minSaleDate, maxSaleDate, orderCriteria, orderDesc)
 
         return SimpleSQLiteQuery(query)
     }
@@ -42,10 +47,13 @@ object SQLQueryGenerator {
             minNbRooms:String?=null, maxNbRooms:String?=null,
             minNbBedrooms:String?=null, maxNbBedrooms:String?=null,
             minNbBathrooms:String?=null, maxNbBathrooms:String?=null,
-            minbuildYear:String?=null, maxBuildYear:String?=null,
+            minBuildYear:String?=null, maxBuildYear:String?=null,
             extrasIds:List<String> =emptyList(),
             postalCode:String?=null, city:String?=null, country:String?=null,
-            realtorId:String?=null, sold:Boolean?=null,
+            realtorId:String?=null,
+            minAdDate:Date?=null, maxAdDate:Date?=null,
+            sold:Boolean?=null,
+            minSaleDate:Date?=null, maxSaleDate:Date?=null,
             orderCriteria:String?=null, orderDesc:Boolean?=null)
             :String{
 
@@ -58,13 +66,15 @@ object SQLQueryGenerator {
         tempFilters.add(generateRangeFilter("nbRooms", minNbRooms, maxNbRooms))
         tempFilters.add(generateRangeFilter("nbBedrooms", minNbBedrooms, maxNbBedrooms))
         tempFilters.add(generateRangeFilter("nbBathrooms", minNbBathrooms, maxNbBathrooms))
-        tempFilters.add(generateRangeFilter("buildYear", minbuildYear, maxBuildYear))
+        tempFilters.add(generateRangeFilter("buildYear", minBuildYear, maxBuildYear))
         tempFilters.add(generateListFilter("extraId", extrasIds))
         tempFilters.add(generateLikeFilter("postalCode", postalCode, false, true))
         tempFilters.add(generateSimpleFilter("city", city))
         tempFilters.add(generateSimpleFilter("country", country))
         tempFilters.add(generateSimpleFilter("realtorId", realtorId))
+        tempFilters.add(generateRangeFilter("adDate", minAdDate, maxAdDate))
         tempFilters.add(generateSimpleFilter("sold", sold))
+        tempFilters.add(generateRangeFilter("saleDate", minSaleDate, maxSaleDate))
         val filters=tempFilters.filter { it.isNotEmpty() }
 
         /*Writes the fields and tables selection (SELECT, FROM)*/
@@ -169,6 +179,27 @@ object SQLQueryGenerator {
 
             !minCriteria.isNullOrEmpty()&&!maxCriteria.isNullOrEmpty()->
                 result="$fieldName BETWEEN $minCriteria AND $maxCriteria"
+        }
+        return result
+    }
+
+    fun generateRangeFilter(fieldName:String, minCriteria: Date?, maxCriteria:Date?):String{
+        var result=""
+
+        val dateConverter=DateConverter()
+        val minDate=if(minCriteria!=null)dateConverter.dateToTimestamp(minCriteria) else null
+        val maxDate=if(maxCriteria!=null)dateConverter.dateToTimestamp(maxCriteria) else null
+        
+        when{
+
+            minDate!=null&&maxDate==null->
+                result="$fieldName>=$minDate"
+
+            minDate==null&&maxDate!=null->
+                result="$fieldName<=$maxDate"
+
+            minDate!=null&&maxDate!=null->
+                result="$fieldName BETWEEN $minDate AND $maxDate"
         }
         return result
     }

@@ -9,6 +9,8 @@ import org.junit.After
 import org.junit.Rule
 import androidx.room.Room
 import com.openclassrooms.realestatemanager.model.coremodel.*
+import com.openclassrooms.realestatemanager.utils.Utils
+import java.util.*
 import kotlin.math.min
 
 class SQLiteDatabaseTest{
@@ -96,6 +98,30 @@ class SQLiteDatabaseTest{
 
         assertEquals(1, properties.size)
         assertEquals("Beautiful flat", properties[0].adTitle)
+    }
+
+    @Test
+    fun given_minAdDate_when_generatePropertyQueryString_then_checkResult(){
+
+        val date1=Utils.getDateFromString(Utils.getDate(2018, 1, 10))
+        val date2=Utils.getDateFromString(Utils.getDate(2019, 5, 20))
+        val date3=Utils.getDateFromString(Utils.getDate(2019, 9, 15))
+
+        val p1=Property(adTitle="Small flat", adDate=date1)
+        val p2=Property(adTitle="Beautiful flat", adDate=date2)
+        val p3=Property(adTitle="House", adDate=date3)
+        this.database.propertyDAO.insertProperty(p1)
+        this.database.propertyDAO.insertProperty(p2)
+        this.database.propertyDAO.insertProperty(p3)
+
+        val minAdDate=Utils.getDateFromString(Utils.getDate(2019, 8, 1))
+
+        val properties=LiveDataTestUtil.getValue(
+                this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
+                        minAdDate=minAdDate)))
+
+        assertEquals(1, properties.size)
+        assertEquals("House", properties[0].adTitle)
     }
 
     @Test

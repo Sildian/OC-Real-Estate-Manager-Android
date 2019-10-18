@@ -100,6 +100,23 @@ public class Utils {
         return dateFormat.format(calendar.getTime());
     }
 
+    /**Offsets a date with the given year, month and day
+     * @param inputDate : the input date
+     * @param yearOffset : the number of years to offset (+ : future, - : past)
+     * @param monthOffset: the number of months to offset (+ : future, - : past)
+     * @param dayOffset: the number of days to offset (+ : future, - : past)
+     * @return the resulted date
+     */
+
+    public static Date offsetDate(Date inputDate, int yearOffset, int monthOffset, int dayOffset){
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(inputDate);
+        calendar.add(Calendar.YEAR, yearOffset);
+        calendar.add(Calendar.MONTH, monthOffset);
+        calendar.add(Calendar.DAY_OF_MONTH, dayOffset);
+        return calendar.getTime();
+    }
+
     /**Gets a formated figure with thousands separators
      * @param figure : the figure (int)
      * @return the formated figure (String)

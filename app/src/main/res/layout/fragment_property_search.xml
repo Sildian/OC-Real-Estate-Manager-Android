@@ -308,6 +308,24 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!--Ad date-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_property_ad_date"
+            style="@style/TextInputLayoutThemeDropdownMenu"
+            android:layout_margin="@dimen/components_margin_medium">
+
+            <AutoCompleteTextView
+                android:id="@+id/fragment_property_search_ad_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_body"
+                android:editable="false"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <!--Sold status-->
 
         <TextView
@@ -351,6 +369,24 @@
                 android:text="@string/label_property_all"/>
 
         </RadioGroup>
+
+        <!--Sale date-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_property_sale_date"
+            style="@style/TextInputLayoutThemeDropdownMenu"
+            android:layout_margin="@dimen/components_margin_medium">
+
+            <AutoCompleteTextView
+                android:id="@+id/fragment_property_search_sale_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_body"
+                android:editable="false"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <!--Buttons bar-->
 

@@ -13,6 +13,7 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.view.dialogs.SettingsBottomSheetFragment
 import com.openclassrooms.realestatemanager.view.fragments.ListFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 /**************************************************************************************************
  * Main activity for user interaction
@@ -139,12 +140,14 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                                 minBuildYear:String?, maxBuildYear:String?,
                                 extrasIds:List<String>,
                                 postalCode:String?, city:String?, country:String?,
-                                sold:Boolean?){
+                                minAdDate: Date?,
+                                sold:Boolean?, minSaleDate:Date?){
 
         //TODO change this, create a parent Fragment
 
         (this.navigationFragment as ListFragment).runComplexPropertyQuery(
                 minPrice, maxPrice, typeIds, minSize, maxSize, minNbRooms, maxNbRooms,
-                minBuildYear, maxBuildYear, extrasIds, postalCode, city, country, sold)
+                minBuildYear, maxBuildYear, extrasIds, postalCode, city, country,
+                minAdDate, sold, minSaleDate)
     }
 }

@@ -56,4 +56,12 @@
     <!--Others-->
     <string name="currency">$</string>
 
+    <!--Arrays of choice-->
+    <string-array name="choice_date_range">
+        <item>Moins de 3 mois</item>
+        <item>Moins de 6 mois</item>
+        <item>Moins d\'1 an</item>
+        <item>Toutes périodes</item>
+    </string-array>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.utils
+package com.openclassrooms.realestatemanager.model.sqlite
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

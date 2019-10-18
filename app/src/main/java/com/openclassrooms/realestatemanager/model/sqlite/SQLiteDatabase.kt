@@ -6,8 +6,6 @@ import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.openclassrooms.realestatemanager.model.coremodel.*
 import com.openclassrooms.realestatemanager.model.sqlite.dao.*
-import com.openclassrooms.realestatemanager.utils.DateConverter
-import com.openclassrooms.realestatemanager.utils.StringsListConverter
 
 /**************************************************************************************************
  * SQLite Database management

@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.model.sqlite
 
+import com.openclassrooms.realestatemanager.utils.Utils
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -25,6 +26,13 @@ class SQLQueryGeneratorTest {
         val expectedResult="SELECT * FROM Property WHERE price<=300000 AND size BETWEEN 50 AND 100;"
         assertEquals(expectedResult, SQLQueryGenerator.generatePropertyQueryString(
                 maxPrice=maxPrice, minSize = minSize, maxSize = maxSize))
+    }
+
+    @Test
+    fun given_minAdDate_when_generatePropertyQueryString_then_checkResult(){
+        val minAdDate= Utils.getDateFromString(Utils.getDate(2019, 8, 1))
+        val expectedResult="SELECT * FROM Property WHERE adDate>=1567288800000;"
+        assertEquals(expectedResult, SQLQueryGenerator.generatePropertyQueryString(minAdDate=minAdDate))
     }
 
     @Test
@@ -119,6 +127,15 @@ class SQLQueryGeneratorTest {
         val max="500000"
         val expectedResult="price BETWEEN 200000 AND 500000"
         assertEquals(expectedResult, SQLQueryGenerator.generateRangeFilter(fieldName, min, max))
+    }
+
+    @Test
+    fun given_adDateMin1Sept2019_when_generateRangeFilter_then_checkRestul(){
+        val fieldName="adDate"
+        val minDate=Utils.getDateFromString(Utils.getDate(2019, 8, 1))
+        val maxDate=null
+        val expectedResult="adDate>=1567288800000"
+        assertEquals(expectedResult, SQLQueryGenerator.generateRangeFilter(fieldName, minDate, maxDate))
     }
 
     /**generateListFilter**/

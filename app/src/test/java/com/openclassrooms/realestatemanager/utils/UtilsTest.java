@@ -3,7 +3,6 @@ package com.openclassrooms.realestatemanager.utils;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -32,30 +31,14 @@ public class UtilsTest {
     public void given_5oct2019_when_getDateFromString_then_check_result_5oct2019(){
         Locale.setDefault(Locale.US);
         String dateString="10/5/19";
-        Calendar calendar=Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 2019);
-        calendar.set(Calendar.MONTH, 9);
-        calendar.set(Calendar.DAY_OF_MONTH, 5);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        Date date=calendar.getTime();
+        Date date=Utils.getDateFromString(Utils.getDate(2019, 9, 5));
         assertEquals(date, Utils.getDateFromString(dateString));
     }
 
     @Test
     public void given_5oct2019_when_getStringFromDate_then_check_result_5oct2019(){
         Locale.setDefault(Locale.US);
-        Calendar calendar=Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 2019);
-        calendar.set(Calendar.MONTH, 9);
-        calendar.set(Calendar.DAY_OF_MONTH, 5);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        Date date=calendar.getTime();
+        Date date=Utils.getDateFromString(Utils.getDate(2019, 9, 5));
         String dateString="10/5/19";
         assertEquals(dateString, Utils.getStringFromDate(date));
     }
@@ -70,6 +53,13 @@ public class UtilsTest {
         assertEquals(date, Utils.getDate(year, month, day));
     }
 
+    @Test
+    public void given_5oct20191year3months2days_when_offsetDate_then_check_result_3jul2018(){
+        Date actualDate=Utils.getDateFromString(Utils.getDate(2019, 9, 5));
+        Date expectedDate=(Utils.getDateFromString(Utils.getDate(2018, 6, 3)));
+        assertEquals(expectedDate, Utils.offsetDate(actualDate, -1, -3, -2));
+    }
+    
     @Test
     public void given_1000000_when_getFormatedFigure_then_check_result_1000000(){
         Locale.setDefault(Locale.US);

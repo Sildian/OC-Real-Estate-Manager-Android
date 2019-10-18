@@ -19,6 +19,7 @@ import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel
 import com.openclassrooms.realestatemanager.viewmodel.ViewModelFactory
 import com.openclassrooms.realestatemanager.viewmodel.ViewModelInjection
 import kotlinx.android.synthetic.main.fragment_list.view.*
+import java.util.*
 
 /************************************************************************************************
  * Shows a list of properties
@@ -95,7 +96,8 @@ class ListFragment : Fragment(), PropertyViewHolder.Listener {
                                 minBuildYear:String?, maxBuildYear:String?,
                                 extrasIds:List<String>,
                                 postalCode:String?, city:String?, country:String?,
-                                sold:Boolean?){
+                                minAdDate: Date?,
+                                sold:Boolean?, minSaleDate:Date?){
 
         if(this.propertyViewModel.getAllProperties().hasObservers()) {
             this.propertyViewModel.getAllProperties().removeObservers(this)
@@ -109,7 +111,8 @@ class ListFragment : Fragment(), PropertyViewHolder.Listener {
                 minBuildYear=minBuildYear, maxBuildYear=maxBuildYear,
                 extrasIds=extrasIds,
                 postalCode=postalCode, city=city, country=country,
-                sold=sold))
+                minAdDate=minAdDate,
+                sold=sold, minSaleDate = minSaleDate))
                 .observe(this, Observer {
 
             this.propertyAdapter= PropertyAdapter(it, this)
