@@ -132,7 +132,7 @@ class SQLQueryGeneratorTest {
     }
 
     @Test
-    fun given_adDateMin1Sept2019_when_generateRangeFilter_then_checkRestul(){
+    fun given_adDateMin1Sept2019_when_generateRangeFilter_then_checkResult(){
         Locale.setDefault(Locale.US)
         val fieldName="adDate"
         val minDate=Utils.getDateFromString(Utils.getDate(2019, 8, 1))
