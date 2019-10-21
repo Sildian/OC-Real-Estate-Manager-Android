@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.view.fragments
 
 import android.Manifest
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,11 +16,15 @@ import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.utils.Utils
 import kotlinx.android.synthetic.main.fragment_navigation_map.view.*
 import android.content.pm.PackageManager
+import android.os.Handler
+import android.os.ResultReceiver
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.utils.LocationService
 
 /************************************************************************************************
  * Shows properties on a map
@@ -116,7 +121,10 @@ class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback {
     override fun getLayoutId(): Int = R.layout.fragment_navigation_map
 
     override fun onPropertiesReceived(properties: List<Property>) {
-        //TODO implement
+        for(property in properties){
+            val address=property.getFullAddressToFetchLocation()
+            startLocationService(address)
+        }
     }
 
     /*********************************************************************************************
@@ -159,6 +167,10 @@ class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback {
                 }
     }
 
+    private fun showPropertyLocation(latitude:Double, longitude:Double){
+        this.map.addMarker(MarkerOptions().position(LatLng(latitude, longitude)))
+    }
+
     /*********************************************************************************************
      * Permissions management
      ********************************************************************************************/
@@ -185,6 +197,33 @@ class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback {
             }
         }else{
             showUserLocation()
+        }
+    }
+
+    /*********************************************************************************************
+     * Intents management
+     ********************************************************************************************/
+
+    private fun startLocationService(address:String){
+        val locationServiceIntent= Intent(activity, LocationService::class.java)
+        locationServiceIntent.putExtra(LocationService.KEY_BUNDLE_ADDRESS, address)
+        locationServiceIntent.putExtra(LocationService.KEY_BUNDLE_RECEIVER, LocationResultReceiver(Handler()))
+        activity!!.startService(locationServiceIntent)
+    }
+
+    /*********************************************************************************************
+     * This internal class receives results from LocationService
+     ********************************************************************************************/
+
+    internal inner class LocationResultReceiver(handler: Handler) : ResultReceiver(handler) {
+
+        override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
+
+            if(resultCode==LocationService.RESULT_SUCCESS&&resultData!=null){
+                val latitude=resultData.getDouble(LocationService.KEY_BUNDLE_LATITUDE)
+                val longitude=resultData.getDouble(LocationService.KEY_BUNDLE_LONGITUDE)
+                showPropertyLocation(latitude, longitude)
+            }
         }
     }
 }
