@@ -11,7 +11,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.view.dialogs.SettingsBottomSheetFragment
-import com.openclassrooms.realestatemanager.view.fragments.ListFragment
+import com.openclassrooms.realestatemanager.view.fragments.NavigationBaseFragment
+import com.openclassrooms.realestatemanager.view.fragments.NavigationListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -28,7 +29,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
      ********************************************************************************************/
 
     private val toolbar by lazy {activity_main_toolbar as Toolbar}
-    private lateinit var navigationFragment: Fragment
+    private lateinit var navigationFragment: NavigationBaseFragment
     private val addButton by lazy {activity_main_button_add}
     private val bottomNavigationBar by lazy {activity_main_navigation_bottom}
     private lateinit var settingsBottomSheetFragment:SettingsBottomSheetFragment
@@ -104,7 +105,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         //TODO improve this to show multiple fragments
 
-        this.navigationFragment= ListFragment()
+        this.navigationFragment= NavigationListFragment()
         supportFragmentManager.beginTransaction().replace(
                 R.id.activity_main_fragment_navigation, this.navigationFragment).commit()
     }
@@ -145,7 +146,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         //TODO change this, create a parent Fragment
 
-        (this.navigationFragment as ListFragment).runComplexPropertyQuery(
+        this.navigationFragment.runComplexPropertyQuery(
                 minPrice, maxPrice, typeIds, minSize, maxSize, minNbRooms, maxNbRooms,
                 minBuildYear, maxBuildYear, extrasIds, postalCode, city, country,
                 minAdDate, sold, minSaleDate)

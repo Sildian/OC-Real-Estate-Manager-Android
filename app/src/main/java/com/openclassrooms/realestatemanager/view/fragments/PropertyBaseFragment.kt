@@ -39,11 +39,16 @@ abstract class PropertyBaseFragment : Fragment() {
      * Data
      ********************************************************************************************/
 
+    /**ViewModel**/
+
     protected lateinit var viewModelFactory: ViewModelFactory
     protected lateinit var propertyViewModel: PropertyViewModel
     protected lateinit var propertyTypeViewModel: PropertyTypeViewModel
     protected lateinit var realtorViewModel: RealtorViewModel
     protected lateinit var extraViewModel: ExtraViewModel
+
+    /**Data related to the current property**/
+
     protected var propertyId:Int?=null
     protected val picturesPaths:ArrayList<String?> = arrayListOf(null)
     protected val extras:ArrayList<String> = arrayListOf()
