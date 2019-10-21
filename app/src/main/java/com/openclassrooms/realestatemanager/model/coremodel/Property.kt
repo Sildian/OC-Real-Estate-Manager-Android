@@ -32,9 +32,7 @@ data class Property(
         var buildYear: Int? =null,
         var adDate: Date?=null,
         var saleDate:Date?=null,
-        var sold:Boolean=false,
-        var latitude:Double?=null,
-        var longitude:Double?=null
+        var sold:Boolean=false
         )
 {
         fun getFullAddressToDisplay():String{

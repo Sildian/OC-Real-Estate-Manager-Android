@@ -26,6 +26,7 @@ class LocationService : IntentService("LocationService") {
 
         const val RESULT_FAILURE=0
         const val RESULT_SUCCESS=1
+        const val KEY_BUNDLE_PROPERTY_ID_IN_LIST="KEY_PROPERTY_ID_IN_LIST"
         const val KEY_BUNDLE_ADDRESS="KEY_BUNDLE_ADDRESS"
         const val KEY_BUNDLE_RECEIVER="KEY_BUNDLE_RECEIVER"
         const val KEY_BUNDLE_LATITUDE="KEY_BUNDLE_LATITUDE"
@@ -36,6 +37,7 @@ class LocationService : IntentService("LocationService") {
      * Data
      ********************************************************************************************/
 
+    private var propertyIdInList:Int?=null
     private var address:String?=null
     private var receiver: ResultReceiver? = null
 
@@ -44,6 +46,7 @@ class LocationService : IntentService("LocationService") {
      ********************************************************************************************/
 
     override fun onHandleIntent(intent: Intent?) {
+        this.propertyIdInList=intent?.getIntExtra(KEY_BUNDLE_PROPERTY_ID_IN_LIST, 0)
         this.address=intent?.getStringExtra(KEY_BUNDLE_ADDRESS)
         this.receiver=intent?.getParcelableExtra(KEY_BUNDLE_RECEIVER)
         fetchLocation()
@@ -66,13 +69,13 @@ class LocationService : IntentService("LocationService") {
             results = geocoder.getFromLocationName(this.address, 1)
         }
 
-        /*If an exception is raised, nothing happens, the map is just not displayed*/
+        /*If an exception is raised, sends a failure to the receiver*/
 
         catch(e: IOException){
-            Log.d("TAG_LOCATION", e.message)
+            deliverResultToReceiverFailure()
         }
         catch(e:IllegalArgumentException){
-            Log.d("TAG_LOCATION", e.message)
+            deliverResultToReceiverFailure()
         }
 
         /*Sends the result back to the receiver (can be a failure or a success)*/
@@ -95,6 +98,7 @@ class LocationService : IntentService("LocationService") {
 
     private fun deliverResultToReceiverSuccess(latitude:Double, longitude:Double){
         val bundle= Bundle().apply{
+            putInt(KEY_BUNDLE_PROPERTY_ID_IN_LIST, propertyIdInList!!.toInt())
             putDouble(KEY_BUNDLE_LATITUDE, latitude)
             putDouble(KEY_BUNDLE_LONGITUDE, longitude)
         }

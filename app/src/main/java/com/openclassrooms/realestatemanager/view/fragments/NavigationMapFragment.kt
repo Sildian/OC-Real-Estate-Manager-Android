@@ -20,17 +20,23 @@ import android.os.Handler
 import android.os.ResultReceiver
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.utils.LocationService
+import com.openclassrooms.realestatemanager.view.activities.MainActivity
+import kotlinx.android.synthetic.main.map_info_property.view.*
 
 /************************************************************************************************
  * Shows properties on a map
  ***********************************************************************************************/
 
-class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback {
+class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback,
+        GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener {
 
     /*********************************************************************************************
      * Static items
@@ -121,9 +127,11 @@ class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback {
     override fun getLayoutId(): Int = R.layout.fragment_navigation_map
 
     override fun onPropertiesReceived(properties: List<Property>) {
-        for(property in properties){
-            val address=property.getFullAddressToFetchLocation()
-            startLocationService(address)
+        this.properties.clear()
+        this.properties.addAll(properties)
+        for(i in this.properties.indices){
+            val address=properties[i].getFullAddressToFetchLocation()
+            startLocationService(i, address)
         }
     }
 
@@ -149,6 +157,8 @@ class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap?) {
         if(map!=null){
             this.map=map
+            this.map.setInfoWindowAdapter(this)
+            this.map.setOnInfoWindowClickListener(this)
             this.fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(activity!!)
             requestUserLocation()
             runSimplePropertyQuery()
@@ -167,8 +177,62 @@ class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback {
                 }
     }
 
-    private fun showPropertyLocation(latitude:Double, longitude:Double){
+    private fun showPropertyLocation(propertyIdInList:Int, latitude:Double, longitude:Double){
         this.map.addMarker(MarkerOptions().position(LatLng(latitude, longitude)))
+                .tag=this.properties[propertyIdInList]
+    }
+
+    /*********************************************************************************************
+     * Map info management
+     ********************************************************************************************/
+
+    override fun getInfoWindow(marker: Marker?): View? {
+        //return null to let getInfoContents be called instead
+        return null
+    }
+
+    override fun getInfoContents(marker: Marker?): View {
+        val view=layoutInflater.inflate(R.layout.map_info_property, this.layout as ViewGroup, false)
+        if(marker!=null) {
+            val property = marker.tag as Property
+            updateInfoContent(view, property)
+        }
+        return view
+    }
+
+    private fun updateInfoContent(view:View, property:Property){
+
+        /*Gets the UI components from the view*/
+
+        val propertyPicture=view.map_info_property_picture
+        val propertyAdTitle=view.map_info_property_ad_title
+        val propertyPrice=view.map_info_property_price
+
+        /*Updates picture*/
+
+        Glide.with(view).load(property.picturesPaths[0])
+                .apply(RequestOptions.centerCropTransform()).into(propertyPicture)
+
+        /*Updates ad title*/
+
+        propertyAdTitle.setText(property.adTitle)
+
+        /*Updates price*/
+
+        val price=property.price
+        val currency=view.resources.getString(R.string.currency)
+        val priceToDisplay=Utils.getFormatedFigure(if(price!=null) price.toLong() else 0)+" $currency"
+        propertyPrice.setText(priceToDisplay)
+    }
+
+    override fun onInfoWindowClick(marker: Marker?) {
+        if(marker!=null){
+            val property=marker.tag as Property
+            val propertyId=property.id
+            if(propertyId!=null) {
+                (activity as MainActivity).startPropertyDetailActivity(propertyId)
+            }
+        }
     }
 
     /*********************************************************************************************
@@ -204,8 +268,9 @@ class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback {
      * Intents management
      ********************************************************************************************/
 
-    private fun startLocationService(address:String){
+    private fun startLocationService(propertyIdInList:Int, address:String){
         val locationServiceIntent= Intent(activity, LocationService::class.java)
+        locationServiceIntent.putExtra(LocationService.KEY_BUNDLE_PROPERTY_ID_IN_LIST, propertyIdInList)
         locationServiceIntent.putExtra(LocationService.KEY_BUNDLE_ADDRESS, address)
         locationServiceIntent.putExtra(LocationService.KEY_BUNDLE_RECEIVER, LocationResultReceiver(Handler()))
         activity!!.startService(locationServiceIntent)
@@ -220,9 +285,10 @@ class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback {
         override fun onReceiveResult(resultCode: Int, resultData: Bundle?) {
 
             if(resultCode==LocationService.RESULT_SUCCESS&&resultData!=null){
+                val propertyIdInList=resultData.getInt(LocationService.KEY_BUNDLE_PROPERTY_ID_IN_LIST)
                 val latitude=resultData.getDouble(LocationService.KEY_BUNDLE_LATITUDE)
                 val longitude=resultData.getDouble(LocationService.KEY_BUNDLE_LONGITUDE)
-                showPropertyLocation(latitude, longitude)
+                showPropertyLocation(propertyIdInList, latitude, longitude)
             }
         }
     }

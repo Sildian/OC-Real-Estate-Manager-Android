@@ -41,6 +41,7 @@ abstract class NavigationBaseFragment : Fragment() {
 
     protected lateinit var viewModelFactory: ViewModelFactory
     protected lateinit var propertyViewModel: PropertyViewModel
+    protected val properties=arrayListOf<Property>()
 
     /*********************************************************************************************
      * Life cycle

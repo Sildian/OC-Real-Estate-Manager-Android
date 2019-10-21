@@ -45,7 +45,9 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
     override fun getLayoutId(): Int = R.layout.fragment_navigation_list
 
     override fun onPropertiesReceived(properties: List<Property>) {
-        this.propertyAdapter= PropertyAdapter(properties, this)
+        this.properties.clear()
+        this.properties.addAll(properties)
+        this.propertyAdapter= PropertyAdapter(this.properties, this)
         this.propertiesRecyclerView.adapter=this.propertyAdapter
     }
 
