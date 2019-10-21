@@ -47,7 +47,7 @@ abstract class NavigationBaseFragment : Fragment() {
      ********************************************************************************************/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        this.layout=inflater.inflate(R.layout.fragment_navigation_list, container, false)
+        this.layout=inflater.inflate(getLayoutId(), container, false)
         initializeData()
         return this.layout
     }

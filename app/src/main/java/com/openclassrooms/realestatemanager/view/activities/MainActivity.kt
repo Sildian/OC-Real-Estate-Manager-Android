@@ -6,13 +6,13 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.view.dialogs.SettingsBottomSheetFragment
 import com.openclassrooms.realestatemanager.view.fragments.NavigationBaseFragment
 import com.openclassrooms.realestatemanager.view.fragments.NavigationListFragment
+import com.openclassrooms.realestatemanager.view.fragments.NavigationMapFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -23,6 +23,19 @@ import java.util.*
  *************************************************************************************************/
 
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+
+    /*********************************************************************************************
+     * Static items
+     ********************************************************************************************/
+
+    companion object{
+
+        /**Fragments ids**/
+
+        const val ID_FRAGMENT_LIST=1
+        const val ID_FRAGMENT_MAP=2
+        const val ID_FRAGMENT_LOAN=3
+    }
 
     /*********************************************************************************************
      * UI components
@@ -44,7 +57,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         initializeToolbar()
         initializeAddButton()
         initializeBottomNavigationBar()
-        showFragment()
+        showFragment(ID_FRAGMENT_LIST)
     }
 
     /*********************************************************************************************
@@ -68,14 +81,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        //TODO Add actions
 
         if(item.groupId==R.id.menu_navigation_bottom_group){
 
             when(item.itemId){
-                R.id.menu_navigation_bottom_list-> Log.d("TAG_MENU", "List")
-                R.id.menu_navigation_bottom_map-> Log.d("TAG_MENU", "Map")
-                R.id.menu_navigation_bottom_loan-> Log.d("TAG_MENU", "Loan")
+                R.id.menu_navigation_bottom_list-> showFragment(ID_FRAGMENT_LIST)
+                R.id.menu_navigation_bottom_map-> showFragment(ID_FRAGMENT_MAP)
+                R.id.menu_navigation_bottom_loan-> showFragment(ID_FRAGMENT_LOAN)
             }
         }
         return true
@@ -101,11 +113,15 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
      * Fragments management
      ********************************************************************************************/
 
-    private fun showFragment(){
+    private fun showFragment(id:Int){
 
-        //TODO improve this to show multiple fragments
+        //TODO implement Loan
 
-        this.navigationFragment= NavigationListFragment()
+        when(id){
+            ID_FRAGMENT_LIST->this.navigationFragment= NavigationListFragment()
+            ID_FRAGMENT_MAP->this.navigationFragment=NavigationMapFragment()
+            ID_FRAGMENT_LOAN->Log.d("TAG_MENU", "Not implemented yet")
+        }
         supportFragmentManager.beginTransaction().replace(
                 R.id.activity_main_fragment_navigation, this.navigationFragment).commit()
     }

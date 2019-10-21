@@ -318,9 +318,11 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             if(takePictureIntent.resolveActivity(activity!!.packageManager)!=null){
                 startActivityForResult(takePictureIntent, KEY_REQUEST_TAKE_PICTURE)
             }else{
+                //TODO replace toast by dialog?
                 Toast.makeText(context, R.string.toast_photo_unavailable, Toast.LENGTH_LONG).show()
             }
         }else{
+            //TODO replace toast by dialog?
             Toast.makeText(context, R.string.toast_photo_unavailable, Toast.LENGTH_LONG).show()
         }
     }
