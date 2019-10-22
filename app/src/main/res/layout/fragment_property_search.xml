@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.fragments.PropertySearchFragment">
 
@@ -14,312 +15,355 @@
 
         <!--Price-->
 
-        <LinearLayout
+        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:expand_text="@string/hint_property_price"
+            app:expand_text_padding="@dimen/components_margin_medium"
+            app:expand_textSize="@dimen/text_size_title"
+            app:expand_status="collapsed">
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_title"
-                android:text="@string/hint_property_price"
-                android:drawableStart="@drawable/ic_currency_black"
-                android:drawablePadding="@dimen/components_margin_small"/>
+                android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/hint_min"
-                android:layout_margin="@dimen/components_margin_medium">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_price_min"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textSize="@dimen/text_size_body" />
+                    android:layout_weight="1"
+                    android:hint="@string/hint_min"
+                    android:layout_margin="@dimen/components_margin_medium">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_property_search_price_min"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textSize="@dimen/text_size_body" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/hint_max"
-                android:layout_margin="@dimen/components_margin_medium">
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_price_max"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textSize="@dimen/text_size_body" />
+                    android:layout_weight="1"
+                    android:hint="@string/hint_max"
+                    android:layout_margin="@dimen/components_margin_medium">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_property_search_price_max"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textSize="@dimen/text_size_body" />
 
-        </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
 
         <!--Type-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/components_margin_medium"
-            android:textSize="@dimen/text_size_title"
-            android:text="@string/hint_property_type" />
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/fragment_property_search_types"
+        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/components_margin_medium"/>
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:expand_text="@string/hint_property_type"
+            app:expand_text_padding="@dimen/components_margin_medium"
+            app:expand_textSize="@dimen/text_size_title"
+            app:expand_status="collapsed">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/fragment_property_search_types"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_medium"/>
+
+        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
 
         <!--Size-->
 
-        <LinearLayout
+        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:expand_text="@string/hint_property_size"
+            app:expand_text_padding="@dimen/components_margin_medium"
+            app:expand_textSize="@dimen/text_size_title"
+            app:expand_status="collapsed">
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_title"
-                android:text="@string/hint_property_size"
-                android:drawableStart="@drawable/ic_size_black"
-                android:drawablePadding="@dimen/components_margin_small"/>
+                android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/hint_min"
-                android:layout_margin="@dimen/components_margin_medium">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_size_min"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textSize="@dimen/text_size_body" />
+                    android:layout_weight="1"
+                    android:hint="@string/hint_min"
+                    android:layout_margin="@dimen/components_margin_medium">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_property_search_size_min"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textSize="@dimen/text_size_body" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/hint_max"
-                android:layout_margin="@dimen/components_margin_medium">
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_size_max"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textSize="@dimen/text_size_body" />
+                    android:layout_weight="1"
+                    android:hint="@string/hint_max"
+                    android:layout_margin="@dimen/components_margin_medium">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_property_search_size_max"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textSize="@dimen/text_size_body" />
 
-        </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
 
         <!--Nb rooms-->
 
-        <LinearLayout
+        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:expand_text="@string/hint_property_nb_rooms"
+            app:expand_text_padding="@dimen/components_margin_medium"
+            app:expand_textSize="@dimen/text_size_title"
+            app:expand_status="collapsed">
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_title"
-                android:text="@string/hint_property_nb_rooms"
-                android:drawableStart="@drawable/ic_nb_rooms_black"
-                android:drawablePadding="@dimen/components_margin_small"/>
+                android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/hint_min"
-                android:layout_margin="@dimen/components_margin_medium">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_nb_rooms_min"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textSize="@dimen/text_size_body" />
+                    android:layout_weight="1"
+                    android:hint="@string/hint_min"
+                    android:layout_margin="@dimen/components_margin_medium">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_property_search_nb_rooms_min"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textSize="@dimen/text_size_body" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/hint_max"
-                android:layout_margin="@dimen/components_margin_medium">
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_nb_rooms_max"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textSize="@dimen/text_size_body" />
+                    android:layout_weight="1"
+                    android:hint="@string/hint_max"
+                    android:layout_margin="@dimen/components_margin_medium">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_property_search_nb_rooms_max"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textSize="@dimen/text_size_body" />
 
-        </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
 
         <!--Build year-->
 
-        <LinearLayout
+        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:expand_text="@string/hint_property_build_date"
+            app:expand_text_padding="@dimen/components_margin_medium"
+            app:expand_textSize="@dimen/text_size_title"
+            app:expand_status="collapsed">
 
-            <TextView
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_title"
-                android:text="@string/hint_property_build_date"
-                android:drawableStart="@drawable/ic_date_black"
-                android:drawablePadding="@dimen/components_margin_small"/>
+                android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/hint_min"
-                android:layout_margin="@dimen/components_margin_medium">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_build_date_min"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textSize="@dimen/text_size_body"
-                    android:maxLength="4"/>
+                    android:layout_weight="2"
+                    android:layout_margin="@dimen/components_margin_medium"
+                    android:textSize="@dimen/text_size_title"
+                    android:text="@string/hint_property_build_date"
+                    android:drawableStart="@drawable/ic_date_black"
+                    android:drawablePadding="@dimen/components_margin_small"/>
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/hint_max"
-                android:layout_margin="@dimen/components_margin_medium">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_build_date_max"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textSize="@dimen/text_size_body"
-                    android:maxLength="4"/>
+                    android:layout_weight="1"
+                    android:hint="@string/hint_min"
+                    android:layout_margin="@dimen/components_margin_medium">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_property_search_build_date_min"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textSize="@dimen/text_size_body"
+                        android:maxLength="4"/>
 
-        </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/hint_max"
+                    android:layout_margin="@dimen/components_margin_medium">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_property_search_build_date_max"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:textSize="@dimen/text_size_body"
+                        android:maxLength="4"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
 
         <!--Extras-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/components_margin_medium"
-            android:textSize="@dimen/text_size_title"
-            android:text="@string/label_property_extras" />
-
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/fragment_property_search_extras"
+        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/components_margin_medium"/>
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:expand_text="@string/label_property_extras"
+            app:expand_text_padding="@dimen/components_margin_medium"
+            app:expand_textSize="@dimen/text_size_title"
+            app:expand_status="collapsed">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/fragment_property_search_extras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_medium"/>
+
+        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
 
         <!--Location-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/components_margin_medium"
-            android:textSize="@dimen/text_size_title"
-            android:text="@string/label_property_location" />
-
-        <LinearLayout
+        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:expand_text="@string/label_property_location"
+            app:expand_text_padding="@dimen/components_margin_medium"
+            app:expand_textSize="@dimen/text_size_title"
+            app:expand_status="collapsed">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="@string/hint_property_postal_code"
-                android:layout_margin="@dimen/components_margin_medium">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_postal_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences"
-                    android:textSize="@dimen/text_size_body" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:hint="@string/hint_property_city"
-                android:layout_margin="@dimen/components_margin_medium">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences"
-                    android:textSize="@dimen/text_size_body" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_property_country"
-            android:layout_margin="@dimen/components_margin_medium">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/fragment_property_search_country"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapSentences"
-                android:textSize="@dimen/text_size_body" />
+                android:orientation="horizontal"
+                android:baselineAligned="false">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/hint_property_postal_code"
+                    android:layout_margin="@dimen/components_margin_medium">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_property_search_postal_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
+                        android:textSize="@dimen/text_size_body" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="@string/hint_property_city"
+                    android:layout_margin="@dimen/components_margin_medium">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_property_search_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
+                        android:textSize="@dimen/text_size_body" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_property_country"
+                android:layout_margin="@dimen/components_margin_medium">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fragment_property_search_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences"
+                    android:textSize="@dimen/text_size_body" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
 
         <!--Ad date-->
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_property_ad_date"
-            style="@style/TextInputLayoutThemeDropdownMenu"
-            android:layout_margin="@dimen/components_margin_medium">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:expand_text="@string/hint_property_ad_date"
+            app:expand_text_padding="@dimen/components_margin_medium"
+            app:expand_textSize="@dimen/text_size_title"
+            app:expand_status="collapsed">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_property_ad_date"
+                style="@style/TextInputLayoutThemeDropdownMenu"
+                android:layout_margin="@dimen/components_margin_medium">
 
             <AutoCompleteTextView
                 android:id="@+id/fragment_property_search_ad_date"
@@ -328,69 +372,88 @@
                 android:textSize="@dimen/text_size_body"
                 android:editable="false"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
 
         <!--Sold status-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/components_margin_medium"
-            android:textSize="@dimen/text_size_title"
-            android:text="@string/label_property_sold" />
-
-        <RadioGroup
-            android:id="@+id/fragment_property_search_sold"
+        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:expand_text="@string/label_property_sold"
+            app:expand_text_padding="@dimen/components_margin_medium"
+            app:expand_textSize="@dimen/text_size_title"
+            app:expand_status="collapsed">
 
-            <RadioButton
-                android:id="@+id/fragment_property_search_sold_no"
-                android:layout_width="0dp"
+            <RadioGroup
+                android:id="@+id/fragment_property_search_sold"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_body"
-                android:text="@string/label_property_available"/>
+                android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/fragment_property_search_sold_yes"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_body"
-                android:text="@string/label_property_sold"/>
+                <RadioButton
+                    android:id="@+id/fragment_property_search_sold_no"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/components_margin_medium"
+                    android:textSize="@dimen/text_size_body"
+                    android:text="@string/label_property_available"/>
 
-            <RadioButton
-                android:id="@+id/fragment_property_search_sold_all"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_body"
-                android:text="@string/label_property_all"/>
+                <RadioButton
+                    android:id="@+id/fragment_property_search_sold_yes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/components_margin_medium"
+                    android:textSize="@dimen/text_size_body"
+                    android:text="@string/label_property_sold"/>
 
-        </RadioGroup>
+                <RadioButton
+                    android:id="@+id/fragment_property_search_sold_all"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="@dimen/components_margin_medium"
+                    android:textSize="@dimen/text_size_body"
+                    android:text="@string/label_property_all"/>
+
+            </RadioGroup>
+
+        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
 
         <!--Sale date-->
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_property_sale_date"
-            style="@style/TextInputLayoutThemeDropdownMenu"
-            android:layout_margin="@dimen/components_margin_medium">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            app:expand_text="@string/hint_property_sale_date"
+            app:expand_text_padding="@dimen/components_margin_medium"
+            app:expand_textSize="@dimen/text_size_title"
+            app:expand_status="collapsed">
 
-            <AutoCompleteTextView
-                android:id="@+id/fragment_property_search_sale_date"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_body"
-                android:editable="false"/>
+                android:hint="@string/hint_property_sale_date"
+                style="@style/TextInputLayoutThemeDropdownMenu"
+                android:layout_margin="@dimen/components_margin_medium">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <AutoCompleteTextView
+                    android:id="@+id/fragment_property_search_sale_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_body"
+                    android:editable="false"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
 
         <!--Buttons bar-->
 
