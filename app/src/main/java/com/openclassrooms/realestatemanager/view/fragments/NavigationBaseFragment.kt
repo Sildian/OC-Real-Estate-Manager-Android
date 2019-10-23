@@ -75,10 +75,10 @@ abstract class NavigationBaseFragment : Fragment() {
     }
 
     fun runComplexPropertyQuery(minPrice:Int?, maxPrice:Int?,
-                                typeIds:List<Int>,
+                                typeIds:List<Int?>,
                                 minSize:Int?, maxSize:Int?,
                                 minNbRooms:Int?, maxNbRooms:Int?,
-                                extrasIds:List<Int>,
+                                extrasIds:List<Int?>,
                                 postalCode:String?, city:String?, country:String?,
                                 minAdDate: Date?,
                                 sold:Boolean?, minSaleDate: Date?){

@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.view.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.model.sqlite.support.PropertySearchSettings
 import com.openclassrooms.realestatemanager.view.fragments.NavigationBaseFragment
 import com.openclassrooms.realestatemanager.view.fragments.NavigationListFragment
 import com.openclassrooms.realestatemanager.view.fragments.NavigationMapFragment
@@ -44,6 +46,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private lateinit var navigationFragment: NavigationBaseFragment
     private val addButton by lazy {activity_main_button_add}
     private val bottomNavigationBar by lazy {activity_main_navigation_bottom}
+
+    /*********************************************************************************************
+     * Data
+     ********************************************************************************************/
+
+    private var settings:PropertySearchSettings= PropertySearchSettings()
 
     /*********************************************************************************************
      * Life cycle
@@ -128,6 +136,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
      * Intents management
      ********************************************************************************************/
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            KEY_REQUEST_PROPERTY_SEARCH->handlePropertySearchResult(resultCode, data)
+        }
+    }
+
     fun startPropertyDetailActivity(propertyId:Int){
         val propertyDetailIntent= Intent(this, PropertyDetailActivity::class.java)
         propertyDetailIntent.putExtra(KEY_BUNDLE_PROPERTY_ID, propertyId)
@@ -141,26 +156,32 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     fun startPropertySearchActivity(){
         val propertySearchIntent= Intent(this, PropertySearchActivity::class.java)
-        startActivity(propertySearchIntent)
+        propertySearchIntent.putExtra(KEY_BUNDLE_PROPERTY_SETTINGS, this.settings)
+        startActivityForResult(propertySearchIntent, KEY_REQUEST_PROPERTY_SEARCH)
+    }
+
+    private fun handlePropertySearchResult(resultCode:Int, data:Intent?){
+        if(resultCode== Activity.RESULT_OK&&data!=null&&data.hasExtra(KEY_BUNDLE_PROPERTY_SETTINGS)){
+            this.settings=data.getParcelableExtra(KEY_BUNDLE_PROPERTY_SETTINGS)
+            runComplexPropertyQuery()
+        }
     }
 
     /*********************************************************************************************
      * Run queries to get and show properties
      ********************************************************************************************/
 
-    fun runComplexPropertyQuery(minPrice:Int?, maxPrice:Int?,
-                                typeIds:List<Int>,
-                                minSize:Int?, maxSize:Int?,
-                                minNbRooms:Int?, maxNbRooms:Int?,
-                                extrasIds:List<Int>,
-                                postalCode:String?, city:String?, country:String?,
-                                minAdDate: Date?,
-                                sold:Boolean?, minSaleDate:Date?){
-
-        //TODO change this, create a parent Fragment
+    fun runComplexPropertyQuery(){
 
         this.navigationFragment.runComplexPropertyQuery(
-                minPrice, maxPrice, typeIds, minSize, maxSize, minNbRooms, maxNbRooms,
-                extrasIds, postalCode, city, country, minAdDate, sold, minSaleDate)
+                this.settings.minPrice, this.settings.maxPrice,
+                this.settings.typeIds.toList(),
+                this.settings.minSize, this.settings.maxSize,
+                this.settings.minNbRooms, this.settings.maxNbRooms,
+                this.settings.extrasIds.toList(),
+                this.settings.postalCode, this.settings.city, this.settings.country,
+                this.settings.minAdDate,
+                this.settings.sold,
+                this.settings.minSaleDate)
     }
 }

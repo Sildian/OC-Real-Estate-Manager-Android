@@ -117,6 +117,19 @@ public class Utils {
         return calendar.getTime();
     }
 
+    /**Calculates the difference between two dates in months
+     * @param firstDate : the first date
+     * @param secondDate : the second date
+     * @return the difference in months
+     */
+
+    public static int calculateDifferenceBetweenDates(Date firstDate, Date secondDate){
+        long diffMilliseconds=firstDate.getTime()-secondDate.getTime();
+        int diffDays=(int)(diffMilliseconds/86400000);
+        int diffMonths=diffDays/30;
+        return diffMonths;
+    }
+
     /**Gets a formated figure with thousands separators
      * @param figure : the figure (int)
      * @return the formated figure (String)

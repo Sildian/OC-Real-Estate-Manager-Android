@@ -1,11 +1,13 @@
 package com.openclassrooms.realestatemanager.view.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.model.sqlite.support.PropertySearchSettings
 import com.openclassrooms.realestatemanager.view.fragments.PropertySearchFragment
 import kotlinx.android.synthetic.main.activity_property_search.*
 
@@ -45,10 +47,8 @@ class PropertySearchActivity : BaseActivity() {
 
         if(item!=null&&item.groupId==R.id.menu_toolbar_search_group){
 
-            //TODO add actions
-
             when(item.itemId){
-                R.id.menu_toolbar_search-> Log.d("TAG_MENU", "Do something")
+                R.id.menu_toolbar_search-> this.fragment.sendQuerySettings()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -61,5 +61,16 @@ class PropertySearchActivity : BaseActivity() {
     private fun initializeToolbar(){
         setSupportActionBar(this.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    }
+
+    /*********************************************************************************************
+     * Intents management
+     ********************************************************************************************/
+
+    fun sendActivityResult(settings:PropertySearchSettings){
+        val resultIntent= Intent()
+        resultIntent.putExtra(KEY_BUNDLE_PROPERTY_SETTINGS, settings)
+        setResult(Activity.RESULT_OK, resultIntent)
+        finish()
     }
 }

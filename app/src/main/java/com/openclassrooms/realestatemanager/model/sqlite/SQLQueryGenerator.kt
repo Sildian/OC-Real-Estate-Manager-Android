@@ -15,10 +15,10 @@ object SQLQueryGenerator {
 
     fun generatePropertyQuery(
             minPrice:Int?=null, maxPrice:Int?=null,
-            typeIds:List<Int> =emptyList(),
+            typeIds:List<Int?> =emptyList(),
             minSize:Int?=null, maxSize:Int?=null,
             minNbRooms:Int?=null, maxNbRooms:Int?=null,
-            extrasIds:List<Int> = emptyList(),
+            extrasIds:List<Int?> = emptyList(),
             postalCode:String?=null, city:String?=null, country:String?=null,
             realtorId:String?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
@@ -38,10 +38,10 @@ object SQLQueryGenerator {
 
     fun generatePropertyQueryString(
             minPrice:Int?=null, maxPrice:Int?=null,
-            typeIds:List<Int> =emptyList(),
+            typeIds:List<Int?> =emptyList(),
             minSize:Int?=null, maxSize:Int?=null,
             minNbRooms:Int?=null, maxNbRooms:Int?=null,
-            extrasIds:List<Int> =emptyList(),
+            extrasIds:List<Int?> =emptyList(),
             postalCode:String?=null, city:String?=null, country:String?=null,
             realtorId:String?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
@@ -200,7 +200,7 @@ object SQLQueryGenerator {
      * @return a piece of query to be added in WHERE statement
      */
 
-    fun generateListFilter(fieldName:String, criterias:List<Int>):String {
+    fun generateListFilter(fieldName:String, criterias:List<Int?>):String {
 
         val result=StringBuilder("")
 

@@ -17,18 +17,20 @@ class PropertySearchSettings :Parcelable{
 
     var minPrice:Int?=null
     var maxPrice:Int?=null
-    var typeIds:ArrayList<Int> = arrayListOf()
+    var typeIds:ArrayList<Int?> = arrayListOf()
     var minSize:Int?=null
     var maxSize:Int?=null
     var minNbRooms:Int?=null
     var maxNbRooms:Int?=null
-    var extrasIds:ArrayList<Int> = arrayListOf()
+    var extrasIds:ArrayList<Int?> = arrayListOf()
     var postalCode:String?=null
     var city:String?=null
     var country:String?=null
     var minAdDate: Date?=null
+    var minAdDateId:Int?=null
     var sold:Boolean?=null
     var minSaleDate:Date?=null
+    var minSaleDateId:Int?=null
 
     /*********************************************************************************************
      * Needed empty constructor

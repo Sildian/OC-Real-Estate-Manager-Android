@@ -59,7 +59,14 @@ public class UtilsTest {
         Date expectedDate=(Utils.getDateFromString(Utils.getDate(2018, 6, 3)));
         assertEquals(expectedDate, Utils.offsetDate(actualDate, -1, -3, -2));
     }
-    
+
+    @Test
+    public void given_5oct2019and5Jun2019_when_calculateDifferenceBetweenDates_then_check_result_3(){
+        Date firstDate=Utils.getDateFromString(Utils.getDate(2019, 9, 5));
+        Date secondDate=Utils.getDateFromString(Utils.getDate(2019, 6, 5));
+        assertEquals(3, Utils.calculateDifferenceBetweenDates(firstDate, secondDate));
+    }
+
     @Test
     public void given_1000000_when_getFormatedFigure_then_check_result_1000000(){
         Locale.setDefault(Locale.US);
