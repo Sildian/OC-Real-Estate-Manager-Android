@@ -14,14 +14,11 @@ object SQLQueryGenerator {
     /**Generates a query for table Property**/
 
     fun generatePropertyQuery(
-            minPrice:String?=null, maxPrice:String?=null,
-            typeIds:List<String> =emptyList(),
-            minSize:String?=null, maxSize:String?=null,
-            minNbRooms:String?=null, maxNbRooms:String?=null,
-            minNbBedrooms:String?=null, maxNbBedrooms:String?=null,
-            minNbBathrooms:String?=null, maxNbBathrooms:String?=null,
-            minBuildYear:String?=null, maxBuildYear:String?=null,
-            extrasIds:List<String> = emptyList(),
+            minPrice:Int?=null, maxPrice:Int?=null,
+            typeIds:List<Int> =emptyList(),
+            minSize:Int?=null, maxSize:Int?=null,
+            minNbRooms:Int?=null, maxNbRooms:Int?=null,
+            extrasIds:List<Int> = emptyList(),
             postalCode:String?=null, city:String?=null, country:String?=null,
             realtorId:String?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
@@ -31,8 +28,7 @@ object SQLQueryGenerator {
             : SupportSQLiteQuery {
 
         val query = generatePropertyQueryString(minPrice, maxPrice, typeIds, minSize, maxSize,
-                minNbRooms, maxNbRooms, minNbBedrooms, maxNbBedrooms, minNbBathrooms, maxNbBathrooms,
-                minBuildYear, maxBuildYear, extrasIds, postalCode, city, country, realtorId,
+                minNbRooms, maxNbRooms, extrasIds, postalCode, city, country, realtorId,
                 minAdDate, maxAdDate, sold, minSaleDate, maxSaleDate, orderCriteria, orderDesc)
 
         return SimpleSQLiteQuery(query)
@@ -41,14 +37,11 @@ object SQLQueryGenerator {
     /**Generates a String containing a query for table Property**/
 
     fun generatePropertyQueryString(
-            minPrice:String?=null, maxPrice:String?=null,
-            typeIds:List<String> =emptyList(),
-            minSize:String?=null, maxSize:String?=null,
-            minNbRooms:String?=null, maxNbRooms:String?=null,
-            minNbBedrooms:String?=null, maxNbBedrooms:String?=null,
-            minNbBathrooms:String?=null, maxNbBathrooms:String?=null,
-            minBuildYear:String?=null, maxBuildYear:String?=null,
-            extrasIds:List<String> =emptyList(),
+            minPrice:Int?=null, maxPrice:Int?=null,
+            typeIds:List<Int> =emptyList(),
+            minSize:Int?=null, maxSize:Int?=null,
+            minNbRooms:Int?=null, maxNbRooms:Int?=null,
+            extrasIds:List<Int> =emptyList(),
             postalCode:String?=null, city:String?=null, country:String?=null,
             realtorId:String?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
@@ -64,9 +57,6 @@ object SQLQueryGenerator {
         tempFilters.add(generateListFilter("typeId", typeIds))
         tempFilters.add(generateRangeFilter("size", minSize, maxSize))
         tempFilters.add(generateRangeFilter("nbRooms", minNbRooms, maxNbRooms))
-        tempFilters.add(generateRangeFilter("nbBedrooms", minNbBedrooms, maxNbBedrooms))
-        tempFilters.add(generateRangeFilter("nbBathrooms", minNbBathrooms, maxNbBathrooms))
-        tempFilters.add(generateRangeFilter("buildYear", minBuildYear, maxBuildYear))
         tempFilters.add(generateListFilter("extraId", extrasIds))
         tempFilters.add(generateLikeFilter("postalCode", postalCode, false, true))
         tempFilters.add(generateSimpleFilter("city", city))
@@ -167,17 +157,17 @@ object SQLQueryGenerator {
      * @return a piece of query to be added in WHERE statement
      */
 
-    fun generateRangeFilter(fieldName:String, minCriteria:String?, maxCriteria:String?):String{
+    fun generateRangeFilter(fieldName:String, minCriteria:Int?, maxCriteria:Int?):String{
         var result=""
         when{
 
-            !minCriteria.isNullOrEmpty()&&maxCriteria.isNullOrEmpty()->
+            minCriteria!=null&&maxCriteria==null->
                 result="$fieldName>=$minCriteria"
 
-            minCriteria.isNullOrEmpty()&&!maxCriteria.isNullOrEmpty()->
+            minCriteria==null&&maxCriteria!=null->
                 result="$fieldName<=$maxCriteria"
 
-            !minCriteria.isNullOrEmpty()&&!maxCriteria.isNullOrEmpty()->
+            minCriteria!=null&&maxCriteria!=null->
                 result="$fieldName BETWEEN $minCriteria AND $maxCriteria"
         }
         return result
@@ -210,7 +200,7 @@ object SQLQueryGenerator {
      * @return a piece of query to be added in WHERE statement
      */
 
-    fun generateListFilter(fieldName:String, criterias:List<String>):String {
+    fun generateListFilter(fieldName:String, criterias:List<Int>):String {
 
         val result=StringBuilder("")
 

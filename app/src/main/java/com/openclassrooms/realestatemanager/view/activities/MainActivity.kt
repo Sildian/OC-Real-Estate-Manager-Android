@@ -148,12 +148,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
      * Run queries to get and show properties
      ********************************************************************************************/
 
-    fun runComplexPropertyQuery(minPrice:String?, maxPrice:String?,
-                                typeIds:List<String>,
-                                minSize:String?, maxSize:String?,
-                                minNbRooms:String?, maxNbRooms:String?,
-                                minBuildYear:String?, maxBuildYear:String?,
-                                extrasIds:List<String>,
+    fun runComplexPropertyQuery(minPrice:Int?, maxPrice:Int?,
+                                typeIds:List<Int>,
+                                minSize:Int?, maxSize:Int?,
+                                minNbRooms:Int?, maxNbRooms:Int?,
+                                extrasIds:List<Int>,
                                 postalCode:String?, city:String?, country:String?,
                                 minAdDate: Date?,
                                 sold:Boolean?, minSaleDate:Date?){
@@ -162,7 +161,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         this.navigationFragment.runComplexPropertyQuery(
                 minPrice, maxPrice, typeIds, minSize, maxSize, minNbRooms, maxNbRooms,
-                minBuildYear, maxBuildYear, extrasIds, postalCode, city, country,
-                minAdDate, sold, minSaleDate)
+                extrasIds, postalCode, city, country, minAdDate, sold, minSaleDate)
     }
 }

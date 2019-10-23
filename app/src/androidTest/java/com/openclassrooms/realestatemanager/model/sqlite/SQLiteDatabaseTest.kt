@@ -89,9 +89,9 @@ class SQLiteDatabaseTest{
         this.database.propertyDAO.insertProperty(p2)
         this.database.propertyDAO.insertProperty(p3)
 
-        val maxPrice="300000"
-        val minSize="50"
-        val maxSize="100"
+        val maxPrice=300000
+        val minSize=50
+        val maxSize=100
         val properties=LiveDataTestUtil.getValue(
                 this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
                         maxPrice=maxPrice, minSize=minSize, maxSize=maxSize)))
@@ -141,8 +141,8 @@ class SQLiteDatabaseTest{
         this.database.propertyDAO.insertProperty(p2)
         this.database.propertyDAO.insertProperty(p3)
 
-        val typeIds=listOf("1", "3")
-        val minNbRooms="3"
+        val typeIds=listOf(1, 3)
+        val minNbRooms=3
         val properties=LiveDataTestUtil.getValue(
                 this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
                         typeIds=typeIds, minNbRooms = minNbRooms)))
@@ -230,7 +230,7 @@ class SQLiteDatabaseTest{
         this.database.extrasPerPropertyDAO.insertPropertyExtra(p3Extra2)
         this.database.extrasPerPropertyDAO.insertPropertyExtra(p3Extra3)
 
-        val extrasIds=listOf("1", "3")
+        val extrasIds=listOf(1, 3)
 
         val properties=LiveDataTestUtil.getValue(
                 this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(

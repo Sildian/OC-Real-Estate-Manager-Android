@@ -74,12 +74,11 @@ abstract class NavigationBaseFragment : Fragment() {
         })
     }
 
-    fun runComplexPropertyQuery(minPrice:String?, maxPrice:String?,
-                                typeIds:List<String>,
-                                minSize:String?, maxSize:String?,
-                                minNbRooms:String?, maxNbRooms:String?,
-                                minBuildYear:String?, maxBuildYear:String?,
-                                extrasIds:List<String>,
+    fun runComplexPropertyQuery(minPrice:Int?, maxPrice:Int?,
+                                typeIds:List<Int>,
+                                minSize:Int?, maxSize:Int?,
+                                minNbRooms:Int?, maxNbRooms:Int?,
+                                extrasIds:List<Int>,
                                 postalCode:String?, city:String?, country:String?,
                                 minAdDate: Date?,
                                 sold:Boolean?, minSaleDate: Date?){
@@ -93,7 +92,6 @@ abstract class NavigationBaseFragment : Fragment() {
                 typeIds = typeIds,
                 minSize=minSize, maxSize=maxSize,
                 minNbRooms=minNbRooms, maxNbRooms=maxNbRooms,
-                minBuildYear=minBuildYear, maxBuildYear=maxBuildYear,
                 extrasIds=extrasIds,
                 postalCode=postalCode, city=city, country=country,
                 minAdDate=minAdDate,

@@ -21,9 +21,9 @@ class SQLQueryGeneratorTest {
 
     @Test
     fun given_maxPriceMinSizeMaxSize_when_generatePropertyQueryString_then_checkResult(){
-        val maxPrice="300000"
-        val minSize="50"
-        val maxSize="100"
+        val maxPrice=300000
+        val minSize=50
+        val maxSize=100
         val expectedResult="SELECT * FROM Property WHERE price<=300000 AND size BETWEEN 50 AND 100;"
         assertEquals(expectedResult, SQLQueryGenerator.generatePropertyQueryString(
                 maxPrice=maxPrice, minSize = minSize, maxSize = maxSize))
@@ -39,8 +39,8 @@ class SQLQueryGeneratorTest {
 
     @Test
     fun given_typeIdsMinNbRooms_when_generatePropertyQueryString_then_checkResult(){
-        val typeIds=listOf("1", "3")
-        val minNbRooms="3"
+        val typeIds=listOf(1, 3)
+        val minNbRooms=3
         val expectedResult="SELECT * FROM Property WHERE typeId IN (1, 3) AND nbRooms>=3;"
         assertEquals(expectedResult, SQLQueryGenerator.generatePropertyQueryString(
                 typeIds=typeIds, minNbRooms = minNbRooms))
@@ -66,7 +66,7 @@ class SQLQueryGeneratorTest {
 
     @Test
     fun given_extrasIds_when_generatePropertyQueryString_then_checkResult(){
-        val extrasIds=listOf("1", "3")
+        val extrasIds=listOf(1, 3)
         val expectedResult="SELECT * FROM Property INNER JOIN ExtrasPerProperty ON Property.id=ExtrasPerProperty.propertyId WHERE extraId IN (1, 3);"
         assertEquals(expectedResult, SQLQueryGenerator.generatePropertyQueryString(
                 extrasIds=extrasIds))
@@ -107,7 +107,7 @@ class SQLQueryGeneratorTest {
     @Test
     fun given_priceMin200000_when_generateRangeFilter_then_checkResult(){
         val fieldName="price"
-        val min="200000"
+        val min=200000
         val max=null
         val expectedResult="price>=200000"
         assertEquals(expectedResult, SQLQueryGenerator.generateRangeFilter(fieldName, min, max))
@@ -117,7 +117,7 @@ class SQLQueryGeneratorTest {
     fun given_priceMax500000_when_generateRangeFilter_then_checkResult(){
         val fieldName="price"
         val min=null
-        val max="500000"
+        val max=500000
         val expectedResult="price<=500000"
         assertEquals(expectedResult, SQLQueryGenerator.generateRangeFilter(fieldName, min, max))
     }
@@ -125,8 +125,8 @@ class SQLQueryGeneratorTest {
     @Test
     fun given_priceBetween200000And500000_when_generateRangeFilter_then_checkResult(){
         val fieldName="price"
-        val min="200000"
-        val max="500000"
+        val min=200000
+        val max=500000
         val expectedResult="price BETWEEN 200000 AND 500000"
         assertEquals(expectedResult, SQLQueryGenerator.generateRangeFilter(fieldName, min, max))
     }
@@ -146,7 +146,7 @@ class SQLQueryGeneratorTest {
     @Test
     fun given_typeId4_when_generateListFilter_then_checkResult(){
         val fieldName="typeId"
-        val criterias=listOf("4")
+        val criterias=listOf(4)
         val expectedResult="typeId=4"
         assertEquals(expectedResult, SQLQueryGenerator.generateListFilter(fieldName, criterias))
     }
@@ -154,7 +154,7 @@ class SQLQueryGeneratorTest {
     @Test
     fun given_typeId2and5and6_when_generateListFilter_then_checkResult(){
         val fieldName="typeId"
-        val criterias=listOf("2", "5", "6")
+        val criterias=listOf(2, 5, 6)
         val expectedResult="typeId IN (2, 5, 6)"
         assertEquals(expectedResult, SQLQueryGenerator.generateListFilter(fieldName, criterias))
     }
