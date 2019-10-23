@@ -1,82 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.fragments.PropertySearchFragment">
+    tools:context=".view.fragments.PropertySearchFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <ScrollView
+        android:id="@+id/fragment_property_search_main"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/fragment_property_search_buttons_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!--Price-->
-
-        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            app:expand_text="@string/hint_property_price"
-            app:expand_text_padding="@dimen/components_margin_medium"
-            app:expand_textSize="@dimen/text_size_title"
-            app:expand_status="collapsed">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <!--Price-->
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_medium"
+                android:textSize="@dimen/text_size_title"
+                android:text="@string/hint_property_price"
+                android:drawableStart="@drawable/ic_currency_black"
+                android:drawablePadding="@dimen/components_margin_small"/>
+
+            <com.appyvet.materialrangebar.RangeBar
+                android:id="@+id/fragment_property_search_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/components_margin_medium"
+                app:mrb_tickStart="0"
+                app:mrb_tickEnd="800"
+                app:mrb_tickInterval="100"
+                app:mrb_tickHeight="2dp"
+                app:mrb_tickDefaultColor="@color/colorAccent"
+                app:mrb_tickBottomLabels="@array/choice_price_range"
+                app:mrb_pinMinFont="@dimen/text_size_body"
+                app:mrb_pinMaxFont="@dimen/text_size_body"
+                app:mrb_pinColor="@android:color/transparent"
+                app:mrb_pinTextColor="@color/colorPrimary"
+                app:mrb_connectingLineColor="@color/colorAccent"
+                app:mrb_selectorColor="@color/colorAccent"/>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_min"
-                    android:layout_margin="@dimen/components_margin_medium">
+            <!--Type-->
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_search_price_min"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textSize="@dimen/text_size_body" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_max"
-                    android:layout_margin="@dimen/components_margin_medium">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_search_price_max"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textSize="@dimen/text_size_body" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
-
-        <!--Type-->
-
-        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            app:expand_text="@string/hint_property_type"
-            app:expand_text_padding="@dimen/components_margin_medium"
-            app:expand_textSize="@dimen/text_size_title"
-            app:expand_status="collapsed">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_medium"
+                android:textSize="@dimen/text_size_title"
+                android:text="@string/hint_property_type"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/fragment_property_search_types"
@@ -84,190 +67,73 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"/>
 
-        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
+            <!--Size-->
 
-        <!--Size-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_medium"
+                android:textSize="@dimen/text_size_title"
+                android:text="@string/hint_property_size"
+                android:drawableStart="@drawable/ic_size_black"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
-        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            app:expand_text="@string/hint_property_size"
-            app:expand_text_padding="@dimen/components_margin_medium"
-            app:expand_textSize="@dimen/text_size_title"
-            app:expand_status="collapsed">
-
-            <LinearLayout
+            <com.appyvet.materialrangebar.RangeBar
+                android:id="@+id/fragment_property_search_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/components_margin_medium"
+                app:mrb_tickStart="0"
+                app:mrb_tickEnd="300"
+                app:mrb_tickInterval="50"
+                app:mrb_tickHeight="2dp"
+                app:mrb_tickDefaultColor="@color/colorAccent"
+                app:mrb_tickBottomLabels="@array/choice_size_range"
+                app:mrb_pinMinFont="@dimen/text_size_body"
+                app:mrb_pinMaxFont="@dimen/text_size_body"
+                app:mrb_pinColor="@android:color/transparent"
+                app:mrb_pinTextColor="@color/colorPrimary"
+                app:mrb_connectingLineColor="@color/colorAccent"
+                app:mrb_selectorColor="@color/colorAccent"/>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_min"
-                    android:layout_margin="@dimen/components_margin_medium">
+            <!--Nb rooms-->
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_search_size_min"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textSize="@dimen/text_size_body" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_medium"
+                android:textSize="@dimen/text_size_title"
+                android:text="@string/hint_property_nb_rooms"
+                android:drawableStart="@drawable/ic_nb_rooms_black"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_max"
-                    android:layout_margin="@dimen/components_margin_medium">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_search_size_max"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textSize="@dimen/text_size_body" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
-
-        <!--Nb rooms-->
-
-        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            app:expand_text="@string/hint_property_nb_rooms"
-            app:expand_text_padding="@dimen/components_margin_medium"
-            app:expand_textSize="@dimen/text_size_title"
-            app:expand_status="collapsed">
-
-            <LinearLayout
+            <com.appyvet.materialrangebar.RangeBar
+                android:id="@+id/fragment_property_search_nb_rooms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/components_margin_medium"
+                app:mrb_tickStart="1"
+                app:mrb_tickEnd="8"
+                app:mrb_tickInterval="1"
+                app:mrb_tickHeight="2dp"
+                app:mrb_tickDefaultColor="@color/colorAccent"
+                app:mrb_tickBottomLabels="@array/choice_nb_rooms_range"
+                app:mrb_pinMinFont="@dimen/text_size_body"
+                app:mrb_pinMaxFont="@dimen/text_size_body"
+                app:mrb_pinColor="@android:color/transparent"
+                app:mrb_pinTextColor="@color/colorPrimary"
+                app:mrb_connectingLineColor="@color/colorAccent"
+                app:mrb_selectorColor="@color/colorAccent"/>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_min"
-                    android:layout_margin="@dimen/components_margin_medium">
+            <!--Extras-->
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_search_nb_rooms_min"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textSize="@dimen/text_size_body" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_max"
-                    android:layout_margin="@dimen/components_margin_medium">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_search_nb_rooms_max"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textSize="@dimen/text_size_body" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
-
-        <!--Build year-->
-
-        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            app:expand_text="@string/hint_property_build_date"
-            app:expand_text_padding="@dimen/components_margin_medium"
-            app:expand_textSize="@dimen/text_size_title"
-            app:expand_status="collapsed">
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:textSize="@dimen/text_size_title"
-                    android:text="@string/hint_property_build_date"
-                    android:drawableStart="@drawable/ic_date_black"
-                    android:drawablePadding="@dimen/components_margin_small"/>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_min"
-                    android:layout_margin="@dimen/components_margin_medium">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_search_build_date_min"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textSize="@dimen/text_size_body"
-                        android:maxLength="4"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/hint_max"
-                    android:layout_margin="@dimen/components_margin_medium">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_search_build_date_max"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:textSize="@dimen/text_size_body"
-                        android:maxLength="4"/>
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
-
-        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
-
-        <!--Extras-->
-
-        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            app:expand_text="@string/label_property_extras"
-            app:expand_text_padding="@dimen/components_margin_medium"
-            app:expand_textSize="@dimen/text_size_title"
-            app:expand_status="collapsed">
+                android:layout_margin="@dimen/components_margin_medium"
+                android:textSize="@dimen/text_size_title"
+                android:text="@string/label_property_extras"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/fragment_property_search_extras"
@@ -275,19 +141,15 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"/>
 
-        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
+            <!--Location-->
 
-        <!--Location-->
-
-        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            app:expand_text="@string/label_property_location"
-            app:expand_text_padding="@dimen/components_margin_medium"
-            app:expand_textSize="@dimen/text_size_title"
-            app:expand_status="collapsed">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_medium"
+                android:textSize="@dimen/text_size_title"
+                android:text="@string/label_property_location"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -344,19 +206,15 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
+            <!--Other information-->
 
-        <!--Ad date-->
-
-        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            app:expand_text="@string/hint_property_ad_date"
-            app:expand_text_padding="@dimen/components_margin_medium"
-            app:expand_textSize="@dimen/text_size_title"
-            app:expand_status="collapsed">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_medium"
+                android:textSize="@dimen/text_size_title"
+                android:text="@string/label_property_other_information"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -365,28 +223,14 @@
                 style="@style/TextInputLayoutThemeDropdownMenu"
                 android:layout_margin="@dimen/components_margin_medium">
 
-            <AutoCompleteTextView
-                android:id="@+id/fragment_property_search_ad_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_body"
-                android:editable="false"/>
+                <AutoCompleteTextView
+                    android:id="@+id/fragment_property_search_ad_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_body"
+                    android:editable="false"/>
 
             </com.google.android.material.textfield.TextInputLayout>
-
-        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
-
-        <!--Sold status-->
-
-        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            app:expand_text="@string/label_property_sold"
-            app:expand_text_padding="@dimen/components_margin_medium"
-            app:expand_textSize="@dimen/text_size_title"
-            app:expand_status="collapsed">
 
             <RadioGroup
                 android:id="@+id/fragment_property_search_sold"
@@ -423,20 +267,6 @@
 
             </RadioGroup>
 
-        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
-
-        <!--Sale date-->
-
-        <com.openclassrooms.realestatemanager.view.custom.ExpandLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            app:expand_text="@string/hint_property_sale_date"
-            app:expand_text_padding="@dimen/components_margin_medium"
-            app:expand_textSize="@dimen/text_size_title"
-            app:expand_status="collapsed">
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -453,9 +283,21 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-        </com.openclassrooms.realestatemanager.view.custom.ExpandLayout>
+        </LinearLayout>
 
-        <!--Buttons bar-->
+    </ScrollView>
+
+    <!--Buttons bar-->
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/fragment_property_search_buttons_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_property_search_main"
+        app:cardElevation="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -483,6 +325,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

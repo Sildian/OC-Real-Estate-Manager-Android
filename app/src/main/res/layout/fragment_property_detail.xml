@@ -99,7 +99,8 @@
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
                     android:text="@string/hint_property_size"
-                    android:drawableStart="@drawable/ic_size_black"/>
+                    android:drawableStart="@drawable/ic_size_black"
+                    android:drawablePadding="@dimen/components_margin_small"/>
 
                 <TextView
                     android:id="@+id/fragment_property_detail_size"
@@ -126,7 +127,8 @@
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
                     android:text="@string/hint_property_nb_rooms"
-                    android:drawableStart="@drawable/ic_nb_rooms_black"/>
+                    android:drawableStart="@drawable/ic_nb_rooms_black"
+                    android:drawablePadding="@dimen/components_margin_small"/>
 
                 <TextView
                     android:id="@+id/fragment_property_detail_nb_rooms"
@@ -160,7 +162,8 @@
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
                     android:text="@string/hint_property_nb_bedrooms"
-                    android:drawableStart="@drawable/ic_nb_bedrooms_black"/>
+                    android:drawableStart="@drawable/ic_nb_bedrooms_black"
+                    android:drawablePadding="@dimen/components_margin_small"/>
 
                 <TextView
                     android:id="@+id/fragment_property_detail_nb_bedrooms"
@@ -187,7 +190,8 @@
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
                     android:text="@string/hint_property_nb_bathrooms"
-                    android:drawableStart="@drawable/ic_nb_bathrooms_black"/>
+                    android:drawableStart="@drawable/ic_nb_bathrooms_black"
+                    android:drawablePadding="@dimen/components_margin_small"/>
 
                 <TextView
                     android:id="@+id/fragment_property_detail_nb_bathrooms"
@@ -215,7 +219,8 @@
                 android:textSize="@dimen/text_size_body"
                 android:textColor="@android:color/black"
                 android:text="@string/hint_property_build_date"
-                android:drawableStart="@drawable/ic_date_black"/>
+                android:drawableStart="@drawable/ic_date_black"
+                android:drawablePadding="@dimen/components_margin_small"/>
 
             <TextView
                 android:id="@+id/fragment_property_detail_build_date"
@@ -305,7 +310,8 @@
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
                     android:text="@string/hint_property_realtor"
-                    android:drawableStart="@drawable/ic_realtor_black"/>
+                    android:drawableStart="@drawable/ic_realtor_black"
+                    android:drawablePadding="@dimen/components_margin_small"/>
 
                 <TextView
                     android:id="@+id/fragment_property_detail_realtor"
@@ -330,7 +336,8 @@
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
                     android:text="@string/hint_property_ad_date"
-                    android:drawableStart="@drawable/ic_date_black"/>
+                    android:drawableStart="@drawable/ic_date_black"
+                    android:drawablePadding="@dimen/components_margin_small"/>
 
                 <TextView
                     android:id="@+id/fragment_property_detail_ad_date"

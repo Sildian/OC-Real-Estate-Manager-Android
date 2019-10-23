@@ -9,7 +9,6 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.view.dialogs.SettingsBottomSheetFragment
 import com.openclassrooms.realestatemanager.view.fragments.NavigationBaseFragment
 import com.openclassrooms.realestatemanager.view.fragments.NavigationListFragment
 import com.openclassrooms.realestatemanager.view.fragments.NavigationMapFragment
@@ -45,7 +44,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private lateinit var navigationFragment: NavigationBaseFragment
     private val addButton by lazy {activity_main_button_add}
     private val bottomNavigationBar by lazy {activity_main_navigation_bottom}
-    private lateinit var settingsBottomSheetFragment:SettingsBottomSheetFragment
 
     /*********************************************************************************************
      * Life cycle
@@ -74,7 +72,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         if(item!=null&&item.groupId==R.id.menu_toolbar_group){
 
             when(item.itemId){
-                R.id.menu_toolbar_search-> showSettingsBottomSheetFragment()
+                R.id.menu_toolbar_search-> startPropertySearchActivity()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -126,11 +124,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 R.id.activity_main_fragment_navigation, this.navigationFragment).commit()
     }
 
-    private fun showSettingsBottomSheetFragment(){
-        this.settingsBottomSheetFragment= SettingsBottomSheetFragment()
-        this.settingsBottomSheetFragment.show(supportFragmentManager, "settingsBottomSheetFragment")
-    }
-
     /*********************************************************************************************
      * Intents management
      ********************************************************************************************/
@@ -144,6 +137,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     fun startPropertyEditActivity(){
         val propertyEditIntent= Intent(this, PropertyEditActivity::class.java)
         startActivity(propertyEditIntent)
+    }
+
+    fun startPropertySearchActivity(){
+        val propertySearchIntent= Intent(this, PropertySearchActivity::class.java)
+        startActivity(propertySearchIntent)
     }
 
     /*********************************************************************************************

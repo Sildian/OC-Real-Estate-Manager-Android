@@ -13,7 +13,6 @@ import com.openclassrooms.realestatemanager.model.coremodel.Extra
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.activities.MainActivity
-import com.openclassrooms.realestatemanager.view.dialogs.SettingsBottomSheetFragment
 import kotlinx.android.synthetic.main.fragment_property_search.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,24 +27,20 @@ class PropertySearchFragment : PropertyBaseFragment() {
      * UI components
      ********************************************************************************************/
 
-    private val minPriceText by lazy {layout.fragment_property_search_price_min}
-    private val maxPriceText by lazy {layout.fragment_property_search_price_max}
+    private val priceRangeBar by lazy {layout.fragment_property_search_price}
     private val typesChipGroup by lazy {layout.fragment_property_search_types}
     private val typesChips=ArrayList<Chip>()
-    private val minSizeText by lazy {layout.fragment_property_search_size_min}
-    private val maxSizeText by lazy {layout.fragment_property_search_size_max}
-    private val minNbRoomsText by lazy {layout.fragment_property_search_nb_rooms_min}
-    private val maxNbRoomsText by lazy {layout.fragment_property_search_nb_rooms_max}
-    private val minBuildYearText by lazy {layout.fragment_property_search_build_date_min}
-    private val maxBuildYearText by lazy {layout.fragment_property_search_build_date_max}
+    private val sizeRangeBar by lazy {layout.fragment_property_search_size}
+    private val nbRoomsRangeBar by lazy {layout.fragment_property_search_nb_rooms}
     private val extrasChipGroup by lazy {layout.fragment_property_search_extras}
     private val extrasChips=ArrayList<Chip>()
     private val postalCodeText by lazy {layout.fragment_property_search_postal_code}
     private val cityText by lazy {layout.fragment_property_search_city}
-    private val country by lazy {layout.fragment_property_search_country}
+    private val countryText by lazy {layout.fragment_property_search_country}
     private val adDateTextDropDown by lazy {layout.fragment_property_search_ad_date}
     private val soldRadioGroup by lazy {layout.fragment_property_search_sold}
     private val saleDateTextDropDown by lazy {layout.fragment_property_search_sale_date}
+    private val buttonsBar by lazy {layout.fragment_property_search_buttons_bar}
     private val backButton by lazy {layout.fragment_property_search_button_back}
     private val searchButton by lazy {layout.fragment_property_search_button_search}
 
@@ -60,8 +55,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
         initializeAdDateTextDropDown()
         initializeSoldRadioGroup()
         initializeSaleDateTextDropDown()
-        initializeBackButton()
-        initializeSearchButton()
+        initializeButtons()
         return this.layout
     }
 
@@ -101,22 +95,16 @@ class PropertySearchFragment : PropertyBaseFragment() {
                 resources.getStringArray(R.array.choice_date_range).toList())
     }
 
-    private fun initializeBackButton(){
+    private fun initializeButtons(){
 
         //TODO improve for tablet
 
-        this.backButton.setOnClickListener {
-            (parentFragment as SettingsBottomSheetFragment).dismiss()
-        }
-    }
+        this.buttonsBar.visibility=View.GONE
 
-    private fun initializeSearchButton(){
-
-        //TODO improve for tablet
-
+        this.backButton.setOnClickListener {activity!!.finish()}
         this.searchButton.setOnClickListener {
 
-            (activity!! as MainActivity).runComplexPropertyQuery(
+            /*(activity!! as MainActivity).runComplexPropertyQuery(
                     this.minPriceText.text.toString(), this.maxPriceText.text.toString(),
                     getIdsFromChips(this.typesChips, PropertyType::class.java).map { it.toString() },
                     this.minSizeText.text.toString(), this.maxSizeText.text.toString(),
@@ -126,9 +114,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
                     this.postalCodeText.text.toString(), this.cityText.text.toString(), this.country.text.toString(),
                     getOffsetDateFromDateTextDropDown(this.adDateTextDropDown),
                     getSoldStatusFromSoldRadioGroup(), getOffsetDateFromDateTextDropDown(this.saleDateTextDropDown)
-                    )
-
-            (parentFragment as SettingsBottomSheetFragment).dismiss()
+                    )*/
         }
     }
 

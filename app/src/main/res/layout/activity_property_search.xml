@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.PropertyDetailActivity"
+    tools:context=".view.activities.PropertySearchActivity"
     android:orientation="vertical">
 
     <include
         layout="@layout/toolbar_main"
-        android:id="@+id/activity_property_detail_toolbar"
+        android:id="@+id/activity_property_search_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <fragment
-        android:id="@+id/activity_property_detail_fragment"
-        android:name="com.openclassrooms.realestatemanager.view.fragments.PropertyDetailFragment"
+        android:id="@+id/activity_property_search_fragment"
+        android:name="com.openclassrooms.realestatemanager.view.fragments.PropertySearchFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
