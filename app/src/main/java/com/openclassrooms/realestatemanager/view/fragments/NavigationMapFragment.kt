@@ -244,7 +244,7 @@ class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback,
             KEY_REQUEST_PERMISSION_LOCATION -> if (grantResults.size > 0) {
                 when (grantResults[0]) {
                     PackageManager.PERMISSION_GRANTED -> showUserLocation()
-                    PackageManager.PERMISSION_DENIED -> Log.d("TAG_MAP", "Oulala") //TODO handle
+                    PackageManager.PERMISSION_DENIED -> Log.d("TAG_PERMISSION", "Oulala") //TODO handle
                 }
             }
         }
@@ -253,11 +253,10 @@ class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback,
     private fun requestUserLocation(){
         if(Build.VERSION.SDK_INT>=23
                 &&activity!!.checkSelfPermission(KEY_PERMISSION_LOCATION)!=PackageManager.PERMISSION_GRANTED){
-            if(ActivityCompat.shouldShowRequestPermissionRationale(activity!!, KEY_PERMISSION_LOCATION)){
+            if(shouldShowRequestPermissionRationale(KEY_PERMISSION_LOCATION)){
                 //TODO handle
             }else{
-                ActivityCompat.requestPermissions(
-                        activity!!, arrayOf(KEY_PERMISSION_LOCATION), KEY_REQUEST_PERMISSION_LOCATION)
+                requestPermissions(arrayOf(KEY_PERMISSION_LOCATION), KEY_REQUEST_PERMISSION_LOCATION)
             }
         }else{
             showUserLocation()

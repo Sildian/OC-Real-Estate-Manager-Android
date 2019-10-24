@@ -74,6 +74,9 @@ dependencies {
 
     //RangeBar
     implementation 'com.appyvet:materialrangebar:1.4.6'
+
+    //EasyImage
+    implementation 'com.github.jkwiecien:EasyImage:3.0.3'
 }
 repositories {
     mavenCentral()

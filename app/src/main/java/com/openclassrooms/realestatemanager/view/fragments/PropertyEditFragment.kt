@@ -1,14 +1,15 @@
 package com.openclassrooms.realestatemanager.view.fragments
 
-import android.app.Activity
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,7 @@ import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
 import kotlinx.android.synthetic.main.fragment_property_edit.view.*
+import pl.aprilapps.easyphotopicker.*
 
 /**************************************************************************************************
  * Allows the user to create or edit a property
@@ -36,10 +38,14 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
     companion object {
 
-        /**Requests keys for internal intents**/
+        /**Requests for internal calls**/
 
-        const val KEY_REQUEST_ADD_PICTURE = 101
-        const val KEY_REQUEST_TAKE_PICTURE = 102
+        const val KEY_REQUEST_PERMISSION_WRITE_AND_CAMERA=101
+
+        /**Permissions**/
+
+        const val KEY_PERMISSION_WRITE=Manifest.permission.WRITE_EXTERNAL_STORAGE
+        const val KEY_PERMISSION_CAMERA=Manifest.permission.CAMERA
     }
 
     /*********************************************************************************************
@@ -73,6 +79,12 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     private val saveButton by lazy {layout.fragment_property_edit_button_save}
 
     /*********************************************************************************************
+     * Pictures support
+     ********************************************************************************************/
+
+    private lateinit var easyImage:EasyImage
+
+    /*********************************************************************************************
      * Life cycle
      ********************************************************************************************/
 
@@ -88,6 +100,10 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         initializeAdDateText()
         initializeSaleInfo()
         initializeButtons()
+
+        /*Initializes pictures support items*/
+
+        initializeEasyImage()
 
         /*If a property id exists, then loads the property's data*/
 
@@ -152,6 +168,13 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         this.saveButton.setOnClickListener { saveProperty() }
     }
 
+    private fun initializeEasyImage(){
+        this.easyImage= EasyImage.Builder(context!!)
+                .setChooserType(ChooserType.CAMERA_AND_GALLERY)
+                .allowMultiple(true)
+                .build()
+    }
+
     /*********************************************************************************************
      * Listens UI events on picturesRecyclerView
      ********************************************************************************************/
@@ -165,7 +188,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     }
 
     override fun onTakePictureButtonClick(position: Int) {
-        startTakePictureIntent()
+        requestCamera()
     }
 
     /*********************************************************************************************
@@ -291,44 +314,76 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     }
 
     /*********************************************************************************************
+     * Permissions management
+     ********************************************************************************************/
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            KEY_REQUEST_PERMISSION_WRITE_AND_CAMERA -> if (grantResults.size > 0) {
+                when (grantResults[0]) {
+                    PackageManager.PERMISSION_GRANTED -> startTakePictureIntent()
+                    PackageManager.PERMISSION_DENIED -> Log.d("TAG_PERMISSION", "Oulala") //TODO handle
+                }
+            }
+        }
+    }
+
+    private fun requestCamera(){
+        if(Build.VERSION.SDK_INT>=23
+                &&(activity!!.checkSelfPermission(KEY_PERMISSION_WRITE)!= PackageManager.PERMISSION_GRANTED
+                        ||activity!!.checkSelfPermission(KEY_PERMISSION_CAMERA)!= PackageManager.PERMISSION_GRANTED)){
+
+            if(shouldShowRequestPermissionRationale(KEY_PERMISSION_WRITE)
+                            ||shouldShowRequestPermissionRationale(KEY_PERMISSION_CAMERA)){
+
+                //TODO handle
+
+            }else{
+                requestPermissions(
+                        arrayOf(KEY_PERMISSION_WRITE, KEY_PERMISSION_CAMERA),
+                        KEY_REQUEST_PERMISSION_WRITE_AND_CAMERA)
+            }
+        }else{
+            startTakePictureIntent()
+        }
+    }
+
+    /*********************************************************************************************
      * Intents management
      ********************************************************************************************/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode== Activity.RESULT_OK){
-            when(requestCode){
-                KEY_REQUEST_ADD_PICTURE ->handleNewPictureResult(data)
-                KEY_REQUEST_TAKE_PICTURE ->handleNewPictureResult(data)
-            }
-        }
+        handleNewPictureResult(requestCode, resultCode, data)
     }
 
     fun startAddPictureIntent(){
-        val addPictureIntent= Intent(Intent.ACTION_OPEN_DOCUMENT).apply{
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type="image/*"
-        }
-        startActivityForResult(addPictureIntent, KEY_REQUEST_ADD_PICTURE)
+        this.easyImage.openGallery(this)
     }
 
     fun startTakePictureIntent(){
-        if(activity!!.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
-            val takePictureIntent= Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            if(takePictureIntent.resolveActivity(activity!!.packageManager)!=null){
-                startActivityForResult(takePictureIntent, KEY_REQUEST_TAKE_PICTURE)
-            }else{
-                //TODO replace toast by dialog?
-                Toast.makeText(context, R.string.toast_photo_unavailable, Toast.LENGTH_LONG).show()
-            }
-        }else{
-            //TODO replace toast by dialog?
-            Toast.makeText(context, R.string.toast_photo_unavailable, Toast.LENGTH_LONG).show()
-        }
+        this.easyImage.openCameraForImage(this)
     }
 
-    private fun handleNewPictureResult(data: Intent?){
-        val picturePath:String?=data?.data.toString()
-        if(picturePath!=null) addPicture(picturePath)
+    private fun handleNewPictureResult(requestCode: Int, resultCode: Int, data: Intent?){
+
+        this.easyImage.handleActivityResult(requestCode, resultCode, data, activity!!, object: DefaultCallback(){
+
+            override fun onMediaFilesPicked(imageFiles: Array<MediaFile>, source: MediaSource) {
+                for(image in imageFiles){
+                    addPicture(image.file.toURI().path)
+                }
+            }
+
+            override fun onImagePickerError(error: Throwable, source: MediaSource) {
+                super.onImagePickerError(error, source)
+                //TODO handle
+            }
+
+            override fun onCanceled(source: MediaSource) {
+                super.onCanceled(source)
+                //TODO handle
+            }
+        })
     }
 }
