@@ -39,6 +39,8 @@
     <style name="ChipThemeStandard" parent="@style/Widget.MaterialComponents.Chip.Entry">
         <item name="chipBackgroundColor">@color/chip_color_background</item>
         <item name="android:textColor">@color/chip_color_text</item>
+        <item name="chipStrokeColor">@color/chip_color_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
         <item name="closeIconVisible">false</item>
     </style>
 
@@ -46,7 +48,8 @@
     <style name="ChipThemeSingleChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
         <item name="chipBackgroundColor">@color/chip_color_background</item>
         <item name="android:textColor">@color/chip_color_text</item>
-        <item name="closeIconVisible">false</item>
+        <item name="chipStrokeColor">@color/chip_color_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
     </style>
 
     <!-- DatePicker theme -->

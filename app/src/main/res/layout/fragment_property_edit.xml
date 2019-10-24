@@ -91,9 +91,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_pictures"
-                android:drawableStart="@drawable/ic_picture_blue"
+                android:drawableStart="@drawable/ic_picture_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -109,9 +109,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_main_information"
-                android:drawableStart="@drawable/ic_property_blue"
+                android:drawableStart="@drawable/ic_property_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -242,9 +242,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_extras"
-                android:drawableStart="@drawable/ic_extras_blue"
+                android:drawableStart="@drawable/ic_extras_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.chip.ChipGroup
@@ -262,9 +262,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_location"
-                android:drawableStart="@drawable/ic_location_blue"
+                android:drawableStart="@drawable/ic_location_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -344,9 +344,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_other_information"
-                android:drawableStart="@drawable/ic_info_blue"
+                android:drawableStart="@drawable/ic_info_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <LinearLayout

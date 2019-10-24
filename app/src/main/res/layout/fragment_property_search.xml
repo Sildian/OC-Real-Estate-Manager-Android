@@ -29,8 +29,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_price"
-                android:drawableStart="@drawable/ic_currency_black"
+                android:drawableStart="@drawable/ic_currency_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.appyvet.materialrangebar.RangeBar
@@ -58,7 +59,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_type"
+                android:drawableStart="@drawable/ic_property_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.chip.ChipGroup
@@ -74,8 +77,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_size"
-                android:drawableStart="@drawable/ic_size_black"
+                android:drawableStart="@drawable/ic_size_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.appyvet.materialrangebar.RangeBar
@@ -103,8 +107,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_nb_rooms"
-                android:drawableStart="@drawable/ic_nb_rooms_black"
+                android:drawableStart="@drawable/ic_nb_rooms_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.appyvet.materialrangebar.RangeBar
@@ -132,7 +137,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_extras"
+                android:drawableStart="@drawable/ic_extras_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.chip.ChipGroup
@@ -148,7 +155,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_location"
+                android:drawableStart="@drawable/ic_location_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <LinearLayout
@@ -213,10 +222,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
+                android:textColor="@color/colorPrimary"
                 android:text="@string/label_property_other_information"
+                android:drawableStart="@drawable/ic_info_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
-
-            <!--Ad title-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

@@ -90,14 +90,15 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
 
     private fun sortProperties(){
 
-        var orderCriteria:String?=null
-        var orderDesc:Boolean?=null
+        val orderCriteria:String?
+        val orderDesc:Boolean?
 
         when(this.sortCriteriaChipGroup.checkedChipId){
             R.id.fragment_navigation_list_sort_price->orderCriteria="price"
             R.id.fragment_navigation_list_sort_size->orderCriteria="size"
             R.id.fragment_navigation_list_sort_nb_rooms->orderCriteria="nbRooms"
             R.id.fragment_navigation_list_sort_ad_date->orderCriteria="adDate"
+            R.id.fragment_navigation_list_sort_sale_date->orderCriteria="saleDate"
             else->orderCriteria=null
         }
 
