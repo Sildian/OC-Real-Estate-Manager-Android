@@ -40,6 +40,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
     private val postalCodeText by lazy {layout.fragment_property_search_postal_code}
     private val cityText by lazy {layout.fragment_property_search_city}
     private val countryText by lazy {layout.fragment_property_search_country}
+    private val adTitleText by lazy {layout.fragment_property_search_ad_title}
     private val adDateTextDropDown by lazy {layout.fragment_property_search_ad_date}
     private val soldRadioGroup by lazy {layout.fragment_property_search_sold}
     private val saleDateTextDropDown by lazy {layout.fragment_property_search_sale_date}
@@ -151,6 +152,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
         this.settings.postalCode=this.postalCodeText.text.toString()
         this.settings.city=this.cityText.text.toString()
         this.settings.country=this.countryText.text.toString()
+        this.settings.adTitle=this.adTitleText.text.toString()
         this.settings.minAdDate=getOffsetDateFromDateTextDropDown(this.adDateTextDropDown)
         this.settings.sold=getSoldStatusFromSoldRadioGroup()
         this.settings.minSaleDate=getOffsetDateFromDateTextDropDown(this.saleDateTextDropDown)
@@ -167,6 +169,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
         this.postalCodeText.setText(this.settings.postalCode)
         this.cityText.setText(this.settings.city)
         this.countryText.setText(this.settings.country)
+        this.adTitleText.setText(this.settings.adTitle)
         loadOffsetPeriod(this.adDateTextDropDown, this.settings.minAdDate)
         loadSoldStatus()
         loadOffsetPeriod(this.saleDateTextDropDown, this.settings.minSaleDate)

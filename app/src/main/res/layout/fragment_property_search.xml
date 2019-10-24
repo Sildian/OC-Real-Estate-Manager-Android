@@ -216,6 +216,23 @@
                 android:text="@string/label_property_other_information"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
+            <!--Ad title-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_property_ad_title"
+                android:layout_margin="@dimen/components_margin_medium">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fragment_property_search_ad_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences"
+                    android:textSize="@dimen/text_size_body" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

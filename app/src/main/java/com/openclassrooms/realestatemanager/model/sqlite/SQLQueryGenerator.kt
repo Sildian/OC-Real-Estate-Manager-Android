@@ -21,6 +21,7 @@ object SQLQueryGenerator {
             extrasIds:List<Int?> = emptyList(),
             postalCode:String?=null, city:String?=null, country:String?=null,
             realtorId:String?=null,
+            adTitle:String?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
             sold:Boolean?=null,
             minSaleDate:Date?=null, maxSaleDate:Date?=null,
@@ -29,7 +30,7 @@ object SQLQueryGenerator {
 
         val query = generatePropertyQueryString(minPrice, maxPrice, typeIds, minSize, maxSize,
                 minNbRooms, maxNbRooms, extrasIds, postalCode, city, country, realtorId,
-                minAdDate, maxAdDate, sold, minSaleDate, maxSaleDate, orderCriteria, orderDesc)
+                adTitle, minAdDate, maxAdDate, sold, minSaleDate, maxSaleDate, orderCriteria, orderDesc)
 
         return SimpleSQLiteQuery(query)
     }
@@ -44,6 +45,7 @@ object SQLQueryGenerator {
             extrasIds:List<Int?> =emptyList(),
             postalCode:String?=null, city:String?=null, country:String?=null,
             realtorId:String?=null,
+            adTitle:String?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
             sold:Boolean?=null,
             minSaleDate:Date?=null, maxSaleDate:Date?=null,
@@ -62,6 +64,7 @@ object SQLQueryGenerator {
         tempFilters.add(generateSimpleFilter("city", city))
         tempFilters.add(generateSimpleFilter("country", country))
         tempFilters.add(generateSimpleFilter("realtorId", realtorId))
+        tempFilters.add(generateLikeFilter("adTitle", adTitle, true, true))
         tempFilters.add(generateRangeFilter("adDate", minAdDate, maxAdDate))
         tempFilters.add(generateSimpleFilter("sold", sold))
         tempFilters.add(generateRangeFilter("saleDate", minSaleDate, maxSaleDate))

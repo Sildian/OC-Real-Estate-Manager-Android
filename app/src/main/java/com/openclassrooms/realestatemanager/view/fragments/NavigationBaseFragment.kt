@@ -80,7 +80,7 @@ abstract class NavigationBaseFragment : Fragment() {
                                 minNbRooms:Int?, maxNbRooms:Int?,
                                 extrasIds:List<Int?>,
                                 postalCode:String?, city:String?, country:String?,
-                                minAdDate: Date?,
+                                adTitle:String?, minAdDate: Date?,
                                 sold:Boolean?, minSaleDate: Date?,
                                 orderCriteria:String?, orderDesc:Boolean?){
 
@@ -95,7 +95,7 @@ abstract class NavigationBaseFragment : Fragment() {
                 minNbRooms=minNbRooms, maxNbRooms=maxNbRooms,
                 extrasIds=extrasIds,
                 postalCode=postalCode, city=city, country=country,
-                minAdDate=minAdDate,
+                adTitle=adTitle, minAdDate=minAdDate,
                 sold=sold, minSaleDate = minSaleDate,
                 orderCriteria = orderCriteria, orderDesc = orderDesc))
                 .observe(this, Observer {

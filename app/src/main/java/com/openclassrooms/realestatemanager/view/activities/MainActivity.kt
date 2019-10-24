@@ -186,7 +186,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 this.settings.minNbRooms, this.settings.maxNbRooms,
                 this.settings.extrasIds.toList(),
                 this.settings.postalCode, this.settings.city, this.settings.country,
-                this.settings.minAdDate,
+                this.settings.adTitle, this.settings.minAdDate,
                 this.settings.sold,
                 this.settings.minSaleDate,
                 this.settings.orderCriteria, this.settings.orderDesc)
