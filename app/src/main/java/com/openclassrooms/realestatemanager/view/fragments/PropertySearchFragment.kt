@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
-import android.widget.EditText
 import androidx.lifecycle.Observer
 import com.appyvet.materialrangebar.RangeBar
 import com.google.android.material.chip.Chip
@@ -110,7 +109,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
 
     private fun initializeAdDateTextDropDown(){
         initializeTextDropDown(this.adDateTextDropDown, R.layout.dropdown_menu_standard,
-                resources.getStringArray(R.array.choice_date_range).toList())
+                resources.getStringArray(R.array.choice_date).toList())
     }
 
     private fun initializeSoldRadioGroup(){
@@ -119,7 +118,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
 
     private fun initializeSaleDateTextDropDown(){
         initializeTextDropDown(this.saleDateTextDropDown, R.layout.dropdown_menu_standard,
-                resources.getStringArray(R.array.choice_date_range).toList())
+                resources.getStringArray(R.array.choice_date).toList())
     }
 
     private fun initializeButtons(){
@@ -212,9 +211,9 @@ class PropertySearchFragment : PropertyBaseFragment() {
             val date = Date()
             val offsetMonths=Utils.calculateDifferenceBetweenDates(date, offsetDate)
             when(offsetMonths){
-                3->dateText.setText(resources.getStringArray(R.array.choice_date_range)[0], false)
-                6->dateText.setText(resources.getStringArray(R.array.choice_date_range)[1], false)
-                12->dateText.setText(resources.getStringArray(R.array.choice_date_range)[2], false)
+                3->dateText.setText(resources.getStringArray(R.array.choice_date)[0], false)
+                6->dateText.setText(resources.getStringArray(R.array.choice_date)[1], false)
+                12->dateText.setText(resources.getStringArray(R.array.choice_date)[2], false)
             }
             dateText.tag=dateText.text.toString()
         }
@@ -279,11 +278,11 @@ class PropertySearchFragment : PropertyBaseFragment() {
         if(!dateText.text.isNullOrEmpty()) {
 
             when (dateText.text.toString()) {
-                resources.getStringArray(R.array.choice_date_range)[0] ->
+                resources.getStringArray(R.array.choice_date)[0] ->
                     targetDate = Utils.offsetDate(actualDate, 0, -3, 0)
-                resources.getStringArray(R.array.choice_date_range)[1] ->
+                resources.getStringArray(R.array.choice_date)[1] ->
                     targetDate = Utils.offsetDate(actualDate, 0, -6, 0)
-                resources.getStringArray(R.array.choice_date_range)[2] ->
+                resources.getStringArray(R.array.choice_date)[2] ->
                     targetDate = Utils.offsetDate(actualDate, -1, 0, 0)
             }
         }

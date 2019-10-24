@@ -41,7 +41,7 @@
                 android:layout_margin="@dimen/components_margin_small"
                 android:textSize="@dimen/text_size_body"
                 android:textStyle="bold"
-                android:text="@string/hint_property_ad_title"/>
+                android:text="@string/label_property_ad_title"/>
 
             <TextView
                 android:id="@+id/list_properties_item_city"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/components_margin_small"
                 android:textSize="@dimen/text_size_body"
-                android:text="@string/hint_property_city"/>
+                android:text="@string/label_property_city"/>
 
             <TextView
                 android:id="@+id/list_properties_item_price"
@@ -58,7 +58,7 @@
                 android:layout_margin="@dimen/components_margin_small"
                 android:textSize="@dimen/text_size_important"
                 android:textColor="@color/colorAccent"
-                android:text="@string/hint_property_price"/>
+                android:text="@string/label_property_price"/>
 
         </LinearLayout>
 

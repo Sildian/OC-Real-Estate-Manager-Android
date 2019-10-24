@@ -42,6 +42,13 @@
         <item name="closeIconVisible">false</item>
     </style>
 
+    <!--Chip theme Single choice-->
+    <style name="ChipThemeSingleChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/chip_color_background</item>
+        <item name="android:textColor">@color/chip_color_text</item>
+        <item name="closeIconVisible">false</item>
+    </style>
+
     <!-- DatePicker theme -->
     <style name="DatePickerTheme" parent="@style/Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/colorPrimary</item>

@@ -1,13 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.NavigationListFragment">
+    tools:context=".view.fragments.NavigationListFragment"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            android:layout_gravity="start"
+            android:textSize="@dimen/text_size_body"
+            android:textStyle="bold"
+            android:text="@string/label_property_sort" />
+
+        <Switch
+            android:id="@+id/fragment_navigation_list_sort_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            android:layout_gravity="end"
+            android:text="@string/label_property_sort_desc" />
+
+    </FrameLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbarSize="2dp">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/fragment_navigation_list_sort_criteria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fragment_navigation_list_sort_price"
+                style="@style/ChipThemeSingleChoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_property_price" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fragment_navigation_list_sort_size"
+                style="@style/ChipThemeSingleChoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_property_size" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fragment_navigation_list_sort_nb_rooms"
+                style="@style/ChipThemeSingleChoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_property_nb_rooms" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/fragment_navigation_list_sort_ad_date"
+                style="@style/ChipThemeSingleChoice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_property_ad_date" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+    </HorizontalScrollView>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_margin="@dimen/components_margin_medium"
+        android:background="?android:attr/listDivider" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_list_properties"
+        android:id="@+id/fragment_navigation_list_properties"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</FrameLayout>
+</LinearLayout>

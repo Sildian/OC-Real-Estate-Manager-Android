@@ -81,7 +81,8 @@ abstract class NavigationBaseFragment : Fragment() {
                                 extrasIds:List<Int?>,
                                 postalCode:String?, city:String?, country:String?,
                                 minAdDate: Date?,
-                                sold:Boolean?, minSaleDate: Date?){
+                                sold:Boolean?, minSaleDate: Date?,
+                                orderCriteria:String?, orderDesc:Boolean?){
 
         if(this.propertyViewModel.getAllProperties().hasObservers()) {
             this.propertyViewModel.getAllProperties().removeObservers(this)
@@ -95,7 +96,8 @@ abstract class NavigationBaseFragment : Fragment() {
                 extrasIds=extrasIds,
                 postalCode=postalCode, city=city, country=country,
                 minAdDate=minAdDate,
-                sold=sold, minSaleDate = minSaleDate))
+                sold=sold, minSaleDate = minSaleDate,
+                orderCriteria = orderCriteria, orderDesc = orderDesc))
                 .observe(this, Observer {
 
                     onPropertiesReceived(it)

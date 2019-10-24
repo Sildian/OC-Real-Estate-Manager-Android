@@ -25,27 +25,27 @@
     <string name="label_property_sold_on">Sold on</string>
     <string name="label_property_available">Available</string>
     <string name="label_property_all">All</string>
-
-    <!--Text hints-->
-    <string name="hint_property_ad_title">Ad title</string>
-    <string name="hint_property_price">Price</string>
-    <string name="hint_property_type">Type</string>
-    <string name="hint_property_description">Description</string>
-    <string name="hint_property_size">Size</string>
-    <string name="hint_property_size_unit">sqm</string>
-    <string name="hint_property_nb_rooms">Rooms</string>
-    <string name="hint_property_nb_bedrooms">Bedrooms</string>
-    <string name="hint_property_nb_bathrooms">Bathrooms</string>
-    <string name="hint_property_build_date">Build year</string>
-    <string name="hint_property_address">Address</string>
-    <string name="hint_property_postal_code">Postal code</string>
-    <string name="hint_property_city">City</string>
-    <string name="hint_property_country">Country</string>
-    <string name="hint_property_realtor">Realtor</string>
-    <string name="hint_property_ad_date">Ad date</string>
-    <string name="hint_property_sale_date">Sale date</string>
-    <string name="hint_min">Min</string>
-    <string name="hint_max">Max</string>
+    <string name="label_property_ad_title">Ad title</string>
+    <string name="label_property_price">Price</string>
+    <string name="label_property_type">Type</string>
+    <string name="label_property_description">Description</string>
+    <string name="label_property_size">Size</string>
+    <string name="label_property_size_unit">sqm</string>
+    <string name="label_property_nb_rooms">Rooms</string>
+    <string name="label_property_nb_bedrooms">Bedrooms</string>
+    <string name="label_property_nb_bathrooms">Bathrooms</string>
+    <string name="label_property_build_date">Build year</string>
+    <string name="label_property_address">Address</string>
+    <string name="label_property_postal_code">Zip code</string>
+    <string name="label_property_city">City</string>
+    <string name="label_property_country">Country</string>
+    <string name="label_property_realtor">Realtor</string>
+    <string name="label_property_ad_date">Ad date</string>
+    <string name="label_property_sale_date">Sale date</string>
+    <string name="label_property_sort">Sort</string>
+    <string name="label_property_sort_default">Default</string>
+    <string name="label_property_sort_asc">Ascending</string>
+    <string name="label_property_sort_desc">Descending</string>
 
     <!--Toasts / Snackbars-->
     <string name="toast_photo_unavailable">Your device cannot take photos</string>
@@ -92,7 +92,7 @@
         <item>8+</item>
     </string-array>
 
-    <string-array name="choice_date_range">
+    <string-array name="choice_date">
         <item>Less than 3 months</item>
         <item>Less than 6 months</item>
         <item>Less than 1 year</item>

@@ -27,10 +27,10 @@ class PropertySearchSettings :Parcelable{
     var city:String?=null
     var country:String?=null
     var minAdDate: Date?=null
-    var minAdDateId:Int?=null
     var sold:Boolean?=null
     var minSaleDate:Date?=null
-    var minSaleDateId:Int?=null
+    var orderCriteria:String?=null
+    var orderDesc:Boolean?=null
 
     /*********************************************************************************************
      * Needed empty constructor
@@ -60,6 +60,9 @@ class PropertySearchSettings :Parcelable{
         this.sold=if(soldFromParcel==0) false else if(soldFromParcel==1) true else null
         val minSaleDateFromParcel=parcel.readValue(Long::class.java.classLoader) as Long?
         this.minSaleDate= if(minSaleDateFromParcel!=null) DateConverter().fromTimestamp(minSaleDateFromParcel) else null
+        this.orderCriteria=parcel.readString()
+        val orderDescFromParcel=parcel.readValue(Int::class.java.classLoader) as Int?
+        this.orderDesc=if(orderDescFromParcel==0) false else if(orderDescFromParcel==1) true else null
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -77,6 +80,8 @@ class PropertySearchSettings :Parcelable{
         parcel.writeValue(if(this.minAdDate!=null) DateConverter().dateToTimestamp(this.minAdDate) else null)
         parcel.writeValue(if(this.sold==false) 0 else if(this.sold==true) 1 else null)
         parcel.writeValue(if(this.minSaleDate!=null) DateConverter().dateToTimestamp(this.minSaleDate) else null)
+        parcel.writeString(this.orderCriteria)
+        parcel.writeValue(if(this.orderDesc==false) 0 else if(this.orderDesc==true) 1 else null)
     }
 
     override fun describeContents(): Int {

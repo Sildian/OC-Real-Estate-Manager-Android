@@ -21,7 +21,7 @@
             android:textSize="@dimen/text_size_title"
             android:textStyle="bold"
             android:textColor="@color/colorAccent"
-            android:text="@string/hint_property_ad_title"/>
+            android:text="@string/label_property_ad_title"/>
 
         <TextView
             android:id="@+id/fragment_property_detail_type"
@@ -30,7 +30,7 @@
             android:layout_margin="@dimen/components_margin_medium"
             android:gravity="center_horizontal"
             android:textSize="@dimen/text_size_body"
-            android:text="@string/hint_property_type"/>
+            android:text="@string/label_property_type"/>
 
         <TextView
             android:id="@+id/fragment_property_detail_price"
@@ -39,7 +39,7 @@
             android:layout_margin="@dimen/components_margin_medium"
             android:gravity="center_horizontal"
             android:textSize="@dimen/text_size_important"
-            android:text="@string/hint_property_price"/>
+            android:text="@string/label_property_price"/>
 
         <!--Pictures-->
 
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/components_margin_medium"
             android:textSize="@dimen/text_size_body"
-            android:text="@string/hint_property_description"/>
+            android:text="@string/label_property_description"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -98,7 +98,7 @@
                     android:gravity="center_horizontal"
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
-                    android:text="@string/hint_property_size"
+                    android:text="@string/label_property_size"
                     android:drawableStart="@drawable/ic_size_black"
                     android:drawablePadding="@dimen/components_margin_small"/>
 
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:textSize="@dimen/text_size_important"
-                    android:text="@string/hint_property_size"/>
+                    android:text="@string/label_property_size"/>
 
             </LinearLayout>
 
@@ -126,7 +126,7 @@
                     android:gravity="center_horizontal"
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
-                    android:text="@string/hint_property_nb_rooms"
+                    android:text="@string/label_property_nb_rooms"
                     android:drawableStart="@drawable/ic_nb_rooms_black"
                     android:drawablePadding="@dimen/components_margin_small"/>
 
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:textSize="@dimen/text_size_important"
-                    android:text="@string/hint_property_nb_rooms"/>
+                    android:text="@string/label_property_nb_rooms"/>
 
             </LinearLayout>
 
@@ -161,7 +161,7 @@
                     android:gravity="center_horizontal"
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
-                    android:text="@string/hint_property_nb_bedrooms"
+                    android:text="@string/label_property_nb_bedrooms"
                     android:drawableStart="@drawable/ic_nb_bedrooms_black"
                     android:drawablePadding="@dimen/components_margin_small"/>
 
@@ -171,7 +171,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:textSize="@dimen/text_size_important"
-                    android:text="@string/hint_property_nb_bedrooms"/>
+                    android:text="@string/label_property_nb_bedrooms"/>
 
             </LinearLayout>
 
@@ -189,7 +189,7 @@
                     android:gravity="center_horizontal"
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
-                    android:text="@string/hint_property_nb_bathrooms"
+                    android:text="@string/label_property_nb_bathrooms"
                     android:drawableStart="@drawable/ic_nb_bathrooms_black"
                     android:drawablePadding="@dimen/components_margin_small"/>
 
@@ -199,7 +199,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:textSize="@dimen/text_size_important"
-                    android:text="@string/hint_property_nb_bathrooms"/>
+                    android:text="@string/label_property_nb_bathrooms"/>
 
             </LinearLayout>
 
@@ -218,7 +218,7 @@
                 android:gravity="center_horizontal"
                 android:textSize="@dimen/text_size_body"
                 android:textColor="@android:color/black"
-                android:text="@string/hint_property_build_date"
+                android:text="@string/label_property_build_date"
                 android:drawableStart="@drawable/ic_date_black"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
@@ -228,7 +228,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textSize="@dimen/text_size_important"
-                android:text="@string/hint_property_build_date"/>
+                android:text="@string/label_property_build_date"/>
 
         </LinearLayout>
 
@@ -309,7 +309,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
-                    android:text="@string/hint_property_realtor"
+                    android:text="@string/label_property_realtor"
                     android:drawableStart="@drawable/ic_realtor_black"
                     android:drawablePadding="@dimen/components_margin_small"/>
 
@@ -318,7 +318,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_title"
-                    android:text="@string/hint_property_realtor"/>
+                    android:text="@string/label_property_realtor"/>
 
             </LinearLayout>
 
@@ -335,7 +335,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_body"
                     android:textColor="@android:color/black"
-                    android:text="@string/hint_property_ad_date"
+                    android:text="@string/label_property_ad_date"
                     android:drawableStart="@drawable/ic_date_black"
                     android:drawablePadding="@dimen/components_margin_small"/>
 
@@ -344,7 +344,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/text_size_title"
-                    android:text="@string/hint_property_ad_date"/>
+                    android:text="@string/label_property_ad_date"/>
 
             </LinearLayout>
 

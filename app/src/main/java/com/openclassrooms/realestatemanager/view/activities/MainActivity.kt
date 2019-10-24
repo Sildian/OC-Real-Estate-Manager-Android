@@ -168,8 +168,14 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     /*********************************************************************************************
-     * Run queries to get and show properties
+     * Queries management
      ********************************************************************************************/
+
+    fun sortProperties(orderCriteria:String?, orderDesc:Boolean?){
+        this.settings.orderCriteria=orderCriteria
+        this.settings.orderDesc=orderDesc
+        runComplexPropertyQuery()
+    }
 
     fun runComplexPropertyQuery(){
 
@@ -182,6 +188,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 this.settings.postalCode, this.settings.city, this.settings.country,
                 this.settings.minAdDate,
                 this.settings.sold,
-                this.settings.minSaleDate)
+                this.settings.minSaleDate,
+                this.settings.orderCriteria, this.settings.orderDesc)
     }
 }

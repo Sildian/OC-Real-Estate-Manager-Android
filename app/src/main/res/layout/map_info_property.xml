@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/components_margin_small"
             android:textSize="@dimen/text_size_body"
-            android:text="@string/hint_property_ad_title"/>
+            android:text="@string/label_property_ad_title"/>
 
         <TextView
             android:id="@+id/map_info_property_price"
@@ -35,7 +35,7 @@
             android:layout_margin="@dimen/components_margin_small"
             android:textSize="@dimen/text_size_body"
             android:textColor="@color/colorAccent"
-            android:text="@string/hint_property_price"/>
+            android:text="@string/label_property_price"/>
 
     </LinearLayout>
 

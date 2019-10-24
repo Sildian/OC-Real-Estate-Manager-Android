@@ -26,7 +26,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_property_ad_title"
+                android:hint="@string/label_property_ad_title"
                 android:layout_margin="@dimen/components_margin_medium"
                 app:counterEnabled="true"
                 app:counterMaxLength="30">
@@ -51,7 +51,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/hint_property_price"
+                    android:hint="@string/label_property_price"
                     android:layout_margin="@dimen/components_margin_medium"
                     app:helperTextEnabled="true"
                     app:helperText="@string/currency">
@@ -69,7 +69,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/hint_property_type"
+                    android:hint="@string/label_property_type"
                     style="@style/TextInputLayoutThemeDropdownMenu"
                     android:layout_margin="@dimen/components_margin_medium">
 
@@ -117,7 +117,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_property_description"
+                android:hint="@string/label_property_description"
                 android:layout_margin="@dimen/components_margin_medium"
                 app:counterEnabled="true"
                 app:counterMaxLength="500">
@@ -142,10 +142,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/hint_property_size"
+                    android:hint="@string/label_property_size"
                     android:layout_margin="@dimen/components_margin_medium"
                     app:helperTextEnabled="true"
-                    app:helperText="@string/hint_property_size_unit"
+                    app:helperText="@string/label_property_size_unit"
                     app:startIconDrawable="@drawable/ic_size_black">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -161,7 +161,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/hint_property_nb_rooms"
+                    android:hint="@string/label_property_nb_rooms"
                     android:layout_margin="@dimen/components_margin_medium"
                     app:startIconDrawable="@drawable/ic_nb_rooms_black">
 
@@ -186,7 +186,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/hint_property_nb_bedrooms"
+                    android:hint="@string/label_property_nb_bedrooms"
                     android:layout_margin="@dimen/components_margin_medium"
                     app:startIconDrawable="@drawable/ic_nb_bedrooms_black">
 
@@ -203,7 +203,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/hint_property_nb_bathrooms"
+                    android:hint="@string/label_property_nb_bathrooms"
                     android:layout_margin="@dimen/components_margin_medium"
                     app:startIconDrawable="@drawable/ic_nb_bathrooms_black">
 
@@ -221,7 +221,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_property_build_date"
+                android:hint="@string/label_property_build_date"
                 android:layout_margin="@dimen/components_margin_medium"
                 app:startIconDrawable="@drawable/ic_date_black">
 
@@ -270,7 +270,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_property_address"
+                android:hint="@string/label_property_address"
                 android:layout_margin="@dimen/components_margin_medium">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -292,7 +292,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/hint_property_postal_code"
+                    android:hint="@string/label_property_postal_code"
                     android:layout_margin="@dimen/components_margin_medium">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -308,7 +308,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:hint="@string/hint_property_city"
+                    android:hint="@string/label_property_city"
                     android:layout_margin="@dimen/components_margin_medium">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -325,7 +325,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_property_country"
+                android:hint="@string/label_property_country"
                 android:layout_margin="@dimen/components_margin_medium">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -358,7 +358,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/hint_property_realtor"
+                    android:hint="@string/label_property_realtor"
                     style="@style/TextInputLayoutThemeDropdownMenu"
                     android:layout_margin="@dimen/components_margin_medium">
 
@@ -375,7 +375,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/hint_property_ad_date"
+                    android:hint="@string/label_property_ad_date"
                     style="@style/TextInputLayoutThemeDropdownMenu"
                     android:layout_margin="@dimen/components_margin_medium">
 
@@ -409,7 +409,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="@string/hint_property_sale_date"
+                    android:hint="@string/label_property_sale_date"
                     style="@style/TextInputLayoutThemeDropdownMenu"
                     android:layout_margin="@dimen/components_margin_medium">
 
