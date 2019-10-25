@@ -26,10 +26,11 @@
     <string name="label_property_all">Tous</string>
     <string name="label_property_ad_title">Titre de l\'annonce</string>
     <string name="label_property_price">Prix</string>
+    <string name="label_property_price_settings">Prix (K$)</string>
     <string name="label_property_type">Type</string>
     <string name="label_property_description">Description</string>
     <string name="label_property_size">Surface</string>
-    <string name="label_property_size_unit">m2</string>
+    <string name="label_property_size_settings">Surface (m2)</string>
     <string name="label_property_nb_rooms">Pièces</string>
     <string name="label_property_nb_bedrooms">Chambres</string>
     <string name="label_property_nb_bathrooms">Salles de bain</string>
@@ -42,7 +43,6 @@
     <string name="label_property_ad_date">Date annonce</string>
     <string name="label_property_sale_date">Date vente</string>
     <string name="label_property_sort">Tri</string>
-    <string name="label_property_sort_default">Par défaut</string>
     <string name="label_property_sort_asc">Croissant</string>
     <string name="label_property_sort_desc">Décroissant</string>
 
@@ -55,6 +55,7 @@
 
     <!--Others-->
     <string name="currency">$</string>
+    <string name="size_unit">m2</string>
 
     <!--Arrays of choice-->
 

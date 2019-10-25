@@ -40,7 +40,7 @@ abstract class NavigationBaseFragment : Fragment() {
      ********************************************************************************************/
 
     protected lateinit var viewModelFactory: ViewModelFactory
-    protected lateinit var propertyViewModel: PropertyViewModel
+    protected var propertyViewModel: PropertyViewModel?=null
     protected val properties=arrayListOf<Property>()
 
     /*********************************************************************************************
@@ -69,7 +69,7 @@ abstract class NavigationBaseFragment : Fragment() {
 
     fun runSimplePropertyQuery(){
 
-        this.propertyViewModel.getAllProperties().observe(this, Observer {
+        this.propertyViewModel?.getAllProperties()!!.observe(this, Observer {
             onPropertiesReceived(it)
         })
     }
@@ -84,11 +84,11 @@ abstract class NavigationBaseFragment : Fragment() {
                                 sold:Boolean?, minSaleDate: Date?,
                                 orderCriteria:String?, orderDesc:Boolean?){
 
-        if(this.propertyViewModel.getAllProperties().hasObservers()) {
-            this.propertyViewModel.getAllProperties().removeObservers(this)
+        if(this.propertyViewModel!=null&&this.propertyViewModel?.getAllProperties()!!.hasObservers()) {
+            this.propertyViewModel?.getAllProperties()?.removeObservers(this)
         }
 
-        this.propertyViewModel.getProperties(SQLQueryGenerator.generatePropertyQuery(
+        this.propertyViewModel?.getProperties(SQLQueryGenerator.generatePropertyQuery(
                 minPrice=minPrice, maxPrice=maxPrice,
                 typeIds = typeIds,
                 minSize=minSize, maxSize=maxSize,
@@ -98,7 +98,7 @@ abstract class NavigationBaseFragment : Fragment() {
                 adTitle=adTitle, minAdDate=minAdDate,
                 sold=sold, minSaleDate = minSaleDate,
                 orderCriteria = orderCriteria, orderDesc = orderDesc))
-                .observe(this, Observer {
+                ?.observe(this, Observer {
 
                     onPropertiesReceived(it)
                 })

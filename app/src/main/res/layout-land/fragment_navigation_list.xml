@@ -6,55 +6,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.fragments.NavigationListFragment"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/colorPrimaryUltraLight"
-        app:cardElevation="8dp">
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryUltraLight">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:layout_gravity="start"
-                    android:textSize="@dimen/text_size_body"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:alpha="0.6"
-                    android:text="@string/label_property_sort" />
-
-                <Switch
-                    android:id="@+id/fragment_navigation_list_sort_desc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:layout_gravity="end"
-                    android:text="@string/label_property_sort_desc" />
-
-            </FrameLayout>
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scrollbarSize="2dp">
+                android:layout_margin="@dimen/components_margin_medium"
+                android:textSize="@dimen/text_size_body"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:alpha="0.6"
+                android:text="@string/label_property_sort" />
+
+            <Switch
+                android:id="@+id/fragment_navigation_list_sort_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/components_margin_medium"
+                android:text="@string/label_property_sort_desc" />
 
                 <com.google.android.material.chip.ChipGroup
                     android:id="@+id/fragment_navigation_list_sort_criteria"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/components_margin_medium"
-                    app:singleLine="true"
                     app:singleSelection="true">
 
                     <com.google.android.material.chip.Chip
@@ -94,15 +80,19 @@
 
                 </com.google.android.material.chip.ChipGroup>
 
-            </HorizontalScrollView>
-
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </ScrollView>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="?android:attr/listDivider" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_navigation_list_properties"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"/>
 
 </LinearLayout>

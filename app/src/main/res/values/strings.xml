@@ -27,10 +27,11 @@
     <string name="label_property_all">All</string>
     <string name="label_property_ad_title">Ad title</string>
     <string name="label_property_price">Price</string>
+    <string name="label_property_price_settings">Price (k$)</string>
     <string name="label_property_type">Type</string>
     <string name="label_property_description">Description</string>
     <string name="label_property_size">Size</string>
-    <string name="label_property_size_unit">sqm</string>
+    <string name="label_property_size_settings">Size (sqm)</string>
     <string name="label_property_nb_rooms">Rooms</string>
     <string name="label_property_nb_bedrooms">Bedrooms</string>
     <string name="label_property_nb_bathrooms">Bathrooms</string>
@@ -43,7 +44,6 @@
     <string name="label_property_ad_date">Ad date</string>
     <string name="label_property_sale_date">Sale date</string>
     <string name="label_property_sort">Sort</string>
-    <string name="label_property_sort_default">Default</string>
     <string name="label_property_sort_asc">Ascending</string>
     <string name="label_property_sort_desc">Descending</string>
 
@@ -56,6 +56,7 @@
 
     <!--Others-->
     <string name="currency">$</string>
+    <string name="size_unit">sqm</string>
 
     <!--Arrays of choice-->
 

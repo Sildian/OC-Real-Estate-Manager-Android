@@ -30,7 +30,7 @@
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorPrimary"
-                android:text="@string/label_property_price"
+                android:text="@string/label_property_price_settings"
                 android:drawableStart="@drawable/ic_currency_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
@@ -78,7 +78,7 @@
                 android:layout_margin="@dimen/components_margin_medium"
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/colorPrimary"
-                android:text="@string/label_property_size"
+                android:text="@string/label_property_size_settings"
                 android:drawableStart="@drawable/ic_size_color_primary"
                 android:drawablePadding="@dimen/components_margin_small"/>
 
