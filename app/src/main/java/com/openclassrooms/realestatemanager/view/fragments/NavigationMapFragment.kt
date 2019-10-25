@@ -19,7 +19,6 @@ import android.content.pm.PackageManager
 import android.os.Handler
 import android.os.ResultReceiver
 import android.util.Log
-import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -35,8 +34,8 @@ import kotlinx.android.synthetic.main.map_info_property.view.*
  * Shows properties on a map
  ***********************************************************************************************/
 
-class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback,
-        GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener {
+class NavigationMapFragment : NavigationBaseFragment(),
+        OnMapReadyCallback, GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener {
 
     /*********************************************************************************************
      * Static items
@@ -161,7 +160,7 @@ class NavigationMapFragment : NavigationBaseFragment(), OnMapReadyCallback,
             this.map.setOnInfoWindowClickListener(this)
             this.fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(activity!!)
             requestUserLocation()
-            runSimplePropertyQuery()
+            runPropertyQuery()
         }
     }
 

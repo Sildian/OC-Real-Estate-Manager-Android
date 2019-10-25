@@ -35,10 +35,12 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        loadSortDesc()
+        loadSortCriterias()
         initializeSortDesSwitch()
         initializeSortCriteriaChipGroup()
         initializePropertiesRecyclerView()
-        runSimplePropertyQuery()
+        runPropertyQuery()
         return this.layout
     }
 
@@ -82,6 +84,28 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
 
     override fun onPropertyClick(position: Int, propertyId:Int) {
         (activity as MainActivity).startPropertyDetailActivity(propertyId)
+    }
+
+    /*********************************************************************************************
+     * Loads settings
+     ********************************************************************************************/
+
+    private fun loadSortDesc(){
+        if(this.settings!=null&&this.settings!!.orderDesc!=null){
+            this.sortDescSwitch.isChecked=this.settings!!.orderDesc!!
+        }
+    }
+
+    private fun loadSortCriterias(){
+        if(this.settings!=null&&this.settings!!.orderCriteria!=null){
+            when(this.settings!!.orderCriteria){
+                "price"->this.sortCriteriaChipGroup.check(R.id.fragment_navigation_list_sort_price)
+                "size"->this.sortCriteriaChipGroup.check(R.id.fragment_navigation_list_sort_size)
+                "nbRooms"->this.sortCriteriaChipGroup.check(R.id.fragment_navigation_list_sort_nb_rooms)
+                "adDate"->this.sortCriteriaChipGroup.check(R.id.fragment_navigation_list_sort_ad_date)
+                "saleDate"->this.sortCriteriaChipGroup.check(R.id.fragment_navigation_list_sort_sale_date)
+            }
+        }
     }
 
     /*********************************************************************************************

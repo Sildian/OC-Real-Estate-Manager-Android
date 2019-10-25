@@ -82,7 +82,10 @@ class PropertySearchFragment : PropertyBaseFragment() {
      ********************************************************************************************/
 
     private fun initializeSettings(){
-        if(activity!!.intent!=null&&activity!!.intent.hasExtra(BaseActivity.KEY_BUNDLE_PROPERTY_SETTINGS)){
+        if(activity!!.intent!=null&&activity!!.intent.hasExtra(BaseActivity.KEY_BUNDLE_PROPERTY_SETTINGS)
+                        &&activity!!.intent
+                        .getParcelableExtra<PropertySearchSettings>(BaseActivity.KEY_BUNDLE_PROPERTY_SETTINGS)!=null){
+
             this.settings=activity!!.intent.getParcelableExtra(BaseActivity.KEY_BUNDLE_PROPERTY_SETTINGS)
         }
         else{

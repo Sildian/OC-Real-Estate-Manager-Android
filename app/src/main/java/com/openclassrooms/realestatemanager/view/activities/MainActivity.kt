@@ -15,7 +15,6 @@ import com.openclassrooms.realestatemanager.view.fragments.NavigationBaseFragmen
 import com.openclassrooms.realestatemanager.view.fragments.NavigationListFragment
 import com.openclassrooms.realestatemanager.view.fragments.NavigationMapFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 /**************************************************************************************************
  * Main activity for user interaction
@@ -30,6 +29,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
      ********************************************************************************************/
 
     companion object{
+
+        /**Bundles for internal calls**/
+
+        const val KEY_BUNDLE_FRAGMENT_ID="KEY_BUNDLE_FRAGMENT_ID"
 
         /**Fragments ids**/
 
@@ -51,7 +54,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
      * Data
      ********************************************************************************************/
 
-    private var settings:PropertySearchSettings= PropertySearchSettings()
+    private var currentFragmentId= ID_FRAGMENT_LIST
+    private var settings:PropertySearchSettings?= null
 
     /*********************************************************************************************
      * Life cycle
@@ -60,10 +64,17 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        initializeDataFromInstanceState(savedInstanceState)
         initializeToolbar()
         initializeAddButton()
         initializeBottomNavigationBar()
-        showFragment(ID_FRAGMENT_LIST)
+        showFragment(this.currentFragmentId)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_BUNDLE_FRAGMENT_ID, this.currentFragmentId)
+        outState.putParcelable(KEY_BUNDLE_PROPERTY_SETTINGS, this.settings)
     }
 
     /*********************************************************************************************
@@ -91,10 +102,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         if(item.groupId==R.id.menu_navigation_bottom_group){
 
             when(item.itemId){
-                R.id.menu_navigation_bottom_list-> showFragment(ID_FRAGMENT_LIST)
-                R.id.menu_navigation_bottom_map-> showFragment(ID_FRAGMENT_MAP)
-                R.id.menu_navigation_bottom_loan-> showFragment(ID_FRAGMENT_LOAN)
+                R.id.menu_navigation_bottom_list-> this.currentFragmentId= ID_FRAGMENT_LIST
+                R.id.menu_navigation_bottom_map-> this.currentFragmentId= ID_FRAGMENT_MAP
+                R.id.menu_navigation_bottom_loan-> this.currentFragmentId= ID_FRAGMENT_LOAN
             }
+            showFragment(this.currentFragmentId)
         }
         return true
     }
@@ -102,6 +114,17 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     /*********************************************************************************************
      * Initializations
      ********************************************************************************************/
+
+    private fun initializeDataFromInstanceState(savedInstanceState: Bundle?){
+        if(savedInstanceState!=null){
+            this.currentFragmentId=savedInstanceState.getInt(KEY_BUNDLE_FRAGMENT_ID)
+            this.settings=savedInstanceState.getParcelable(KEY_BUNDLE_PROPERTY_SETTINGS)!!
+        }
+        else{
+            this.currentFragmentId= ID_FRAGMENT_LIST
+            this.settings= null
+        }
+    }
 
     private fun initializeToolbar(){
         setSupportActionBar(this.toolbar)
@@ -128,6 +151,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             ID_FRAGMENT_MAP->this.navigationFragment=NavigationMapFragment()
             ID_FRAGMENT_LOAN->Log.d("TAG_MENU", "Not implemented yet")
         }
+
+        this.navigationFragment.updateSettings(this.settings)
+
         supportFragmentManager.beginTransaction().replace(
                 R.id.activity_main_fragment_navigation, this.navigationFragment).commit()
     }
@@ -163,7 +189,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private fun handlePropertySearchResult(resultCode:Int, data:Intent?){
         if(resultCode== Activity.RESULT_OK&&data!=null&&data.hasExtra(KEY_BUNDLE_PROPERTY_SETTINGS)){
             this.settings=data.getParcelableExtra(KEY_BUNDLE_PROPERTY_SETTINGS)
-            runComplexPropertyQuery()
+            this.navigationFragment.updateSettings(this.settings)
+            this.navigationFragment.runPropertyQuery()
         }
     }
 
@@ -172,23 +199,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
      ********************************************************************************************/
 
     fun sortProperties(orderCriteria:String?, orderDesc:Boolean?){
-        this.settings.orderCriteria=orderCriteria
-        this.settings.orderDesc=orderDesc
-        runComplexPropertyQuery()
-    }
-
-    fun runComplexPropertyQuery(){
-
-        this.navigationFragment.runComplexPropertyQuery(
-                this.settings.minPrice, this.settings.maxPrice,
-                this.settings.typeIds.toList(),
-                this.settings.minSize, this.settings.maxSize,
-                this.settings.minNbRooms, this.settings.maxNbRooms,
-                this.settings.extrasIds.toList(),
-                this.settings.postalCode, this.settings.city, this.settings.country,
-                this.settings.adTitle, this.settings.minAdDate,
-                this.settings.sold,
-                this.settings.minSaleDate,
-                this.settings.orderCriteria, this.settings.orderDesc)
+        if(this.settings==null){
+            this.settings= PropertySearchSettings()
+        }
+        this.settings!!.orderCriteria=orderCriteria
+        this.settings!!.orderDesc=orderDesc
+        this.navigationFragment.updateSettings(this.settings)
+        this.navigationFragment.runPropertyQuery()
     }
 }
