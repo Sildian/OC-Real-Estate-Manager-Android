@@ -11,9 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.sqlite.support.PropertySearchSettings
-import com.openclassrooms.realestatemanager.view.fragments.NavigationBaseFragment
-import com.openclassrooms.realestatemanager.view.fragments.NavigationListFragment
-import com.openclassrooms.realestatemanager.view.fragments.NavigationMapFragment
+import com.openclassrooms.realestatemanager.view.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**************************************************************************************************
@@ -32,13 +30,18 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         /**Bundles for internal calls**/
 
-        const val KEY_BUNDLE_FRAGMENT_ID="KEY_BUNDLE_FRAGMENT_ID"
+        const val KEY_BUNDLE_MAIN_FRAGMENT_ID="KEY_BUNDLE_MAIN_FRAGMENT_ID"
+        const val KEY_BUNDLE_SECOND_FRAGMENT_ID="KEY_BUNDLE_SECOND_FRAGMENT_ID"
 
         /**Fragments ids**/
 
-        const val ID_FRAGMENT_LIST=1
-        const val ID_FRAGMENT_MAP=2
-        const val ID_FRAGMENT_LOAN=3
+        const val ID_FRAGMENT_MAIN_LIST=1
+        const val ID_FRAGMENT_MAIN_MAP=2
+        const val ID_FRAGMENT_MAIN_LOAN=3
+
+        const val ID_FRAGMENT_SECOND_DETAIL=1
+        const val ID_FRAGMENT_SECOND_EDIT=2
+        const val ID_FRAGMENT_SECOND_SEARCH=3
     }
 
     /*********************************************************************************************
@@ -47,6 +50,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     private val toolbar by lazy {activity_main_toolbar as Toolbar}
     private lateinit var navigationFragment: NavigationBaseFragment
+    private lateinit var propertyFragment: PropertyBaseFragment
     private val addButton by lazy {activity_main_button_add}
     private val bottomNavigationBar by lazy {activity_main_navigation_bottom}
 
@@ -54,7 +58,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
      * Data
      ********************************************************************************************/
 
-    private var currentFragmentId= ID_FRAGMENT_LIST
+    private var mainFragmentId= ID_FRAGMENT_MAIN_LIST
+    private var secondFragmentId= ID_FRAGMENT_SECOND_DETAIL
     private var settings:PropertySearchSettings?= null
 
     /*********************************************************************************************
@@ -68,12 +73,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         initializeToolbar()
         initializeAddButton()
         initializeBottomNavigationBar()
-        showFragment(this.currentFragmentId)
+        showMainFragment(this.mainFragmentId)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(KEY_BUNDLE_FRAGMENT_ID, this.currentFragmentId)
+        outState.putInt(KEY_BUNDLE_MAIN_FRAGMENT_ID, this.mainFragmentId)
+        outState.putInt(KEY_BUNDLE_SECOND_FRAGMENT_ID, this.secondFragmentId)
         outState.putParcelable(KEY_BUNDLE_PROPERTY_SETTINGS, this.settings)
     }
 
@@ -102,11 +108,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         if(item.groupId==R.id.menu_navigation_bottom_group){
 
             when(item.itemId){
-                R.id.menu_navigation_bottom_list-> this.currentFragmentId= ID_FRAGMENT_LIST
-                R.id.menu_navigation_bottom_map-> this.currentFragmentId= ID_FRAGMENT_MAP
-                R.id.menu_navigation_bottom_loan-> this.currentFragmentId= ID_FRAGMENT_LOAN
+                R.id.menu_navigation_bottom_list-> this.mainFragmentId= ID_FRAGMENT_MAIN_LIST
+                R.id.menu_navigation_bottom_map-> this.mainFragmentId= ID_FRAGMENT_MAIN_MAP
+                R.id.menu_navigation_bottom_loan-> this.mainFragmentId= ID_FRAGMENT_MAIN_LOAN
             }
-            showFragment(this.currentFragmentId)
+            showMainFragment(this.mainFragmentId)
         }
         return true
     }
@@ -117,12 +123,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     private fun initializeDataFromInstanceState(savedInstanceState: Bundle?){
         if(savedInstanceState!=null){
-            this.currentFragmentId=savedInstanceState.getInt(KEY_BUNDLE_FRAGMENT_ID)
-            this.settings=savedInstanceState.getParcelable(KEY_BUNDLE_PROPERTY_SETTINGS)!!
-        }
-        else{
-            this.currentFragmentId= ID_FRAGMENT_LIST
-            this.settings= null
+            this.mainFragmentId=savedInstanceState.getInt(KEY_BUNDLE_MAIN_FRAGMENT_ID)
+            this.secondFragmentId=savedInstanceState.getInt(KEY_BUNDLE_SECOND_FRAGMENT_ID)
+            if(savedInstanceState.getParcelable<PropertySearchSettings>(KEY_BUNDLE_PROPERTY_SETTINGS)!=null) {
+                this.settings = savedInstanceState.getParcelable(KEY_BUNDLE_PROPERTY_SETTINGS)!!
+            }
         }
     }
 
@@ -142,20 +147,62 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
      * Fragments management
      ********************************************************************************************/
 
-    private fun showFragment(id:Int){
+    private fun showMainFragment(fragmentId:Int){
 
         //TODO implement Loan
 
-        when(id){
-            ID_FRAGMENT_LIST->this.navigationFragment= NavigationListFragment()
-            ID_FRAGMENT_MAP->this.navigationFragment=NavigationMapFragment()
-            ID_FRAGMENT_LOAN->Log.d("TAG_MENU", "Not implemented yet")
+        when(fragmentId){
+            ID_FRAGMENT_MAIN_LIST->this.navigationFragment= NavigationListFragment()
+            ID_FRAGMENT_MAIN_MAP->this.navigationFragment=NavigationMapFragment()
+            ID_FRAGMENT_MAIN_LOAN->Log.d("TAG_MENU", "Not implemented yet")
         }
 
         this.navigationFragment.updateSettings(this.settings)
 
         supportFragmentManager.beginTransaction().replace(
                 R.id.activity_main_fragment_navigation, this.navigationFragment).commit()
+    }
+
+    private fun showSecondFragment(fragmentId:Int, propertyId:Int?) {
+
+        when (fragmentId) {
+            ID_FRAGMENT_SECOND_DETAIL -> this.propertyFragment = PropertyDetailFragment()
+            ID_FRAGMENT_SECOND_EDIT -> this.propertyFragment = PropertyEditFragment()
+            ID_FRAGMENT_SECOND_SEARCH -> this.propertyFragment = PropertySearchFragment()
+        }
+
+        this.propertyFragment.updatePropertyId(propertyId)
+
+        supportFragmentManager.beginTransaction().replace(
+                R.id.activity_main_fragment_property, this.propertyFragment).commit()
+    }
+
+    /*********************************************************************************************
+     * Opens activities / fragments
+     ********************************************************************************************/
+
+    fun openPropertyDetail(propertyId:Int){
+        if(activity_main_fragment_property!=null){
+            showSecondFragment(ID_FRAGMENT_SECOND_DETAIL, propertyId)
+        }else{
+            startPropertyDetailActivity(propertyId)
+        }
+    }
+
+    fun openPropertyEdit(){
+        if(activity_main_fragment_property!=null){
+            showSecondFragment(ID_FRAGMENT_SECOND_EDIT, 0)
+        }else{
+            startPropertyEditActivity()
+        }
+    }
+
+    fun openPropertySearch(){
+        if(activity_main_fragment_property!=null){
+            showSecondFragment(ID_FRAGMENT_SECOND_SEARCH, 0)
+        }else{
+            startPropertySearchActivity()
+        }
     }
 
     /*********************************************************************************************
@@ -169,18 +216,18 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
     }
 
-    fun startPropertyDetailActivity(propertyId:Int){
+    private fun startPropertyDetailActivity(propertyId:Int){
         val propertyDetailIntent= Intent(this, PropertyDetailActivity::class.java)
         propertyDetailIntent.putExtra(KEY_BUNDLE_PROPERTY_ID, propertyId)
         startActivity(propertyDetailIntent)
     }
 
-    fun startPropertyEditActivity(){
+    private fun startPropertyEditActivity(){
         val propertyEditIntent= Intent(this, PropertyEditActivity::class.java)
         startActivity(propertyEditIntent)
     }
 
-    fun startPropertySearchActivity(){
+    private fun startPropertySearchActivity(){
         val propertySearchIntent= Intent(this, PropertySearchActivity::class.java)
         propertySearchIntent.putExtra(KEY_BUNDLE_PROPERTY_SETTINGS, this.settings)
         startActivityForResult(propertySearchIntent, KEY_REQUEST_PROPERTY_SEARCH)

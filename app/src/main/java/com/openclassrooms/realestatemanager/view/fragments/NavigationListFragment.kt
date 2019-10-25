@@ -83,7 +83,7 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
      ********************************************************************************************/
 
     override fun onPropertyClick(position: Int, propertyId:Int) {
-        (activity as MainActivity).startPropertyDetailActivity(propertyId)
+        (activity as MainActivity).openPropertyDetail(propertyId)
     }
 
     /*********************************************************************************************

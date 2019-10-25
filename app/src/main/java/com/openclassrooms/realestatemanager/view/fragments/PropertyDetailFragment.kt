@@ -81,7 +81,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
         initializePicturesRecyclerView()
         initializeExtrasRecyclerView()
         initializeMapView(savedInstanceState)
-        loadProperty()
+        if(this.propertyId!=null) loadProperty()
         return this.layout
     }
 
@@ -105,8 +105,9 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     private fun initializeExtrasRecyclerView(){
         this.extrasAdapter= CheckedTextAdapter(this.extras)
         this.ExtrasRecyclerView.adapter=this.extrasAdapter
+        val nbColumns=resources.getInteger(R.integer.grid_nb_columns)
         this.ExtrasRecyclerView.layoutManager=
-                GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
+                GridLayoutManager(context, nbColumns, RecyclerView.VERTICAL, false)
     }
 
     private fun initializeMapView(savedInstanceState: Bundle?){

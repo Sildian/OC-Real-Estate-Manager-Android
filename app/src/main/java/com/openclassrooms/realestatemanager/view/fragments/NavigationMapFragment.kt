@@ -229,7 +229,7 @@ class NavigationMapFragment : NavigationBaseFragment(),
             val property=marker.tag as Property
             val propertyId=property.id
             if(propertyId!=null) {
-                (activity as MainActivity).startPropertyDetailActivity(propertyId)
+                (activity as MainActivity).openPropertyDetail(propertyId)
             }
         }
     }
