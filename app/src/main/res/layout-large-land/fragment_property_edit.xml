@@ -59,12 +59,14 @@
             <!--Head information-->
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fragment_property_edit_ad_title_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_property_ad_title"
                 android:layout_margin="@dimen/components_margin_medium"
                 app:counterEnabled="true"
-                app:counterMaxLength="30">
+                app:counterMaxLength="30"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fragment_property_edit_ad_title"
@@ -83,13 +85,15 @@
                 android:baselineAligned="false">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_price_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/label_property_price"
                     android:layout_margin="@dimen/components_margin_medium"
                     app:helperTextEnabled="true"
-                    app:helperText="@string/currency">
+                    app:helperText="@string/currency"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_edit_price"
@@ -101,12 +105,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_type_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/label_property_type"
                     style="@style/TextInputLayoutThemeDropdownMenu"
-                    android:layout_margin="@dimen/components_margin_medium">
+                    android:layout_margin="@dimen/components_margin_medium"
+                    app:errorEnabled="true">
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_property_edit_type"
@@ -150,12 +156,14 @@
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fragment_property_edit_description_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_property_description"
                 android:layout_margin="@dimen/components_margin_medium"
                 app:counterEnabled="true"
-                app:counterMaxLength="500">
+                app:counterMaxLength="500"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fragment_property_edit_description"
@@ -174,6 +182,7 @@
                 android:baselineAligned="false">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_size_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -181,7 +190,8 @@
                     android:layout_margin="@dimen/components_margin_medium"
                     app:helperTextEnabled="true"
                     app:helperText="@string/size_unit"
-                    app:startIconDrawable="@drawable/ic_size_black">
+                    app:startIconDrawable="@drawable/ic_size_black"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_edit_size"
@@ -193,12 +203,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_nb_rooms_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/label_property_nb_rooms"
                     android:layout_margin="@dimen/components_margin_medium"
-                    app:startIconDrawable="@drawable/ic_nb_rooms_black">
+                    app:startIconDrawable="@drawable/ic_nb_rooms_black"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_edit_nb_rooms"
@@ -210,12 +222,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_nb_bedrooms_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/label_property_nb_bedrooms"
                     android:layout_margin="@dimen/components_margin_medium"
-                    app:startIconDrawable="@drawable/ic_nb_bedrooms_black">
+                    app:startIconDrawable="@drawable/ic_nb_bedrooms_black"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_edit_nb_bedrooms"
@@ -227,12 +241,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_nb_bathrooms_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/label_property_nb_bathrooms"
                     android:layout_margin="@dimen/components_margin_medium"
-                    app:startIconDrawable="@drawable/ic_nb_bathrooms_black">
+                    app:startIconDrawable="@drawable/ic_nb_bathrooms_black"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_edit_nb_bathrooms"
@@ -244,12 +260,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_build_year_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/label_property_build_date"
                     android:layout_margin="@dimen/components_margin_medium"
-                    app:startIconDrawable="@drawable/ic_date_black">
+                    app:startIconDrawable="@drawable/ic_date_black"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_edit_build_year"
@@ -296,10 +314,12 @@
                 android:drawablePadding="@dimen/components_margin_small"/>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fragment_property_edit_address_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_property_address"
-                android:layout_margin="@dimen/components_margin_medium">
+                android:layout_margin="@dimen/components_margin_medium"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fragment_property_edit_address"
@@ -317,11 +337,13 @@
                 android:baselineAligned="false">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_postal_code_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/label_property_postal_code"
-                    android:layout_margin="@dimen/components_margin_medium">
+                    android:layout_margin="@dimen/components_margin_medium"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_edit_postal_code"
@@ -333,11 +355,13 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_city_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:hint="@string/label_property_city"
-                    android:layout_margin="@dimen/components_margin_medium">
+                    android:layout_margin="@dimen/components_margin_medium"
+                    app:errorEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/fragment_property_edit_city"
@@ -351,10 +375,12 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fragment_property_edit_country_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_property_country"
-                android:layout_margin="@dimen/components_margin_medium">
+                android:layout_margin="@dimen/components_margin_medium"
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fragment_property_edit_country"
@@ -383,12 +409,14 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_realtor_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/label_property_realtor"
                     style="@style/TextInputLayoutThemeDropdownMenu"
-                    android:layout_margin="@dimen/components_margin_medium">
+                    android:layout_margin="@dimen/components_margin_medium"
+                    app:errorEnabled="true">
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_property_edit_realtor"
@@ -400,12 +428,14 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_ad_date_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/label_property_ad_date"
                     style="@style/TextInputLayoutThemeDropdownMenu"
-                    android:layout_margin="@dimen/components_margin_medium">
+                    android:layout_margin="@dimen/components_margin_medium"
+                    app:errorEnabled="true">
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_property_edit_ad_date"
@@ -434,12 +464,14 @@
                     android:text="@string/label_property_sold"/>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_property_edit_sale_date_layout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="@string/label_property_sale_date"
                     style="@style/TextInputLayoutThemeDropdownMenu"
-                    android:layout_margin="@dimen/components_margin_medium">
+                    android:layout_margin="@dimen/components_margin_medium"
+                    app:errorEnabled="true">
 
                     <AutoCompleteTextView
                         android:id="@+id/fragment_property_edit_sale_date"

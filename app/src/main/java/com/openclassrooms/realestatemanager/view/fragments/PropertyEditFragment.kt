@@ -9,11 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.coremodel.Extra
@@ -52,6 +55,27 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     /*********************************************************************************************
      * UI components
      ********************************************************************************************/
+
+    /**Text input layouts**/
+
+    private val adTitleInputLayout by lazy {layout.fragment_property_edit_ad_title_layout}
+    private val priceInputLayout by lazy {layout.fragment_property_edit_price_layout}
+    private val typeInputLayout by lazy {layout.fragment_property_edit_type_layout}
+    private val descriptionInputLayout by lazy {layout.fragment_property_edit_description_layout}
+    private val sizeInputLayout by lazy {layout.fragment_property_edit_size_layout}
+    private val nbRoomsInputLayout by lazy {layout.fragment_property_edit_nb_rooms_layout}
+    private val nbBedroomsInputLayout by lazy {layout.fragment_property_edit_nb_bedrooms_layout}
+    private val nbBathroomsInputLayout by lazy {layout.fragment_property_edit_nb_bathrooms_layout}
+    private val buildYearInputLayout by lazy {layout.fragment_property_edit_build_year_layout}
+    private val addressInputLayout by lazy {layout.fragment_property_edit_address_layout}
+    private val postalCodeInputLayout by lazy {layout.fragment_property_edit_postal_code_layout}
+    private val cityInputLayout by lazy {layout.fragment_property_edit_city_layout}
+    private val countryInputLayout by lazy {layout.fragment_property_edit_country_layout}
+    private val realtorInputLayout by lazy {layout.fragment_property_edit_realtor_layout}
+    private val adDateInputLayout by lazy {layout.fragment_property_edit_ad_date_layout}
+    private val saleDateInputLayout by lazy {layout.fragment_property_edit_sale_date_layout}
+
+    /**Other components**/
 
     private lateinit var pictureAdapter:PictureAdapter
     private val adTitleText by lazy {layout.fragment_property_edit_ad_title }
@@ -206,43 +230,109 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     }
 
     /*********************************************************************************************
+     * Input control
+     ********************************************************************************************/
+
+    private fun checkInputIsValid():Boolean{
+
+        var isValid=true
+
+        if(!checkTextIsNotEmpty(this.adTitleText, this.adTitleInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.priceText, this.priceInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.typeTextDropdown, this.typeInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.descriptionText, this.descriptionInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.sizeText, this.sizeInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.nbRoomsText, this.nbRoomsInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.nbBedroomsText, this.nbBedroomsInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.nbBathroomsText, this.nbBathroomsInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.buildYearText, this.buildYearInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.addressText, this.addressInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.postalCodeText, this.postalCodeInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.cityText, this.cityInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.countryText, this.countryInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.realtorTextDropDown, this.realtorInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.adDateText, this.adDateInputLayout)) isValid=false
+        if(!checkSaleDateIsValid()) isValid=false
+
+        return isValid
+    }
+
+    private fun checkTextIsNotEmpty(editText:TextInputEditText, textLayout:TextInputLayout):Boolean{
+        if(editText.text.isNullOrEmpty()) {
+            textLayout.error = resources.getString(R.string.error_mandatory_field)
+            return false
+        }else{
+            textLayout.error=null
+            return true
+        }
+    }
+
+    private fun checkTextIsNotEmpty(editText:AutoCompleteTextView, textLayout:TextInputLayout):Boolean{
+        if(editText.text.isNullOrEmpty()) {
+            textLayout.error = resources.getString(R.string.error_mandatory_field)
+            return false
+        }else{
+            textLayout.error=null
+            return true
+        }
+    }
+
+    private fun checkSaleDateIsValid():Boolean{
+        when{
+            this.soldSwitch.isChecked&&this.saleDateText.text.isNullOrEmpty()-> {
+                this.saleDateInputLayout.error = resources.getString(R.string.error_mandatory_sale_date)
+                return false
+            }
+            !this.soldSwitch.isChecked&&!this.saleDateText.text.isNullOrEmpty()->{
+                this.saleDateInputLayout.error = resources.getString(R.string.error_forbidden_sale_date)
+                return false
+            }
+            else ->
+                return true
+        }
+    }
+
+    /*********************************************************************************************
      * Data management
      ********************************************************************************************/
 
     fun saveProperty(){
 
-        //TODO add a control checking that data are valid before saving
+        if(!checkInputIsValid()){
+            //TODO handle
+        }else {
 
-        val property=Property()
-        property.adTitle=this.adTitleText.text.toString()
-        property.price=Integer.parseInt(this.priceText.text.toString())
-        property.typeId=(this.typeTextDropdown.tag as PropertyType).id
-        property.picturesPaths=this.picturesPaths.filterNotNull()
-        property.description=this.descriptionText.text.toString()
-        property.size=Integer.parseInt(this.sizeText.text.toString())
-        property.nbRooms=Integer.parseInt(this.nbRoomsText.text.toString())
-        property.nbBedrooms=Integer.parseInt(this.nbBedroomsText.text.toString())
-        property.nbBathrooms=Integer.parseInt(this.nbBathroomsText.text.toString())
-        property.buildYear= Integer.parseInt(this.buildYearText.text.toString())
-        property.address=this.addressText.text.toString()
-        property.postalCode=this.postalCodeText.text.toString()
-        property.city=this.cityText.text.toString()
-        property.country=this.countryText.text.toString()
-        property.realtorId=(this.realtorTextDropDown.tag as Realtor).id
-        property.adDate=Utils.getDateFromString(this.adDateText.text.toString())
-        property.sold=this.soldSwitch.isChecked
-        if(!this.saleDateText.text.isNullOrEmpty())
-            property.saleDate=Utils.getDateFromString(this.saleDateText.text.toString())
-        if(this.propertyId==null) {
-            this.propertyId = this.propertyViewModel.insertProperty(property).toInt()
-        }else{
-            property.id=this.propertyId
-            this.propertyViewModel.updateProperty(property)
+            val property = Property()
+            property.adTitle = this.adTitleText.text.toString()
+            property.price = Integer.parseInt(this.priceText.text.toString())
+            property.typeId = (this.typeTextDropdown.tag as PropertyType).id
+            property.picturesPaths = this.picturesPaths.filterNotNull()
+            property.description = this.descriptionText.text.toString()
+            property.size = Integer.parseInt(this.sizeText.text.toString())
+            property.nbRooms = Integer.parseInt(this.nbRoomsText.text.toString())
+            property.nbBedrooms = Integer.parseInt(this.nbBedroomsText.text.toString())
+            property.nbBathrooms = Integer.parseInt(this.nbBathroomsText.text.toString())
+            property.buildYear = Integer.parseInt(this.buildYearText.text.toString())
+            property.address = this.addressText.text.toString()
+            property.postalCode = this.postalCodeText.text.toString()
+            property.city = this.cityText.text.toString()
+            property.country = this.countryText.text.toString()
+            property.realtorId = (this.realtorTextDropDown.tag as Realtor).id
+            property.adDate = Utils.getDateFromString(this.adDateText.text.toString())
+            property.sold = this.soldSwitch.isChecked
+            if (!this.saleDateText.text.isNullOrEmpty())
+                property.saleDate = Utils.getDateFromString(this.saleDateText.text.toString())
+            if (this.propertyId == null) {
+                this.propertyId = this.propertyViewModel.insertProperty(property).toInt()
+            } else {
+                property.id = this.propertyId
+                this.propertyViewModel.updateProperty(property)
+            }
+            val propertyId = this.propertyId
+            savePropertyExtras(propertyId!!.toInt())
+
+            finish(propertyId)
         }
-        val propertyId=this.propertyId
-        savePropertyExtras(propertyId!!.toInt())
-
-        finish(propertyId)
     }
 
     private fun savePropertyExtras(propertyId:Int){

@@ -11,10 +11,6 @@
     <string name="menu_navigation_bottom_map">Map</string>
     <string name="menu_navigation_bottom_loan">Loan</string>
 
-    <!--Buttons-->
-    <string name="button_save">Save</string>
-    <string name="button_cancel">Cancel</string>
-
     <!--Text labels-->
     <string name="label_property_main_information">Main information</string>
     <string name="label_property_pictures">Pictures</string>
@@ -46,6 +42,11 @@
     <string name="label_property_sort">Sort</string>
     <string name="label_property_sort_asc">Ascending</string>
     <string name="label_property_sort_desc">Descending</string>
+
+    <!--Text error messages-->
+    <string name="error_mandatory_field">Mandatory</string>
+    <string name="error_mandatory_sale_date">If sold, mandatory</string>
+    <string name="error_forbidden_sale_date">If not sold, forbidden</string>
 
     <!--Toasts / Snackbars-->
     <string name="toast_photo_unavailable">Your device cannot take photos</string>

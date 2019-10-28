@@ -10,10 +10,6 @@
     <string name="menu_navigation_bottom_map">Carte</string>
     <string name="menu_navigation_bottom_loan">Emprunt</string>
 
-    <!--Buttons-->
-    <string name="button_save">Enregistrer</string>
-    <string name="button_cancel">Annuler</string>
-
     <!--Text labels-->
     <string name="label_property_main_information">Informations principales</string>
     <string name="label_property_pictures">Photos</string>
@@ -45,6 +41,11 @@
     <string name="label_property_sort">Tri</string>
     <string name="label_property_sort_asc">Croissant</string>
     <string name="label_property_sort_desc">Décroissant</string>
+
+    <!--Text error messages-->
+    <string name="error_mandatory_field">Obligatoire</string>
+    <string name="error_mandatory_sale_date">Si vendu, obligatoire</string>
+    <string name="error_forbidden_sale_date">Si non vendu, interdit</string>
 
     <!--Toasts / Snackbars-->
     <string name="toast_photo_unavailable">Votre appareil ne peut pas prendre de photos</string>
