@@ -47,7 +47,6 @@
     </com.google.android.material.card.MaterialCardView>
 
     <ScrollView
-        android:id="@+id/fragment_property_edit_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -209,6 +208,14 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -243,25 +250,24 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/label_property_build_date"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    app:startIconDrawable="@drawable/ic_date_black">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_edit_build_year"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:maxLength="4"
-                        android:textSize="@dimen/text_size_body" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
             </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/label_property_build_date"
+                android:layout_margin="@dimen/components_margin_medium"
+                app:startIconDrawable="@drawable/ic_date_black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fragment_property_edit_build_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:textSize="@dimen/text_size_body" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <!--Extras-->
 

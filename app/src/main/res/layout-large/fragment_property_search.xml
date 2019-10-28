@@ -46,7 +46,6 @@
     </com.google.android.material.card.MaterialCardView>
 
     <ScrollView
-        android:id="@+id/fragment_property_search_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
