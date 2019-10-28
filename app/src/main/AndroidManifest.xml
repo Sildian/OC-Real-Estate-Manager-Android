@@ -9,13 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activities.PropertySearchActivity"></activity>
+        <activity android:name=".view.activities.PropertySearchActivity"
+            android:parentActivityName=".view.activities.MainActivity"></activity>
         <activity
             android:name=".view.activities.PropertyDetailActivity"
             android:parentActivityName=".view.activities.MainActivity" />
         <activity
             android:name=".view.activities.PropertyEditActivity"
-            android:parentActivityName=".view.activities.PropertyDetailActivity" />
+            android:parentActivityName=".view.activities.MainActivity" />
         <activity android:name=".view.activities.BaseActivity" />
         <activity android:name=".view.activities.MainActivity">
             <intent-filter>

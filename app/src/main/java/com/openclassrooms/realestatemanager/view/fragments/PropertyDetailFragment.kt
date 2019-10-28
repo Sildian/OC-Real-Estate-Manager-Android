@@ -7,6 +7,7 @@ import android.os.ResultReceiver
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.utils.LocationService
 import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.view.activities.MainActivity
 import com.openclassrooms.realestatemanager.view.recyclerviews.CheckedTextAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
@@ -49,6 +51,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
 
     private lateinit var pictureAdapter: PictureAdapter
     private lateinit var extrasAdapter:CheckedTextAdapter
+    private lateinit var editButton:Button
     private val adTitleText by lazy {layout.fragment_property_detail_ad_title }
     private val priceText by lazy {layout.fragment_property_detail_price}
     private val typeText by lazy {layout.fragment_property_detail_type}
@@ -78,6 +81,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
+        initializeEditButton()
         initializePicturesRecyclerView()
         initializeExtrasRecyclerView()
         initializeMapView(savedInstanceState)
@@ -94,6 +98,13 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     /*********************************************************************************************
      * Initializations
      ********************************************************************************************/
+
+    private fun initializeEditButton(){
+        if(this.layout.fragment_property_detail_button_edit!=null){
+            this.editButton=this.layout.fragment_property_detail_button_edit
+            this.editButton.setOnClickListener {(activity!! as MainActivity).openPropertyEdit(this.propertyId)}
+        }
+    }
 
     private fun initializePicturesRecyclerView(){
         this.pictureAdapter= PictureAdapter(this.picturesPaths, false, this)

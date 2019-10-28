@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
+import android.widget.Button
 import androidx.lifecycle.Observer
 import com.appyvet.materialrangebar.RangeBar
 import com.google.android.material.chip.Chip
@@ -15,6 +16,7 @@ import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
 import com.openclassrooms.realestatemanager.model.sqlite.support.PropertySearchSettings
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.activities.BaseActivity
+import com.openclassrooms.realestatemanager.view.activities.MainActivity
 import com.openclassrooms.realestatemanager.view.activities.PropertySearchActivity
 import kotlinx.android.synthetic.main.fragment_property_search.view.*
 import java.util.*
@@ -44,9 +46,8 @@ class PropertySearchFragment : PropertyBaseFragment() {
     private val adDateTextDropDown by lazy {layout.fragment_property_search_ad_date}
     private val soldRadioGroup by lazy {layout.fragment_property_search_sold}
     private val saleDateTextDropDown by lazy {layout.fragment_property_search_sale_date}
-    private val buttonsBar by lazy {layout.fragment_property_search_buttons_bar}
-    private val backButton by lazy {layout.fragment_property_search_button_back}
-    private val searchButton by lazy {layout.fragment_property_search_button_search}
+    private lateinit var backButton:Button
+    private lateinit var searchButton:Button
 
     /*********************************************************************************************
      * Data
@@ -94,6 +95,14 @@ class PropertySearchFragment : PropertyBaseFragment() {
     }
 
     /*********************************************************************************************
+     * Data update
+     ********************************************************************************************/
+
+    fun updateSettings(settings:PropertySearchSettings){
+        this.settings=settings
+    }
+
+    /*********************************************************************************************
      * UI Initializations
      ********************************************************************************************/
 
@@ -126,13 +135,12 @@ class PropertySearchFragment : PropertyBaseFragment() {
     }
 
     private fun initializeButtons(){
-
-        //TODO improve for tablet
-
-        this.buttonsBar.visibility=View.GONE
-
-        this.backButton.setOnClickListener {activity!!.finish()}
-        this.searchButton.setOnClickListener {sendQuerySettings()}
+        if(this.layout.fragment_property_search_button_back!=null&&this.layout.fragment_property_search_button_search!=null){
+            this.backButton=this.layout.fragment_property_search_button_back
+            this.searchButton=this.layout.fragment_property_search_button_search
+            this.backButton.setOnClickListener { finish() }
+            this.searchButton.setOnClickListener { sendQuerySettings() }
+        }
     }
 
     /*********************************************************************************************
@@ -159,10 +167,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
         this.settings.minAdDate=getOffsetDateFromDateTextDropDown(this.adDateTextDropDown)
         this.settings.sold=getSoldStatusFromSoldRadioGroup()
         this.settings.minSaleDate=getOffsetDateFromDateTextDropDown(this.saleDateTextDropDown)
-
-        //TODO improve for tablet
-
-        (activity!! as PropertySearchActivity).sendActivityResult(this.settings)
+        finish()
     }
 
     private fun loadQuerySettings(){
@@ -293,5 +298,17 @@ class PropertySearchFragment : PropertyBaseFragment() {
             }
         }
         return targetDate
+    }
+
+    /*********************************************************************************************
+     * Leaves the fragment
+     ********************************************************************************************/
+
+    private fun finish(){
+        if(this.layout.fragment_property_search_button_back!=null&&this.layout.fragment_property_search_button_search!=null){
+            (activity as MainActivity).updateSettingsAndRunQuery(this.settings)
+        }else{
+            (activity as PropertySearchActivity).sendActivityResult(this.settings)
+        }
     }
 }

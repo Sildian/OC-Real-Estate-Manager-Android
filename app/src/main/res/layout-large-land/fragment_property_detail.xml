@@ -22,38 +22,54 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryUltraLight">
 
-            <TextView
-                android:id="@+id/fragment_property_detail_ad_title"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:layout_gravity="start|center_vertical"
-                android:textSize="@dimen/text_size_title"
-                android:textStyle="bold"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/label_property_ad_title"/>
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/fragment_property_detail_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:layout_gravity="center"
-                android:textSize="@dimen/text_size_body"
-                android:textColor="@android:color/black"
-                android:alpha="0.6"
-                android:text="@string/label_property_type"/>
+                <TextView
+                    android:id="@+id/fragment_property_detail_ad_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/components_margin_medium"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_title"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:text="@string/label_property_ad_title"/>
 
-            <TextView
-                android:id="@+id/fragment_property_detail_price"
+                <TextView
+                    android:id="@+id/fragment_property_detail_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/components_margin_medium"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_body"
+                    android:textColor="@android:color/black"
+                    android:alpha="0.6"
+                    android:text="@string/label_property_type"/>
+
+                <TextView
+                    android:id="@+id/fragment_property_detail_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/components_margin_medium"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/text_size_important"
+                    android:textColor="@android:color/black"
+                    android:alpha="0.87"
+                    android:text="@string/label_property_price"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/fragment_property_detail_button_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
                 android:layout_gravity="end|center_vertical"
-                android:textSize="@dimen/text_size_important"
-                android:textColor="@android:color/black"
-                android:alpha="0.87"
-                android:text="@string/label_property_price"/>
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                app:icon="@drawable/ic_edit_black"
+                app:iconGravity="textStart"/>
 
         </FrameLayout>
 

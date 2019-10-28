@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,233 +7,164 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/fragment_property_search_main"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/fragment_property_search_buttons_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--Price-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/label_property_price_settings"
+            android:drawableStart="@drawable/ic_currency_color_primary"
+            android:drawablePadding="@dimen/components_margin_small"/>
+
+        <com.appyvet.materialrangebar.RangeBar
+            android:id="@+id/fragment_property_search_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            app:mrb_tickStart="0"
+            app:mrb_tickEnd="800"
+            app:mrb_tickInterval="100"
+            app:mrb_tickHeight="2dp"
+            app:mrb_tickDefaultColor="@color/colorAccent"
+            app:mrb_tickBottomLabels="@array/choice_price_range"
+            app:mrb_pinMinFont="@dimen/text_size_body"
+            app:mrb_pinMaxFont="@dimen/text_size_body"
+            app:mrb_pinColor="@android:color/transparent"
+            app:mrb_pinTextColor="@color/colorPrimary"
+            app:mrb_connectingLineColor="@color/colorAccent"
+            app:mrb_selectorColor="@color/colorAccent"/>
+
+        <!--Type-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/label_property_type"
+            android:drawableStart="@drawable/ic_property_color_primary"
+            android:drawablePadding="@dimen/components_margin_small"/>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/fragment_property_search_types"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"/>
+
+        <!--Size-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/label_property_size_settings"
+            android:drawableStart="@drawable/ic_size_color_primary"
+            android:drawablePadding="@dimen/components_margin_small"/>
+
+        <com.appyvet.materialrangebar.RangeBar
+            android:id="@+id/fragment_property_search_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            app:mrb_tickStart="0"
+            app:mrb_tickEnd="300"
+            app:mrb_tickInterval="50"
+            app:mrb_tickHeight="2dp"
+            app:mrb_tickDefaultColor="@color/colorAccent"
+            app:mrb_tickBottomLabels="@array/choice_size_range"
+            app:mrb_pinMinFont="@dimen/text_size_body"
+            app:mrb_pinMaxFont="@dimen/text_size_body"
+            app:mrb_pinColor="@android:color/transparent"
+            app:mrb_pinTextColor="@color/colorPrimary"
+            app:mrb_connectingLineColor="@color/colorAccent"
+            app:mrb_selectorColor="@color/colorAccent"/>
+
+        <!--Nb rooms-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/label_property_nb_rooms"
+            android:drawableStart="@drawable/ic_nb_rooms_color_primary"
+            android:drawablePadding="@dimen/components_margin_small"/>
+
+        <com.appyvet.materialrangebar.RangeBar
+            android:id="@+id/fragment_property_search_nb_rooms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            app:mrb_tickStart="1"
+            app:mrb_tickEnd="8"
+            app:mrb_tickInterval="1"
+            app:mrb_tickHeight="2dp"
+            app:mrb_tickDefaultColor="@color/colorAccent"
+            app:mrb_tickBottomLabels="@array/choice_nb_rooms_range"
+            app:mrb_pinMinFont="@dimen/text_size_body"
+            app:mrb_pinMaxFont="@dimen/text_size_body"
+            app:mrb_pinColor="@android:color/transparent"
+            app:mrb_pinTextColor="@color/colorPrimary"
+            app:mrb_connectingLineColor="@color/colorAccent"
+            app:mrb_selectorColor="@color/colorAccent"/>
+
+        <!--Extras-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/label_property_extras"
+            android:drawableStart="@drawable/ic_extras_color_primary"
+            android:drawablePadding="@dimen/components_margin_small"/>
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/fragment_property_search_extras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"/>
+
+        <!--Location-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/label_property_location"
+            android:drawableStart="@drawable/ic_location_color_primary"
+            android:drawablePadding="@dimen/components_margin_small"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!--Price-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/label_property_price_settings"
-                android:drawableStart="@drawable/ic_currency_color_primary"
-                android:drawablePadding="@dimen/components_margin_small"/>
-
-            <com.appyvet.materialrangebar.RangeBar
-                android:id="@+id/fragment_property_search_price"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                app:mrb_tickStart="0"
-                app:mrb_tickEnd="800"
-                app:mrb_tickInterval="100"
-                app:mrb_tickHeight="2dp"
-                app:mrb_tickDefaultColor="@color/colorAccent"
-                app:mrb_tickBottomLabels="@array/choice_price_range"
-                app:mrb_pinMinFont="@dimen/text_size_body"
-                app:mrb_pinMaxFont="@dimen/text_size_body"
-                app:mrb_pinColor="@android:color/transparent"
-                app:mrb_pinTextColor="@color/colorPrimary"
-                app:mrb_connectingLineColor="@color/colorAccent"
-                app:mrb_selectorColor="@color/colorAccent"/>
-
-            <!--Type-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/label_property_type"
-                android:drawableStart="@drawable/ic_property_color_primary"
-                android:drawablePadding="@dimen/components_margin_small"/>
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/fragment_property_search_types"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"/>
-
-            <!--Size-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/label_property_size_settings"
-                android:drawableStart="@drawable/ic_size_color_primary"
-                android:drawablePadding="@dimen/components_margin_small"/>
-
-            <com.appyvet.materialrangebar.RangeBar
-                android:id="@+id/fragment_property_search_size"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                app:mrb_tickStart="0"
-                app:mrb_tickEnd="300"
-                app:mrb_tickInterval="50"
-                app:mrb_tickHeight="2dp"
-                app:mrb_tickDefaultColor="@color/colorAccent"
-                app:mrb_tickBottomLabels="@array/choice_size_range"
-                app:mrb_pinMinFont="@dimen/text_size_body"
-                app:mrb_pinMaxFont="@dimen/text_size_body"
-                app:mrb_pinColor="@android:color/transparent"
-                app:mrb_pinTextColor="@color/colorPrimary"
-                app:mrb_connectingLineColor="@color/colorAccent"
-                app:mrb_selectorColor="@color/colorAccent"/>
-
-            <!--Nb rooms-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/label_property_nb_rooms"
-                android:drawableStart="@drawable/ic_nb_rooms_color_primary"
-                android:drawablePadding="@dimen/components_margin_small"/>
-
-            <com.appyvet.materialrangebar.RangeBar
-                android:id="@+id/fragment_property_search_nb_rooms"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                app:mrb_tickStart="1"
-                app:mrb_tickEnd="8"
-                app:mrb_tickInterval="1"
-                app:mrb_tickHeight="2dp"
-                app:mrb_tickDefaultColor="@color/colorAccent"
-                app:mrb_tickBottomLabels="@array/choice_nb_rooms_range"
-                app:mrb_pinMinFont="@dimen/text_size_body"
-                app:mrb_pinMaxFont="@dimen/text_size_body"
-                app:mrb_pinColor="@android:color/transparent"
-                app:mrb_pinTextColor="@color/colorPrimary"
-                app:mrb_connectingLineColor="@color/colorAccent"
-                app:mrb_selectorColor="@color/colorAccent"/>
-
-            <!--Extras-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/label_property_extras"
-                android:drawableStart="@drawable/ic_extras_color_primary"
-                android:drawablePadding="@dimen/components_margin_small"/>
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/fragment_property_search_extras"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"/>
-
-            <!--Location-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/label_property_location"
-                android:drawableStart="@drawable/ic_location_color_primary"
-                android:drawablePadding="@dimen/components_margin_small"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/label_property_postal_code"
-                    android:layout_margin="@dimen/components_margin_medium">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_search_postal_code"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textCapSentences"
-                        android:textSize="@dimen/text_size_body" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="@string/label_property_city"
-                    android:layout_margin="@dimen/components_margin_medium">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/fragment_property_search_city"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textCapSentences"
-                        android:textSize="@dimen/text_size_body" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-            </LinearLayout>
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/label_property_country"
+                android:layout_weight="1"
+                android:hint="@string/label_property_postal_code"
                 android:layout_margin="@dimen/components_margin_medium">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_country"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences"
-                    android:textSize="@dimen/text_size_body" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--Other information-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/components_margin_medium"
-                android:textSize="@dimen/text_size_title"
-                android:textColor="@color/colorPrimary"
-                android:text="@string/label_property_other_information"
-                android:drawableStart="@drawable/ic_info_color_primary"
-                android:drawablePadding="@dimen/components_margin_small"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/label_property_ad_title"
-                android:layout_margin="@dimen/components_margin_medium">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/fragment_property_search_ad_title"
+                    android:id="@+id/fragment_property_search_postal_code"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapSentences"
@@ -243,114 +173,132 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/label_property_ad_date"
-                style="@style/TextInputLayoutThemeDropdownMenu"
+                android:layout_weight="2"
+                android:hint="@string/label_property_city"
                 android:layout_margin="@dimen/components_margin_medium">
 
-                <AutoCompleteTextView
-                    android:id="@+id/fragment_property_search_ad_date"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fragment_property_search_city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_body"
-                    android:editable="false"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <RadioGroup
-                android:id="@+id/fragment_property_search_sold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/fragment_property_search_sold_no"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:textSize="@dimen/text_size_body"
-                    android:text="@string/label_property_available"/>
-
-                <RadioButton
-                    android:id="@+id/fragment_property_search_sold_yes"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:textSize="@dimen/text_size_body"
-                    android:text="@string/label_property_sold"/>
-
-                <RadioButton
-                    android:id="@+id/fragment_property_search_sold_all"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_margin="@dimen/components_margin_medium"
-                    android:textSize="@dimen/text_size_body"
-                    android:text="@string/label_property_all"/>
-
-            </RadioGroup>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/label_property_sale_date"
-                style="@style/TextInputLayoutThemeDropdownMenu"
-                android:layout_margin="@dimen/components_margin_medium">
-
-                <AutoCompleteTextView
-                    android:id="@+id/fragment_property_search_sale_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_body"
-                    android:editable="false"/>
+                    android:inputType="textCapSentences"
+                    android:textSize="@dimen/text_size_body" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
-    </ScrollView>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_property_country"
+            android:layout_margin="@dimen/components_margin_medium">
 
-    <!--Buttons bar-->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fragment_property_search_country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:textSize="@dimen/text_size_body" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/fragment_property_search_buttons_bar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fragment_property_search_main"
-        app:cardElevation="8dp">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
+        <!--Other information-->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_medium"
+            android:textSize="@dimen/text_size_title"
+            android:textColor="@color/colorPrimary"
+            android:text="@string/label_property_other_information"
+            android:drawableStart="@drawable/ic_info_color_primary"
+            android:drawablePadding="@dimen/components_margin_small"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_property_ad_title"
+            android:layout_margin="@dimen/components_margin_medium">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/fragment_property_search_ad_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+                android:textSize="@dimen/text_size_body" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_property_ad_date"
+            style="@style/TextInputLayoutThemeDropdownMenu"
+            android:layout_margin="@dimen/components_margin_medium">
+
+            <AutoCompleteTextView
+                android:id="@+id/fragment_property_search_ad_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_body"
+                android:editable="false"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <RadioGroup
+            android:id="@+id/fragment_property_search_sold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/fragment_property_search_button_back"
+            <RadioButton
+                android:id="@+id/fragment_property_search_sold_no"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="@dimen/components_margin_medium"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                app:icon="@drawable/ic_back_black"
-                app:iconGravity="textStart"/>
+                android:textSize="@dimen/text_size_body"
+                android:text="@string/label_property_available"/>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/fragment_property_search_button_search"
+            <RadioButton
+                android:id="@+id/fragment_property_search_sold_yes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="@dimen/components_margin_medium"
-                app:icon="@drawable/ic_search_white"
-                app:iconGravity="textStart"/>
+                android:textSize="@dimen/text_size_body"
+                android:text="@string/label_property_sold"/>
 
-        </LinearLayout>
+            <RadioButton
+                android:id="@+id/fragment_property_search_sold_all"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/components_margin_medium"
+                android:textSize="@dimen/text_size_body"
+                android:text="@string/label_property_all"/>
 
-    </com.google.android.material.card.MaterialCardView>
+        </RadioGroup>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_property_sale_date"
+            style="@style/TextInputLayoutThemeDropdownMenu"
+            android:layout_margin="@dimen/components_margin_medium">
+
+            <AutoCompleteTextView
+                android:id="@+id/fragment_property_search_sale_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_body"
+                android:editable="false"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+</ScrollView>

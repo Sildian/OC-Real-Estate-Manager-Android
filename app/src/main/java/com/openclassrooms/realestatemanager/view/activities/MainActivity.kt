@@ -97,7 +97,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         if(item!=null&&item.groupId==R.id.menu_toolbar_group){
 
             when(item.itemId){
-                R.id.menu_toolbar_search-> startPropertySearchActivity()
+                R.id.menu_toolbar_search-> openPropertySearch()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -136,7 +136,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     private fun initializeAddButton(){
-        this.addButton.setOnClickListener{ startPropertyEditActivity() }
+        this.addButton.setOnClickListener{ openPropertyEdit(null) }
     }
 
     private fun initializeBottomNavigationBar(){
@@ -168,7 +168,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         when (fragmentId) {
             ID_FRAGMENT_SECOND_DETAIL -> this.propertyFragment = PropertyDetailFragment()
             ID_FRAGMENT_SECOND_EDIT -> this.propertyFragment = PropertyEditFragment()
-            ID_FRAGMENT_SECOND_SEARCH -> this.propertyFragment = PropertySearchFragment()
+            ID_FRAGMENT_SECOND_SEARCH -> {
+                this.propertyFragment = PropertySearchFragment()
+                if(this.settings!=null) {
+                    (this.propertyFragment as PropertySearchFragment).updateSettings(this.settings!!)
+                }
+            }
         }
 
         this.propertyFragment.updatePropertyId(propertyId)
@@ -189,9 +194,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
     }
 
-    fun openPropertyEdit(){
+    fun openPropertyEdit(propertyId:Int?){
         if(activity_main_fragment_property!=null){
-            showSecondFragment(ID_FRAGMENT_SECOND_EDIT, 0)
+            showSecondFragment(ID_FRAGMENT_SECOND_EDIT, propertyId)
         }else{
             startPropertyEditActivity()
         }
@@ -199,7 +204,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     fun openPropertySearch(){
         if(activity_main_fragment_property!=null){
-            showSecondFragment(ID_FRAGMENT_SECOND_SEARCH, 0)
+            showSecondFragment(ID_FRAGMENT_SECOND_SEARCH, null)
         }else{
             startPropertySearchActivity()
         }
@@ -251,6 +256,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
         this.settings!!.orderCriteria=orderCriteria
         this.settings!!.orderDesc=orderDesc
+        this.navigationFragment.updateSettings(this.settings)
+        this.navigationFragment.runPropertyQuery()
+    }
+
+    fun updateSettingsAndRunQuery(settings:PropertySearchSettings){
+        this.settings=settings
         this.navigationFragment.updateSettings(this.settings)
         this.navigationFragment.runPropertyQuery()
     }

@@ -9,7 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
+import android.widget.Button
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +21,7 @@ import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
 import com.openclassrooms.realestatemanager.model.coremodel.Realtor
 import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.view.activities.MainActivity
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
 import kotlinx.android.synthetic.main.fragment_property_edit.view.*
@@ -74,9 +75,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     private val saleInfoLayout by lazy {layout.fragment_property_edit_sale_info}
     private val soldSwitch by lazy {layout.fragment_property_edit_sold}
     private val saleDateText by lazy {layout.fragment_property_edit_sale_date}
-    private val buttonsBarCardView by lazy {layout.fragment_property_edit_buttons_bar}
-    private val cancelButton by lazy {layout.fragment_property_edit_button_cancel}
-    private val saveButton by lazy {layout.fragment_property_edit_button_save}
+    private lateinit var cancelButton :Button
+    private lateinit var saveButton :Button
 
     /*********************************************************************************************
      * Pictures support
@@ -160,12 +160,12 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     }
 
     private fun initializeButtons(){
-
-        //TODO improve for tablet
-
-        this.buttonsBarCardView.visibility=View.GONE
-        this.cancelButton.setOnClickListener { activity!!.finish() }
-        this.saveButton.setOnClickListener { saveProperty() }
+        if(this.layout.fragment_property_edit_button_cancel!=null&&this.layout.fragment_property_edit_button_save!=null){
+            this.cancelButton=this.layout.fragment_property_edit_button_cancel
+            this.saveButton=this.layout.fragment_property_edit_button_save
+            this.cancelButton.setOnClickListener { finish(this.propertyId) }
+            this.saveButton.setOnClickListener { saveProperty() }
+        }
     }
 
     private fun initializeEasyImage(){
@@ -242,7 +242,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         val propertyId=this.propertyId
         savePropertyExtras(propertyId!!.toInt())
 
-        activity!!.finish()
+        finish(propertyId)
     }
 
     private fun savePropertyExtras(propertyId:Int){
@@ -385,5 +385,21 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
                 //TODO handle
             }
         })
+    }
+
+    /*********************************************************************************************
+     * Leaves the fragment
+     ********************************************************************************************/
+
+    private fun finish(propertyId:Int?){
+        if(this.layout.fragment_property_edit_button_cancel!=null&&this.layout.fragment_property_edit_button_save!=null){
+            if(this.propertyId!=null){
+                (activity as MainActivity).openPropertyDetail(propertyId!!)
+            }else{
+                //TODO handle
+            }
+        }else{
+            activity!!.finish()
+        }
     }
 }
