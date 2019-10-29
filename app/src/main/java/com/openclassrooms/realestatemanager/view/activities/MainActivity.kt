@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -51,6 +53,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private val toolbar by lazy {activity_main_toolbar as Toolbar}
     private lateinit var navigationFragment: NavigationBaseFragment
     private lateinit var propertyFragment: PropertyBaseFragment
+    private lateinit var noPropertyText:TextView
     private val addButton by lazy {activity_main_button_add}
     private val bottomNavigationBar by lazy {activity_main_navigation_bottom}
 
@@ -71,6 +74,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         setContentView(R.layout.activity_main)
         initializeDataFromInstanceState(savedInstanceState)
         initializeToolbar()
+        initializeNoPropertyText()
         initializeAddButton()
         initializeBottomNavigationBar()
         showMainFragment(this.mainFragmentId)
@@ -135,6 +139,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         setSupportActionBar(this.toolbar)
     }
 
+    private fun initializeNoPropertyText(){
+        if(activity_main_text_no_property!=null){
+            this.noPropertyText=activity_main_text_no_property
+        }
+    }
+
     private fun initializeAddButton(){
         this.addButton.setOnClickListener{ openPropertyEdit(null) }
     }
@@ -176,10 +186,18 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             }
         }
 
+        this.noPropertyText.visibility= View.GONE
+        activity_main_fragment_property.visibility=View.VISIBLE
+
         this.propertyFragment.updatePropertyId(propertyId)
 
         supportFragmentManager.beginTransaction().replace(
                 R.id.activity_main_fragment_property, this.propertyFragment).commit()
+    }
+
+    fun resetSecondFragment(){
+        this.noPropertyText.visibility= View.VISIBLE
+        activity_main_fragment_property.visibility=View.GONE
     }
 
     /*********************************************************************************************

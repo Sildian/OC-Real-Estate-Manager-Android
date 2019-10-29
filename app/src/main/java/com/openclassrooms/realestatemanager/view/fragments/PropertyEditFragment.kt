@@ -493,7 +493,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             if(this.propertyId!=null){
                 (activity as MainActivity).openPropertyDetail(propertyId!!)
             }else{
-                //TODO handle
+                (activity as MainActivity).resetSecondFragment()
             }
         }else{
             activity!!.finish()

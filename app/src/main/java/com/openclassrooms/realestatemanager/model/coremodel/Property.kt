@@ -1,8 +1,6 @@
 package com.openclassrooms.realestatemanager.model.coremodel
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.PrimaryKey
+import androidx.room.*
 import java.util.*
 
 /**************************************************************************************************
@@ -11,14 +9,15 @@ import java.util.*
 
 @Entity(foreignKeys = arrayOf(
         ForeignKey(entity=PropertyType::class, parentColumns = arrayOf("id"), childColumns = arrayOf("typeId")),
-        ForeignKey(entity=Realtor::class, parentColumns = arrayOf("id"), childColumns = arrayOf("realtorId"))))
+        ForeignKey(entity=Realtor::class, parentColumns = arrayOf("id"), childColumns = arrayOf("realtorId"))),
+        indices=arrayOf(Index(value=["typeId", "realtorId"])))
 
 data class Property(
         @PrimaryKey (autoGenerate = true) var id:Int?=null,
         var adTitle:String?=null,
-        var typeId:Int?=null,
+        @ColumnInfo(name="typeId") var typeId:Int?=null,
         var price:Int?=null,
-        var realtorId:String?=null,
+        @ColumnInfo(name="realtorId") var realtorId:String?=null,
         var picturesPaths:List<String> = arrayListOf(),
         var description:String?=null,
         var size:Int?=null,

@@ -14,6 +14,7 @@
     <!--Text infos-->
     <string name="info_no_property_exist">No property exist in the database yet.\nCreate your first property by clicking on the \'+\' button.</string>
     <string name="info_no_property_match">No property match your current research.\nPlease try other parameters.</string>
+    <string name="info_no_property_selected">No property is selected.</string>
 
     <!--Text labels-->
     <string name="label_property_main_information">Main information</string>

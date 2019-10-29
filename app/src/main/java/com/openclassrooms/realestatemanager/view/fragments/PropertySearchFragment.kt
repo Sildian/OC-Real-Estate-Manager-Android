@@ -138,7 +138,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
         if(this.layout.fragment_property_search_button_back!=null&&this.layout.fragment_property_search_button_search!=null){
             this.backButton=this.layout.fragment_property_search_button_back
             this.searchButton=this.layout.fragment_property_search_button_search
-            this.backButton.setOnClickListener { finish() }
+            this.backButton.setOnClickListener { finishAbort() }
             this.searchButton.setOnClickListener { sendQuerySettings() }
         }
     }
@@ -310,5 +310,9 @@ class PropertySearchFragment : PropertyBaseFragment() {
         }else{
             (activity as PropertySearchActivity).sendActivityResult(this.settings)
         }
+    }
+
+    private fun finishAbort(){
+        (activity as MainActivity).resetSecondFragment()
     }
 }

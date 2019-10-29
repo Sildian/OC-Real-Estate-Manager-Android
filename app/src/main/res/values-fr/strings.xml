@@ -13,6 +13,7 @@
     <!--Text infos-->
     <string name="info_no_property_exist">Aucun bien immobilier n\'est stocké dans la base de données pour le moment.\nPour ajouter votre premier bien, cliquez sur le bouton \'+\'.</string>
     <string name="info_no_property_match">Aucun bien immobilier ne correspond à votre recherche.\nVeuillez essayer d\'autres paramètres.</string>
+    <string name="info_no_property_selected">Aucun bien immobilier sélectionné.</string>
 
     <!--Text labels-->
     <string name="label_property_main_information">Informations principales</string>
