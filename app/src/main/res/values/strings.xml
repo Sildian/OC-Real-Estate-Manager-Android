@@ -49,7 +49,18 @@
     <string name="error_forbidden_sale_date">If not sold, forbidden</string>
 
     <!--Toasts / Snackbars-->
-    <string name="toast_photo_unavailable">Your device cannot take photos</string>
+    <string name="toast_message_property_saved">The property is saved.</string>
+
+    <!--Dialogs-->
+    <string name="dialog_button_neutral">OK</string>
+    <string name="dialog_title_validation_issue">Caution!</string>
+    <string name="dialog_message_input_not_valid">Some fields are not valid.\nPlease check these fields and try again.</string>
+    <string name="dialog_title_issue">Issue</string>
+    <string name="dialog_message_picture_not_loaded">An error occurred while fetching the picture.</string>
+    <string name="dialog_message_location_not_found">The location could not be found.\nPlease try again later.</string>
+    <string name="dialog_title_permission_request">Permission request</string>
+    <string name="dialog_message_permission_request_location">Your permission is requested to show your location on the map.</string>
+    <string name="dialog_message_permission_request_write_and_camera">Your permission is requested to take pictures with your device.</string>
 
     <!--Images content descriptions-->
     <string name="content_description_picture">Picture</string>

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,7 @@ import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
 import com.openclassrooms.realestatemanager.model.coremodel.Realtor
 import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.view.activities.MainActivity
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
@@ -299,7 +301,9 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     fun saveProperty(){
 
         if(!checkInputIsValid()){
-            //TODO handle
+            (activity as BaseActivity).showSimpleDialog(
+                    resources.getString(R.string.dialog_title_validation_issue),
+                    resources.getString(R.string.dialog_message_input_not_valid))
         }else {
 
             val property = Property()
@@ -330,6 +334,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             }
             val propertyId = this.propertyId
             savePropertyExtras(propertyId!!.toInt())
+
+            Toast.makeText(context!!, R.string.toast_message_property_saved, Toast.LENGTH_LONG).show()
 
             finish(propertyId)
         }
@@ -412,7 +418,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             KEY_REQUEST_PERMISSION_WRITE_AND_CAMERA -> if (grantResults.size > 0) {
                 when (grantResults[0]) {
                     PackageManager.PERMISSION_GRANTED -> startTakePictureIntent()
-                    PackageManager.PERMISSION_DENIED -> Log.d("TAG_PERMISSION", "Oulala") //TODO handle
+                    PackageManager.PERMISSION_DENIED -> Log.d("TAG_PERMISSION", "Permission denied")
                 }
             }
         }
@@ -426,7 +432,9 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             if(shouldShowRequestPermissionRationale(KEY_PERMISSION_WRITE)
                             ||shouldShowRequestPermissionRationale(KEY_PERMISSION_CAMERA)){
 
-                //TODO handle
+                (activity as BaseActivity).showSimpleDialog(
+                        resources.getString(R.string.dialog_title_permission_request),
+                        resources.getString(R.string.dialog_message_permission_request_write_and_camera))
 
             }else{
                 requestPermissions(
@@ -467,12 +475,11 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
             override fun onImagePickerError(error: Throwable, source: MediaSource) {
                 super.onImagePickerError(error, source)
-                //TODO handle
-            }
-
-            override fun onCanceled(source: MediaSource) {
-                super.onCanceled(source)
-                //TODO handle
+                Log.d("TAG_PICTURE", error.message)
+                (activity as BaseActivity).showSimpleDialog(
+                        resources.getString(R.string.dialog_title_issue),
+                        resources.getString(R.string.dialog_message_picture_not_loaded)
+                )
             }
         })
     }

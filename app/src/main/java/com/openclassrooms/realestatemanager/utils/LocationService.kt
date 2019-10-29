@@ -72,15 +72,18 @@ class LocationService : IntentService("LocationService") {
         /*If an exception is raised, sends a failure to the receiver*/
 
         catch(e: IOException){
+            Log.d("TAG_LOCATION", e.message)
             deliverResultToReceiverFailure()
         }
         catch(e:IllegalArgumentException){
+            Log.d("TAG_LOCATION", e.message)
             deliverResultToReceiverFailure()
         }
 
         /*Sends the result back to the receiver (can be a failure or a success)*/
 
         if(results.isEmpty()){
+            Log.d("TAG_LOCATION", "No location found.")
             deliverResultToReceiverFailure()
         }else{
             deliverResultToReceiverSuccess(results[0].latitude, results[0].longitude)

@@ -27,6 +27,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.utils.LocationService
+import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.view.activities.MainActivity
 import kotlinx.android.synthetic.main.map_info_property.view.*
 
@@ -168,11 +169,21 @@ class NavigationMapFragment : NavigationBaseFragment(),
         this.map.isMyLocationEnabled=true
         this.fusedLocationProviderClient.lastLocation
                 .addOnSuccessListener {
-                    this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                            LatLng(it.latitude, it.longitude), 13f))
+                    if(it!=null) {
+                        this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                                LatLng(it.latitude, it.longitude), 13f))
+                    }else{
+                        Log.d("TAG_LOCATION", "Location not found")
+                        (activity as BaseActivity).showSimpleDialog(
+                                resources.getString(R.string.dialog_title_issue),
+                                resources.getString(R.string.dialog_message_location_not_found))
+                    }
                 }
                 .addOnFailureListener {
-                    //TODO handle
+                    Log.d("TAG_LOCATION", it.message)
+                    (activity as BaseActivity).showSimpleDialog(
+                            resources.getString(R.string.dialog_title_issue),
+                            resources.getString(R.string.dialog_message_location_not_found))
                 }
     }
 
@@ -243,7 +254,7 @@ class NavigationMapFragment : NavigationBaseFragment(),
             KEY_REQUEST_PERMISSION_LOCATION -> if (grantResults.size > 0) {
                 when (grantResults[0]) {
                     PackageManager.PERMISSION_GRANTED -> showUserLocation()
-                    PackageManager.PERMISSION_DENIED -> Log.d("TAG_PERMISSION", "Oulala") //TODO handle
+                    PackageManager.PERMISSION_DENIED -> Log.d("TAG_PERMISSION", "Permission denied")
                 }
             }
         }
@@ -253,7 +264,9 @@ class NavigationMapFragment : NavigationBaseFragment(),
         if(Build.VERSION.SDK_INT>=23
                 &&activity!!.checkSelfPermission(KEY_PERMISSION_LOCATION)!=PackageManager.PERMISSION_GRANTED){
             if(shouldShowRequestPermissionRationale(KEY_PERMISSION_LOCATION)){
-                //TODO handle
+                (activity as BaseActivity).showSimpleDialog(
+                        resources.getString(R.string.dialog_title_permission_request),
+                        resources.getString(R.string.dialog_message_permission_request_location))
             }else{
                 requestPermissions(arrayOf(KEY_PERMISSION_LOCATION), KEY_REQUEST_PERMISSION_LOCATION)
             }

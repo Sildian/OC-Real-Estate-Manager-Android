@@ -48,7 +48,18 @@
     <string name="error_forbidden_sale_date">Si non vendu, interdit</string>
 
     <!--Toasts / Snackbars-->
-    <string name="toast_photo_unavailable">Votre appareil ne peut pas prendre de photos</string>
+    <string name="toast_message_property_saved">Le bien immobilier est sauvegardé.</string>
+
+    <!--Dialogs-->
+    <string name="dialog_button_neutral">OK</string>
+    <string name="dialog_title_validation_issue">Attention!</string>
+    <string name="dialog_message_input_not_valid">Certains champs ne sont pas valides.\nVeuillez vérifier ces champs et réessayer.</string>
+    <string name="dialog_title_issue">Problème</string>
+    <string name="dialog_message_picture_not_loaded">Une erreur est survenue au moment de charger l\'image.</string>
+    <string name="dialog_message_location_not_found">La localisation n\'a pu être trouvée. Veuillez réessayer plus tard.</string>
+    <string name="dialog_title_permission_request">Permission</string>
+    <string name="dialog_message_permission_request_location">Votre permission est nécessaire pour montrer votre localisation sur la carte.</string>
+    <string name="dialog_message_permission_request_write_and_camera">Votre permission est nécessaire pour prendre des photos avec votre appareil.</string>
 
     <!--Images content descriptions-->
     <string name="content_description_picture">Image</string>
