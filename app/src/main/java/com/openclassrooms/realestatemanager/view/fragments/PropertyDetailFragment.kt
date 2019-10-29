@@ -49,9 +49,8 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
      * UI components
      ********************************************************************************************/
 
-    private lateinit var pictureAdapter: PictureAdapter
-    private lateinit var extrasAdapter:CheckedTextAdapter
-    private lateinit var editButton:Button
+    /**Components on the screen**/
+
     private val adTitleText by lazy {layout.fragment_property_detail_ad_title }
     private val priceText by lazy {layout.fragment_property_detail_price}
     private val typeText by lazy {layout.fragment_property_detail_type}
@@ -68,6 +67,12 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     private val realtorText by lazy {layout.fragment_property_detail_realtor}
     private val adDateText by lazy {layout.fragment_property_detail_ad_date}
     private val soldText by lazy {layout.fragment_property_detail_sold}
+    private lateinit var editButton:Button                                      //Only on tablets
+
+    /**Components support**/
+
+    private lateinit var pictureAdapter: PictureAdapter
+    private lateinit var extrasAdapter:CheckedTextAdapter
 
     /*********************************************************************************************
      * Map
@@ -96,7 +101,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     override fun getLayoutId() = R.layout.fragment_property_detail
 
     /*********************************************************************************************
-     * Initializations
+     * UI Initialization
      ********************************************************************************************/
 
     private fun initializeEditButton(){

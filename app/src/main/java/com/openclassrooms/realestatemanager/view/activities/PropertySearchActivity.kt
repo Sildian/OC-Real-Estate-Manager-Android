@@ -55,12 +55,13 @@ class PropertySearchActivity : BaseActivity() {
     }
 
     /*********************************************************************************************
-     * Initializations
+     * UI Initialization
      ********************************************************************************************/
 
     private fun initializeToolbar(){
         setSupportActionBar(this.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.title=resources.getString(R.string.toolbar_title_property_search)
     }
 
     /*********************************************************************************************

@@ -25,7 +25,15 @@ abstract class NavigationBaseFragment : Fragment() {
      * Abstract methods
      ********************************************************************************************/
 
+    /**Layout id**/
+
     abstract fun getLayoutId():Int
+
+    /**Event raised when a query fetching properties is finished
+     * @param properties : the list of resulted properties
+     * @param emptyMessage : the message to be displayed in case the list of properties is empty
+     */
+
     abstract fun onPropertiesReceived(properties:List<Property>, emptyMessage:String)
 
     /*********************************************************************************************
@@ -38,10 +46,15 @@ abstract class NavigationBaseFragment : Fragment() {
      * Data
      ********************************************************************************************/
 
+    /**View Models**/
+
     protected lateinit var viewModelFactory: ViewModelFactory
     protected var propertyViewModel: PropertyViewModel?=null
-    protected val properties=arrayListOf<Property>()
-    protected var settings:PropertySearchSettings?=null
+
+    /**Others**/
+
+    protected val properties=arrayListOf<Property>()            //The list of current displayed properties
+    protected var settings:PropertySearchSettings?=null         //The current settings
 
     /*********************************************************************************************
      * Life cycle
@@ -75,6 +88,8 @@ abstract class NavigationBaseFragment : Fragment() {
      * Run queries to get and show properties
      ********************************************************************************************/
 
+    /**Main function : decides whether to use a simple or a complex query**/
+
     fun runPropertyQuery(){
         if(this.settings==null){
             runSimplePropertyQuery()
@@ -84,6 +99,8 @@ abstract class NavigationBaseFragment : Fragment() {
         }
     }
 
+    /**Simple query : just retrieves all properties from the database**/
+
     private fun runSimplePropertyQuery(){
 
         this.propertyViewModel?.getAllProperties()!!.observe(this, Observer {
@@ -91,13 +108,19 @@ abstract class NavigationBaseFragment : Fragment() {
         })
     }
 
+    /**Complex query : uses the settings to generates filters and sort parameters**/
+
     private fun runComplexPropertyQuery(){
 
         if(this.settings!=null) {
 
+            /*If a simple query is already observed, then stops observing it*/
+
             if (this.propertyViewModel != null && this.propertyViewModel?.getAllProperties()!!.hasObservers()) {
                 this.propertyViewModel?.getAllProperties()?.removeObservers(this)
             }
+
+            /*Then run the complex query and observes it*/
 
             this.propertyViewModel?.getProperties(SQLQueryGenerator.generatePropertyQuery(
                     minPrice = this.settings!!.minPrice, maxPrice = this.settings!!.maxPrice,

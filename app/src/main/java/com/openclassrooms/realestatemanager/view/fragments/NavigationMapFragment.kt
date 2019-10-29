@@ -64,7 +64,7 @@ class NavigationMapFragment : NavigationBaseFragment(),
     private val mapView by lazy {layout.fragment_navigation_map_map}
 
     /*********************************************************************************************
-     * Map & location
+     * Map & location support
      ********************************************************************************************/
 
     private lateinit var map: GoogleMap
@@ -127,14 +127,23 @@ class NavigationMapFragment : NavigationBaseFragment(),
     override fun getLayoutId(): Int = R.layout.fragment_navigation_map
 
     override fun onPropertiesReceived(properties: List<Property>, emptyMessage:String) {
+
+        /*Updates the list of properties*/
+
         this.properties.clear()
         this.properties.addAll(properties)
         clearMarkers()
+
+        /*If the list of properties is not empty, shows the markers on the map*/
+
         if(properties.isNotEmpty()) {
             for (i in this.properties.indices) {
                 val address = properties[i].getFullAddressToFetchLocation()
                 startLocationService(i, address)
             }
+
+            /*Else displays a message*/
+
         } else{
             (activity as BaseActivity).showSimpleDialog(
                     resources.getString(R.string.dialog_title_properties_empty), emptyMessage)

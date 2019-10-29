@@ -164,6 +164,8 @@ object SQLQueryGenerator {
         var result=""
         when{
 
+            /*Uses '>', '<'< or 'BETWEEN' depending on the case*/
+
             minCriteria!=null&&maxCriteria==null->
                 result="$fieldName>=$minCriteria"
 
@@ -179,11 +181,15 @@ object SQLQueryGenerator {
     fun generateRangeFilter(fieldName:String, minCriteria: Date?, maxCriteria:Date?):String{
         var result=""
 
+        /*Converts the dates to timeStamps*/
+
         val dateConverter=DateConverter()
         val minDate=if(minCriteria!=null)dateConverter.dateToTimestamp(minCriteria) else null
         val maxDate=if(maxCriteria!=null)dateConverter.dateToTimestamp(maxCriteria) else null
         
         when{
+
+            /*Uses '>', '<'< or 'BETWEEN' depending on the case*/
 
             minDate!=null&&maxDate==null->
                 result="$fieldName>=$minDate"
@@ -211,8 +217,13 @@ object SQLQueryGenerator {
 
             when {
 
+                /*If there is 1 criteria, makes the field equal to it with '='*/
+
                 criterias.size == 1 ->
                     result.append("$fieldName=" + criterias[0])
+
+                /*If there are more than 1 criteria,
+                adds all of them to the possible values of the field with 'IN' and separates them with ','*/
 
                 criterias.size > 1 -> {
                     result.append("$fieldName IN (")

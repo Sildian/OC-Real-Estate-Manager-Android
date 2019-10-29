@@ -34,9 +34,14 @@ data class Property(
         var sold:Boolean=false
         )
 {
+
+        /**Full address with line breaks (to display)**/
+
         fun getFullAddressToDisplay():String{
                 return this.address+"\n"+this.postalCode+" "+this.city+"\n"+this.country
         }
+
+        /**Full address without line breaks (to use in location queries)**/
 
         fun getFullAddressToFetchLocation():String{
                 return this.address+" "+this.postalCode+" "+this.city+" "+this.country

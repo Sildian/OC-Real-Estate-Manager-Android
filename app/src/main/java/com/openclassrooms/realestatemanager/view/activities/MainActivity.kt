@@ -37,9 +37,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         /**Fragments ids**/
 
+        /*Main fragment is the only one shown on phones. On tablets, Main fragment is the first shown on the screen*/
+
         const val ID_FRAGMENT_MAIN_LIST=1
         const val ID_FRAGMENT_MAIN_MAP=2
         const val ID_FRAGMENT_MAIN_LOAN=3
+
+        /*Second fragment is only shown on tablets*/
 
         const val ID_FRAGMENT_SECOND_DETAIL=1
         const val ID_FRAGMENT_SECOND_EDIT=2
@@ -50,12 +54,23 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
      * UI components
      ********************************************************************************************/
 
-    private val toolbar by lazy {activity_main_toolbar as Toolbar}
-    private lateinit var navigationFragment: NavigationBaseFragment
-    private lateinit var propertyFragment: PropertyBaseFragment
-    private lateinit var noPropertyText:TextView
-    private val addButton by lazy {activity_main_button_add}
-    private val bottomNavigationBar by lazy {activity_main_navigation_bottom}
+    /**Menu bars**/
+
+    private val toolbar by lazy {activity_main_toolbar as Toolbar}              //Toolbar (top)
+    private val bottomNavigationBar by lazy {activity_main_navigation_bottom}   //Navigation bar (bottom)
+
+    /**Fragments**/
+
+    private lateinit var navigationFragment: NavigationBaseFragment     //Allows to navigate between properties
+    private lateinit var propertyFragment: PropertyBaseFragment         //Monitors property's data (tablets only)
+
+    /**Info**/
+
+    private lateinit var noPropertyText:TextView                        //Shows an info when no property is selected (tablets only)
+
+    /**Buttons**/
+
+    private val addButton by lazy {activity_main_button_add}            //Adds a new property
 
     /*********************************************************************************************
      * Data
@@ -122,7 +137,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     /*********************************************************************************************
-     * Initializations
+     * Data Initialization
      ********************************************************************************************/
 
     private fun initializeDataFromInstanceState(savedInstanceState: Bundle?){
@@ -135,8 +150,16 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
     }
 
+    /*********************************************************************************************
+     * UI Initialization
+     ********************************************************************************************/
+
     private fun initializeToolbar(){
         setSupportActionBar(this.toolbar)
+    }
+
+    private fun initializeBottomNavigationBar(){
+        this.bottomNavigationBar.setOnNavigationItemSelectedListener (this)
     }
 
     private fun initializeNoPropertyText(){
@@ -149,10 +172,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         this.addButton.setOnClickListener{ openPropertyEdit(null) }
     }
 
-    private fun initializeBottomNavigationBar(){
-        this.bottomNavigationBar.setOnNavigationItemSelectedListener (this)
-    }
-
     /*********************************************************************************************
      * Fragments management
      ********************************************************************************************/
@@ -161,19 +180,27 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         //TODO implement Loan
 
+        /*Selects which fragment should be shown*/
+
         when(fragmentId){
             ID_FRAGMENT_MAIN_LIST->this.navigationFragment= NavigationListFragment()
             ID_FRAGMENT_MAIN_MAP->this.navigationFragment=NavigationMapFragment()
             ID_FRAGMENT_MAIN_LOAN->Log.d("TAG_MENU", "Not implemented yet")
         }
 
+        /*Sends the current settings to the fragment*/
+
         this.navigationFragment.updateSettings(this.settings)
+
+        /*Shows the fragment*/
 
         supportFragmentManager.beginTransaction().replace(
                 R.id.activity_main_fragment_navigation, this.navigationFragment).commit()
     }
 
     private fun showSecondFragment(fragmentId:Int, propertyId:Int?) {
+
+        /*Select which fragment should be shown, and sends the current settings only to PropertySearchFragment*/
 
         when (fragmentId) {
             ID_FRAGMENT_SECOND_DETAIL -> this.propertyFragment = PropertyDetailFragment()
@@ -186,13 +213,23 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             }
         }
 
-        this.noPropertyText.visibility= View.GONE
-        activity_main_fragment_property.visibility=View.VISIBLE
+        /*Hides / shows items*/
+
+        initSecondFragment()
+
+        /*Sends the current property id to the fragment*/
 
         this.propertyFragment.updatePropertyId(propertyId)
 
+        /*Shows the fragment*/
+
         supportFragmentManager.beginTransaction().replace(
                 R.id.activity_main_fragment_property, this.propertyFragment).commit()
+    }
+
+    private fun initSecondFragment(){
+        this.noPropertyText.visibility= View.GONE
+        activity_main_fragment_property.visibility=View.VISIBLE
     }
 
     fun resetSecondFragment(){

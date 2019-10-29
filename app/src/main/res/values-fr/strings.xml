@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--Toolbar titles-->
+    <string name="toolbar_title_property_detail">Détails du bien</string>
+    <string name="toolbar_title_property_edit">Edition du bien</string>
+    <string name="toolbar_title_property_search">Recherche</string>
+
     <!--Menu-->
     <string name="menu_toolbar_add">Ajouter</string>
     <string name="menu_toolbar_edit">Modifier</string>

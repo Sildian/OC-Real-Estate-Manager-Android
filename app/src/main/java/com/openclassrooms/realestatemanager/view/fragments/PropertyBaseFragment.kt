@@ -49,9 +49,9 @@ abstract class PropertyBaseFragment : Fragment() {
 
     /**Data related to the current property**/
 
-    protected var propertyId:Int?=null
-    protected val picturesPaths:ArrayList<String?> = arrayListOf(null)
-    protected val extras:ArrayList<String> = arrayListOf()
+    protected var propertyId:Int?=null                                      //Property id
+    protected val picturesPaths:ArrayList<String?> = arrayListOf(null)      //The list of pictures paths
+    protected val extras:ArrayList<String> = arrayListOf()                  //The list of extras
 
     /*********************************************************************************************
      * Life cycle
@@ -65,7 +65,7 @@ abstract class PropertyBaseFragment : Fragment() {
     }
 
     /*********************************************************************************************
-     * Initializations
+     * Data Initialization
      ********************************************************************************************/
 
     private fun initializeData(){

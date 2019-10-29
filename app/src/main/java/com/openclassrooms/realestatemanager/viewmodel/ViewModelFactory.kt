@@ -18,6 +18,8 @@ class ViewModelFactory(
         val executor: Executor)
     : ViewModelProvider.Factory {
 
+    /**Generates viewModels**/
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when{
             modelClass.isAssignableFrom(PropertyViewModel::class.java)->

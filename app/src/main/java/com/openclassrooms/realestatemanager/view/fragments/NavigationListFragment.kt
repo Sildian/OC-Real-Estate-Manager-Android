@@ -24,11 +24,16 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
      * UI components
      ********************************************************************************************/
 
-    private lateinit var propertyAdapter:PropertyAdapter
+    /**Components on the screen**/
+
     private val sortDescSwitch by lazy {layout.fragment_navigation_list_sort_desc}
     private val sortCriteriaChipGroup by lazy {layout.fragment_navigation_list_sort_criteria}
     private val propertiesEmptyText by lazy {layout.fragment_navigation_list_text_properties_empty}
     private val propertiesRecyclerView by lazy {layout.fragment_navigation_list_properties}
+
+    /**Support to components**/
+
+    private lateinit var propertyAdapter:PropertyAdapter
 
     /*********************************************************************************************
      * Life cycle
@@ -52,10 +57,16 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
     override fun getLayoutId(): Int = R.layout.fragment_navigation_list
 
     override fun onPropertiesReceived(properties: List<Property>, emptyMessage:String) {
+
+        /*Updates the recyclerView with the list of properties*/
+
         this.properties.clear()
         this.properties.addAll(properties)
         this.propertyAdapter= PropertyAdapter(this.properties, this)
         this.propertiesRecyclerView.adapter=this.propertyAdapter
+
+        /*If the list is empty, then shows a message*/
+
         if(properties.isEmpty()){
             this.propertiesEmptyText.setText(emptyMessage)
             this.propertiesEmptyText.visibility=View.VISIBLE
@@ -65,7 +76,7 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
     }
 
     /*********************************************************************************************
-     * Initializations
+     * UI Initialization
      ********************************************************************************************/
 
     private fun initializeSortDesSwitch(){
@@ -94,7 +105,7 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
     }
 
     /*********************************************************************************************
-     * Loads settings
+     * Loads data to populate the settings UI components
      ********************************************************************************************/
 
     private fun loadSortDesc(){

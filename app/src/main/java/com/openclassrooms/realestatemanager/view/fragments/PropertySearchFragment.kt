@@ -46,8 +46,8 @@ class PropertySearchFragment : PropertyBaseFragment() {
     private val adDateTextDropDown by lazy {layout.fragment_property_search_ad_date}
     private val soldRadioGroup by lazy {layout.fragment_property_search_sold}
     private val saleDateTextDropDown by lazy {layout.fragment_property_search_sale_date}
-    private lateinit var backButton:Button
-    private lateinit var searchButton:Button
+    private lateinit var backButton:Button                                                  //Only on tablets
+    private lateinit var searchButton:Button                                                //Only on tablets
 
     /*********************************************************************************************
      * Data
@@ -79,7 +79,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
     override fun getLayoutId() = R.layout.fragment_property_search
 
     /*********************************************************************************************
-     * Data Initializations
+     * Data Initialization
      ********************************************************************************************/
 
     private fun initializeSettings(){
@@ -103,7 +103,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
     }
 
     /*********************************************************************************************
-     * UI Initializations
+     * UI Initialization
      ********************************************************************************************/
 
     private fun initializeTypesChipGroup(){
@@ -144,7 +144,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
     }
 
     /*********************************************************************************************
-     * Prepares / loads query settings
+     * Sends query settings to MainActivity to run the query
      ********************************************************************************************/
 
     fun sendQuerySettings(){
@@ -170,6 +170,12 @@ class PropertySearchFragment : PropertyBaseFragment() {
         finish()
     }
 
+    /*********************************************************************************************
+     * Loads the settings to populate UI components
+     ********************************************************************************************/
+
+    /**Main function**/
+
     private fun loadQuerySettings(){
         loadPriceRange()
         loadRange(this.sizeRangeBar, this.settings.minSize, this.settings.maxSize)
@@ -183,6 +189,8 @@ class PropertySearchFragment : PropertyBaseFragment() {
         loadOffsetPeriod(this.saleDateTextDropDown, this.settings.minSaleDate)
     }
 
+    /**Specific function to load and populate the price range**/
+
     private fun loadPriceRange(){
         var minPrice=this.settings.minPrice
         minPrice=if(minPrice!=null) minPrice/1000 else null
@@ -191,17 +199,23 @@ class PropertySearchFragment : PropertyBaseFragment() {
         loadRange(this.priceRangeBar, minPrice, maxPrice)
     }
 
+    /**Specific function to load and populate the property's type**/
+
     private fun loadTypeIds(){
         for(typeId in this.settings.typeIds){
             this.typesChips[typeId!!-1].isChecked=true
         }
     }
 
+    /**Specific function to load and populate the property's extras**/
+
     private fun loadExtrasIds(){
         for(extraId in this.settings.extrasIds){
             this.extrasChips[extraId!!-1].isChecked=true
         }
     }
+
+    /**Specific function to load and populate the sold status**/
 
     private fun loadSoldStatus(){
         when(this.settings.sold){
@@ -211,17 +225,31 @@ class PropertySearchFragment : PropertyBaseFragment() {
         }
     }
 
+    /**Loads and populates a RangeBar
+     * @param rangeBar : the rangeBar
+     * @param minValue : the min value
+     * @param maxValue : the max value
+     */
+
     private fun loadRange(rangeBar:RangeBar, minValue:Int?, maxValue:Int?){
         val min=if(minValue!=null) minValue.toFloat() else rangeBar.tickStart
         val max=if(maxValue!=null) maxValue.toFloat() else rangeBar.tickEnd
         rangeBar.setRangePinsByValue(min, max)
     }
 
+    /**Loads and populates a date selection period
+     * @param dateText : the textDropDown
+     * @param offsetDate : the offsetDate
+     */
+
     private fun loadOffsetPeriod(dateText:AutoCompleteTextView, offsetDate:Date?){
         if(offsetDate!=null) {
             val date = Date()
             val offsetMonths=Utils.calculateDifferenceBetweenDates(date, offsetDate)
             when(offsetMonths){
+
+                /*Shows the appropriated text depending on the number of months offset*/
+
                 3->dateText.setText(resources.getStringArray(R.array.choice_date)[0], false)
                 6->dateText.setText(resources.getStringArray(R.array.choice_date)[1], false)
                 12->dateText.setText(resources.getStringArray(R.array.choice_date)[2], false)

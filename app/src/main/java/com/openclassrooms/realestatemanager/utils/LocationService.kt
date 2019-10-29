@@ -22,10 +22,13 @@ class LocationService : IntentService("LocationService") {
 
     companion object{
 
-        /**Keys allowing to transfer information through intents**/
+        /**Result ids**/
 
         const val RESULT_FAILURE=0
         const val RESULT_SUCCESS=1
+
+        /**Keys allowing to transfer information through intents**/
+
         const val KEY_BUNDLE_PROPERTY_ID_IN_LIST="KEY_PROPERTY_ID_IN_LIST"
         const val KEY_BUNDLE_ADDRESS="KEY_BUNDLE_ADDRESS"
         const val KEY_BUNDLE_RECEIVER="KEY_BUNDLE_RECEIVER"

@@ -59,7 +59,7 @@ class PropertyEditActivity : BaseActivity() {
     }
 
     /*********************************************************************************************
-     * Initializations
+     * Data Initialization
      ********************************************************************************************/
 
     private fun initializeDataReceivedByIntent(){
@@ -68,8 +68,13 @@ class PropertyEditActivity : BaseActivity() {
         }
     }
 
+    /*********************************************************************************************
+     * UI Initialization
+     ********************************************************************************************/
+
     private fun initializeToolbar(){
         setSupportActionBar(this.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.title=resources.getString(R.string.toolbar_title_property_edit)
     }
 }

@@ -20,7 +20,6 @@ class PropertyDetailActivity : BaseActivity() {
      ********************************************************************************************/
 
     private val toolbar by lazy {activity_property_detail_toolbar as Toolbar }
-    private val fragment by lazy {activity_property_detail_fragment as PropertyDetailFragment }
 
     /*********************************************************************************************
      * Data
@@ -59,7 +58,7 @@ class PropertyDetailActivity : BaseActivity() {
     }
 
     /*********************************************************************************************
-     * Initializations
+     * Data Initialization
      ********************************************************************************************/
 
     private fun initializeDataReceivedByIntent(){
@@ -68,9 +67,14 @@ class PropertyDetailActivity : BaseActivity() {
         }
     }
 
+    /*********************************************************************************************
+     * UI Initialization
+     ********************************************************************************************/
+
     private fun initializeToolbar(){
         setSupportActionBar(this.toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.title=resources.getString(R.string.toolbar_title_property_detail)
     }
 
     /*********************************************************************************************

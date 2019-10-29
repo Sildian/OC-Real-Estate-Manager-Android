@@ -2,6 +2,11 @@
 
     <string name="app_name" translatable="false">Real Estate Manager</string>
 
+    <!--Toolbar titles-->
+    <string name="toolbar_title_property_detail">Property details</string>
+    <string name="toolbar_title_property_edit">Property edit</string>
+    <string name="toolbar_title_property_search">Research</string>
+
     <!--Menu-->
     <string name="menu_toolbar_add">Add</string>
     <string name="menu_toolbar_edit">Edit</string>

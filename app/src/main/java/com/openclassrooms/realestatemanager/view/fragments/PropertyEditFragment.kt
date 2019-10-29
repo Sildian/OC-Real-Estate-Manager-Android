@@ -77,9 +77,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     private val adDateInputLayout by lazy {layout.fragment_property_edit_ad_date_layout}
     private val saleDateInputLayout by lazy {layout.fragment_property_edit_sale_date_layout}
 
-    /**Other components**/
+    /**Components on the screen**/
 
-    private lateinit var pictureAdapter:PictureAdapter
     private val adTitleText by lazy {layout.fragment_property_edit_ad_title }
     private val priceText by lazy {layout.fragment_property_edit_price}
     private val typeTextDropdown by lazy {layout.fragment_property_edit_type}
@@ -101,8 +100,12 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     private val saleInfoLayout by lazy {layout.fragment_property_edit_sale_info}
     private val soldSwitch by lazy {layout.fragment_property_edit_sold}
     private val saleDateText by lazy {layout.fragment_property_edit_sale_date}
-    private lateinit var cancelButton :Button
-    private lateinit var saveButton :Button
+    private lateinit var cancelButton :Button                                       //Only on tablets
+    private lateinit var saveButton :Button                                         //Only on tablets
+
+    /**Components support**/
+
+    private lateinit var pictureAdapter:PictureAdapter
 
     /*********************************************************************************************
      * Pictures support
@@ -235,6 +238,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
      * Input control
      ********************************************************************************************/
 
+    /**Checks that all input fields are valid**/
+
     private fun checkInputIsValid():Boolean{
 
         var isValid=true
@@ -259,6 +264,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         return isValid
     }
 
+    /**Checks that a simple text field is not empty**/
+
     private fun checkTextIsNotEmpty(editText:TextInputEditText, textLayout:TextInputLayout):Boolean{
         if(editText.text.isNullOrEmpty()) {
             textLayout.error = resources.getString(R.string.error_mandatory_field)
@@ -269,6 +276,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         }
     }
 
+    /**Checks that a dropDown text field is not empy**/
+
     private fun checkTextIsNotEmpty(editText:AutoCompleteTextView, textLayout:TextInputLayout):Boolean{
         if(editText.text.isNullOrEmpty()) {
             textLayout.error = resources.getString(R.string.error_mandatory_field)
@@ -278,6 +287,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             return true
         }
     }
+
+    /**Specific function checking that saleDate is valid (must be filled only if the property is sold)**/
 
     private fun checkSaleDateIsValid():Boolean{
         when{
@@ -295,16 +306,20 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     }
 
     /*********************************************************************************************
-     * Data management
+     * Saves property's items
      ********************************************************************************************/
 
     fun saveProperty(){
+
+        /*Checks that all input fields are valid and eventually shows a message*/
 
         if(!checkInputIsValid()){
             (activity as BaseActivity).showSimpleDialog(
                     resources.getString(R.string.dialog_title_validation_issue),
                     resources.getString(R.string.dialog_message_input_not_valid))
         }else {
+
+            /*Saves all fields into a property*/
 
             val property = Property()
             property.adTitle = this.adTitleText.text.toString()
@@ -326,6 +341,9 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             property.sold = this.soldSwitch.isChecked
             if (!this.saleDateText.text.isNullOrEmpty())
                 property.saleDate = Utils.getDateFromString(this.saleDateText.text.toString())
+
+            /*If this is a new property then creates it in the database. Else updates it.*/
+
             if (this.propertyId == null) {
                 this.propertyId = this.propertyViewModel.insertProperty(property).toInt()
             } else {
@@ -335,8 +353,9 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             val propertyId = this.propertyId
             savePropertyExtras(propertyId!!.toInt())
 
-            Toast.makeText(context!!, R.string.toast_message_property_saved, Toast.LENGTH_LONG).show()
+            /*Shows a confirmation message to the user and leaves the fragment*/
 
+            Toast.makeText(context!!, R.string.toast_message_property_saved, Toast.LENGTH_LONG).show()
             finish(propertyId)
         }
     }
@@ -350,6 +369,10 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             }
         }
     }
+
+    /*********************************************************************************************
+     * Loads property's items
+     ********************************************************************************************/
 
     private fun loadProperty() {
 
