@@ -477,7 +477,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
                 super.onImagePickerError(error, source)
                 Log.d("TAG_PICTURE", error.message)
                 (activity as BaseActivity).showSimpleDialog(
-                        resources.getString(R.string.dialog_title_issue),
+                        resources.getString(R.string.dialog_title_sundry_issue),
                         resources.getString(R.string.dialog_message_picture_not_loaded)
                 )
             }

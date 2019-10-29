@@ -11,6 +11,10 @@
     <string name="menu_navigation_bottom_map">Map</string>
     <string name="menu_navigation_bottom_loan">Loan</string>
 
+    <!--Text infos-->
+    <string name="info_no_property_exist">No property exist in the database yet.\nCreate your first property by clicking on the \'+\' button.</string>
+    <string name="info_no_property_match">No property match your current research.\nPlease try other parameters.</string>
+
     <!--Text labels-->
     <string name="label_property_main_information">Main information</string>
     <string name="label_property_pictures">Pictures</string>
@@ -55,12 +59,15 @@
     <string name="dialog_button_neutral">OK</string>
     <string name="dialog_title_validation_issue">Caution!</string>
     <string name="dialog_message_input_not_valid">Some fields are not valid.\nPlease check these fields and try again.</string>
-    <string name="dialog_title_issue">Issue</string>
+    <string name="dialog_title_sundry_issue">Issue</string>
     <string name="dialog_message_picture_not_loaded">An error occurred while fetching the picture.</string>
     <string name="dialog_message_location_not_found">The location could not be found.\nPlease try again later.</string>
     <string name="dialog_title_permission_request">Permission request</string>
     <string name="dialog_message_permission_request_location">Your permission is requested to show your location on the map.</string>
     <string name="dialog_message_permission_request_write_and_camera">Your permission is requested to take pictures with your device.</string>
+    <string name="dialog_title_properties_empty">No property found</string>
+    <string name="dialog_message_no_property_exist">No property exist in the database yet.\nCreate your first property by clicking on the \'+\' button.</string>
+    <string name="dialog_message_no_property_match">No property match your current research.\nPlease try other parameters.</string>
 
     <!--Images content descriptions-->
     <string name="content_description_picture">Picture</string>

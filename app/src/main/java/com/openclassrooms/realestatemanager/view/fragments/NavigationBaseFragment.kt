@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.Observer
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.sqlite.SQLQueryGenerator
 import com.openclassrooms.realestatemanager.model.sqlite.support.PropertySearchSettings
@@ -25,7 +26,7 @@ abstract class NavigationBaseFragment : Fragment() {
      ********************************************************************************************/
 
     abstract fun getLayoutId():Int
-    abstract fun onPropertiesReceived(properties:List<Property>)
+    abstract fun onPropertiesReceived(properties:List<Property>, emptyMessage:String)
 
     /*********************************************************************************************
      * UI components
@@ -86,7 +87,7 @@ abstract class NavigationBaseFragment : Fragment() {
     private fun runSimplePropertyQuery(){
 
         this.propertyViewModel?.getAllProperties()!!.observe(this, Observer {
-            onPropertiesReceived(it)
+            onPropertiesReceived(it, resources.getString(R.string.info_no_property_exist))
         })
     }
 
@@ -110,7 +111,7 @@ abstract class NavigationBaseFragment : Fragment() {
                     orderCriteria = this.settings!!.orderCriteria, orderDesc = this.settings!!.orderDesc))
                     ?.observe(this, Observer {
 
-                        onPropertiesReceived(it)
+                        onPropertiesReceived(it, resources.getString(R.string.info_no_property_match))
                     })
         }
     }

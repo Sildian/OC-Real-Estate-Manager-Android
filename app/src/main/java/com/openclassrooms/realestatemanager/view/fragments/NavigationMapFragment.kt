@@ -126,12 +126,18 @@ class NavigationMapFragment : NavigationBaseFragment(),
 
     override fun getLayoutId(): Int = R.layout.fragment_navigation_map
 
-    override fun onPropertiesReceived(properties: List<Property>) {
+    override fun onPropertiesReceived(properties: List<Property>, emptyMessage:String) {
         this.properties.clear()
         this.properties.addAll(properties)
-        for(i in this.properties.indices){
-            val address=properties[i].getFullAddressToFetchLocation()
-            startLocationService(i, address)
+        clearMarkers()
+        if(properties.isNotEmpty()) {
+            for (i in this.properties.indices) {
+                val address = properties[i].getFullAddressToFetchLocation()
+                startLocationService(i, address)
+            }
+        } else{
+            (activity as BaseActivity).showSimpleDialog(
+                    resources.getString(R.string.dialog_title_properties_empty), emptyMessage)
         }
     }
 
@@ -175,14 +181,14 @@ class NavigationMapFragment : NavigationBaseFragment(),
                     }else{
                         Log.d("TAG_LOCATION", "Location not found")
                         (activity as BaseActivity).showSimpleDialog(
-                                resources.getString(R.string.dialog_title_issue),
+                                resources.getString(R.string.dialog_title_sundry_issue),
                                 resources.getString(R.string.dialog_message_location_not_found))
                     }
                 }
                 .addOnFailureListener {
                     Log.d("TAG_LOCATION", it.message)
                     (activity as BaseActivity).showSimpleDialog(
-                            resources.getString(R.string.dialog_title_issue),
+                            resources.getString(R.string.dialog_title_sundry_issue),
                             resources.getString(R.string.dialog_message_location_not_found))
                 }
     }
@@ -190,6 +196,10 @@ class NavigationMapFragment : NavigationBaseFragment(),
     private fun showPropertyLocation(propertyIdInList:Int, latitude:Double, longitude:Double){
         this.map.addMarker(MarkerOptions().position(LatLng(latitude, longitude)))
                 .tag=this.properties[propertyIdInList]
+    }
+
+    private fun clearMarkers(){
+        this.map.clear()
     }
 
     /*********************************************************************************************

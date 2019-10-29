@@ -27,6 +27,7 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
     private lateinit var propertyAdapter:PropertyAdapter
     private val sortDescSwitch by lazy {layout.fragment_navigation_list_sort_desc}
     private val sortCriteriaChipGroup by lazy {layout.fragment_navigation_list_sort_criteria}
+    private val propertiesEmptyText by lazy {layout.fragment_navigation_list_text_properties_empty}
     private val propertiesRecyclerView by lazy {layout.fragment_navigation_list_properties}
 
     /*********************************************************************************************
@@ -50,11 +51,17 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
 
     override fun getLayoutId(): Int = R.layout.fragment_navigation_list
 
-    override fun onPropertiesReceived(properties: List<Property>) {
+    override fun onPropertiesReceived(properties: List<Property>, emptyMessage:String) {
         this.properties.clear()
         this.properties.addAll(properties)
         this.propertyAdapter= PropertyAdapter(this.properties, this)
         this.propertiesRecyclerView.adapter=this.propertyAdapter
+        if(properties.isEmpty()){
+            this.propertiesEmptyText.setText(emptyMessage)
+            this.propertiesEmptyText.visibility=View.VISIBLE
+        }else{
+            this.propertiesEmptyText.visibility=View.GONE
+        }
     }
 
     /*********************************************************************************************
