@@ -5,7 +5,7 @@
         android:id="@+id/menu_toolbar_group">
         <item
             android:id="@+id/menu_toolbar_search"
-            android:icon="@drawable/ic_search_white"
+            android:icon="@drawable/ic_settings_white"
             app:showAsAction="ifRoom"
             android:title="@string/menu_toolbar_search">
         </item>
