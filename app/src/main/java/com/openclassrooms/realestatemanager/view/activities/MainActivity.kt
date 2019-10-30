@@ -11,6 +11,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -22,6 +24,7 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.sqlite.support.PropertySearchSettings
 import com.openclassrooms.realestatemanager.view.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.navigation_drawer_header.view.*
 
 /**************************************************************************************************
  * Main activity for user interaction
@@ -199,8 +202,7 @@ class MainActivity : BaseActivity(),
         toggle.syncState()
 
         this.navigationView.setNavigationItemSelectedListener(this)
-
-        val header=layoutInflater.inflate(R.layout.navigation_drawer_header, this.navigationView)
+        updateNavigationDrawer()
     }
 
     private fun initializeNoPropertyText(){
@@ -211,6 +213,31 @@ class MainActivity : BaseActivity(),
 
     private fun initializeAddButton(){
         this.addButton.setOnClickListener{ openPropertyEdit(null) }
+    }
+
+    /*********************************************************************************************
+     * UI update
+     ********************************************************************************************/
+
+    private fun updateNavigationDrawer(){
+        val navigationHeader=layoutInflater.inflate(R.layout.navigation_drawer_header, this.navigationView)
+        val userPictureImageView=navigationHeader.navigation_drawer_header_user_picture
+        val userNameTextView=navigationHeader.navigation_drawer_header_user_name
+        if(this.firebaseUser!=null) {
+            Glide.with(navigationHeader)
+                    .load(this.firebaseUser!!.photoUrl)
+                    .apply(RequestOptions.circleCropTransform())
+                    .placeholder(R.drawable.ic_realtor_gray)
+                    .into(userPictureImageView)
+            userNameTextView.setText(this.firebaseUser!!.displayName)
+        }
+        else{
+            Glide.with(navigationHeader)
+                    .load(R.drawable.ic_realtor_gray)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(userPictureImageView)
+            userNameTextView.setText(R.string.info_user_not_connected)
+        }
     }
 
     /*********************************************************************************************
@@ -367,6 +394,7 @@ class MainActivity : BaseActivity(),
             val message=resources.getString(R.string.toast_message_firebase_user_connected)+
                     " "+this.firebaseUser?.displayName+"."
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            updateNavigationDrawer()
 
             /*Else, shows an other message depending on which error occurred*/
 
