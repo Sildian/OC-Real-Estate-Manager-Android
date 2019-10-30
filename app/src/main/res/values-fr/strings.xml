@@ -14,11 +14,15 @@
     <string name="menu_navigation_bottom_list">Liste</string>
     <string name="menu_navigation_bottom_map">Carte</string>
     <string name="menu_navigation_bottom_loan">Emprunt</string>
+    <string name="menu_navigation_drawer_open">Ouverture</string>
+    <string name="menu_navigation_drawer_close">Fermeture</string>
+    <string name="menu_navigation_drawer_log">Connexion \/ Déconnexion</string>
 
     <!--Text infos-->
     <string name="info_no_property_exist">Aucun bien immobilier n\'est stocké dans la base de données pour le moment.\nPour ajouter votre premier bien, cliquez sur le bouton \'+\'.</string>
     <string name="info_no_property_match">Aucun bien immobilier ne correspond à votre recherche.\nVeuillez essayer d\'autres paramètres.</string>
     <string name="info_no_property_selected">Aucun bien immobilier sélectionné.</string>
+    <string name="info_user_not_connected">Utilisateur inconnu</string>
 
     <!--Text labels-->
     <string name="label_property_main_information">Informations principales</string>
@@ -58,10 +62,16 @@
     <string name="error_forbidden_sale_date">Si non vendu, interdit</string>
 
     <!--Toasts / Snackbars-->
+    <string name="toast_message_firebase_user_connected">Vous êtes connecté en tant que</string>
+    <string name="toast_message_firebase_user_disconnected">Vous êtes déconnecté.</string>
     <string name="toast_message_property_saved">Le bien immobilier est sauvegardé.</string>
+
 
     <!--Dialogs-->
     <string name="dialog_button_neutral">OK</string>
+    <string name="dialog_title_firebase_log_error">Erreur de connexion</string>
+    <string name="dialog_message_firebase_log_error_no_network">Le réseau n\'est pas disponible.\nVeuillez réessayer plus tard.</string>
+    <string name="dialog_message_firebase_log_error_unknown">Une erreur inconnue est survenue.\nVeuillez réessayer plus tard.</string>
     <string name="dialog_title_validation_issue">Attention!</string>
     <string name="dialog_message_input_not_valid">Certains champs ne sont pas valides.\nVeuillez vérifier ces champs et réessayer.</string>
     <string name="dialog_title_sundry_issue">Problème</string>

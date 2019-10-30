@@ -15,11 +15,15 @@
     <string name="menu_navigation_bottom_list">List</string>
     <string name="menu_navigation_bottom_map">Map</string>
     <string name="menu_navigation_bottom_loan">Loan</string>
+    <string name="menu_navigation_drawer_open">Open</string>
+    <string name="menu_navigation_drawer_close">Close</string>
+    <string name="menu_navigation_drawer_log">Log in \/ out</string>
 
     <!--Text infos-->
     <string name="info_no_property_exist">No property exist in the database yet.\nCreate your first property by clicking on the \'+\' button.</string>
     <string name="info_no_property_match">No property match your current research.\nPlease try other parameters.</string>
     <string name="info_no_property_selected">No property is selected.</string>
+    <string name="info_user_not_connected">Unknown user</string>
 
     <!--Text labels-->
     <string name="label_property_main_information">Main information</string>
@@ -59,10 +63,15 @@
     <string name="error_forbidden_sale_date">If not sold, forbidden</string>
 
     <!--Toasts / Snackbars-->
+    <string name="toast_message_firebase_user_connected">You\'re now connected as</string>
+    <string name="toast_message_firebase_user_disconnected">You\'re disconnected.</string>
     <string name="toast_message_property_saved">The property is saved.</string>
 
     <!--Dialogs-->
     <string name="dialog_button_neutral">OK</string>
+    <string name="dialog_title_firebase_log_error">Log error</string>
+    <string name="dialog_message_firebase_log_error_no_network">The network is unavailable.\nPlease try again later.</string>
+    <string name="dialog_message_firebase_log_error_unknown">An unknow error occurred.\nPlease try again later.</string>
     <string name="dialog_title_validation_issue">Caution!</string>
     <string name="dialog_message_input_not_valid">Some fields are not valid.\nPlease check these fields and try again.</string>
     <string name="dialog_title_sundry_issue">Issue</string>

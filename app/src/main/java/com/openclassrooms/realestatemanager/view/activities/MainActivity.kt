@@ -8,8 +8,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.ErrorCodes
+import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.sqlite.support.PropertySearchSettings
@@ -22,7 +29,10 @@ import kotlinx.android.synthetic.main.activity_main.*
  * and which device is running the app
  *************************************************************************************************/
 
-class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(),
+        BottomNavigationView.OnNavigationItemSelectedListener,
+        NavigationView.OnNavigationItemSelectedListener
+{
 
     /*********************************************************************************************
      * Static items
@@ -58,6 +68,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     private val toolbar by lazy {activity_main_toolbar as Toolbar}              //Toolbar (top)
     private val bottomNavigationBar by lazy {activity_main_navigation_bottom}   //Navigation bar (bottom)
+    private val drawerLayout by lazy {activity_main_drawer_layout}              //Drawer layout (side)
+    private val navigationView by lazy {activity_main_navigation_view}          //Navigation view (side)
 
     /**Fragments**/
 
@@ -81,6 +93,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private var settings:PropertySearchSettings?= null
 
     /*********************************************************************************************
+     * Firebase items
+     ********************************************************************************************/
+
+    private var firebaseUser= FirebaseAuth.getInstance().currentUser
+
+    /*********************************************************************************************
      * Life cycle
      ********************************************************************************************/
 
@@ -89,9 +107,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         setContentView(R.layout.activity_main)
         initializeDataFromInstanceState(savedInstanceState)
         initializeToolbar()
+        initializeBottomNavigationBar()
+        initializeNavigationDrawer()
         initializeNoPropertyText()
         initializeAddButton()
-        initializeBottomNavigationBar()
         showMainFragment(this.mainFragmentId)
     }
 
@@ -124,6 +143,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
+        /*Bottom navigation bar*/
+
         if(item.groupId==R.id.menu_navigation_bottom_group){
 
             when(item.itemId){
@@ -132,6 +153,15 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 R.id.menu_navigation_bottom_loan-> this.mainFragmentId= ID_FRAGMENT_MAIN_LOAN
             }
             showMainFragment(this.mainFragmentId)
+        }
+
+        /*Side navigation drawer*/
+
+        if(item.groupId==R.id.menu_navigation_drawer_group){
+
+            when(item.itemId){
+                R.id.menu_navigation_drawer_log->firebaseUserLog()
+            }
         }
         return true
     }
@@ -162,6 +192,17 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         this.bottomNavigationBar.setOnNavigationItemSelectedListener (this)
     }
 
+    private fun initializeNavigationDrawer(){
+        val toggle=ActionBarDrawerToggle(this, this.drawerLayout, this.toolbar,
+                R.string.menu_navigation_drawer_open, R.string.menu_navigation_drawer_close)
+        this.drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        this.navigationView.setNavigationItemSelectedListener(this)
+
+        val header=layoutInflater.inflate(R.layout.navigation_drawer_header, this.navigationView)
+    }
+
     private fun initializeNoPropertyText(){
         if(activity_main_text_no_property!=null){
             this.noPropertyText=activity_main_text_no_property
@@ -170,6 +211,20 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     private fun initializeAddButton(){
         this.addButton.setOnClickListener{ openPropertyEdit(null) }
+    }
+
+    /*********************************************************************************************
+     * Firebase
+     ********************************************************************************************/
+
+    private fun firebaseUserLog(){
+        if(this.firebaseUser==null){
+            startFirebaseUserLoginActivity()
+        }else{
+            FirebaseAuth.getInstance().signOut()
+            this.firebaseUser=null
+            Toast.makeText(this, R.string.toast_message_firebase_user_disconnected, Toast.LENGTH_LONG).show()
+        }
     }
 
     /*********************************************************************************************
@@ -272,8 +327,18 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode){
+            KEY_REQUEST_FIREBASE_USER_LOGIN->handleFirebaseUserLoginResult(resultCode, data)
             KEY_REQUEST_PROPERTY_SEARCH->handlePropertySearchResult(resultCode, data)
         }
+    }
+
+    private fun startFirebaseUserLoginActivity(){
+        startActivityForResult(AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(listOf(AuthUI.IdpConfig.EmailBuilder().build()))
+                .setIsSmartLockEnabled(false, true)
+                .build(),
+                KEY_REQUEST_FIREBASE_USER_LOGIN)
     }
 
     private fun startPropertyDetailActivity(propertyId:Int){
@@ -291,6 +356,35 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         val propertySearchIntent= Intent(this, PropertySearchActivity::class.java)
         propertySearchIntent.putExtra(KEY_BUNDLE_PROPERTY_SETTINGS, this.settings)
         startActivityForResult(propertySearchIntent, KEY_REQUEST_PROPERTY_SEARCH)
+    }
+
+    private fun handleFirebaseUserLoginResult(resultCode: Int, data: Intent?){
+
+        /*If success, shows a message to the user*/
+
+        if(resultCode== Activity.RESULT_OK) {
+            this.firebaseUser = FirebaseAuth.getInstance().currentUser
+            val message=resources.getString(R.string.toast_message_firebase_user_connected)+
+                    " "+this.firebaseUser?.displayName+"."
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+
+            /*Else, shows an other message depending on which error occurred*/
+
+        }else{
+            val loginResponse=IdpResponse.fromResultIntent(data)
+
+            if(loginResponse!=null) {
+                if (loginResponse.error?.errorCode == ErrorCodes.NO_NETWORK) {
+                    showSimpleDialog(
+                            resources.getString(R.string.dialog_title_firebase_log_error),
+                            resources.getString(R.string.dialog_message_firebase_log_error_no_network))
+                } else {
+                    showSimpleDialog(
+                            resources.getString(R.string.dialog_title_firebase_log_error),
+                            resources.getString(R.string.dialog_message_firebase_log_error_unknown))
+                }
+            }
+        }
     }
 
     private fun handlePropertySearchResult(resultCode:Int, data:Intent?){

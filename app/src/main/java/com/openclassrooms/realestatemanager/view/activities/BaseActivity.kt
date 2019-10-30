@@ -15,7 +15,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
         /**Request keys for intents**/
 
-        const val KEY_REQUEST_PROPERTY_SEARCH=101
+        const val KEY_REQUEST_FIREBASE_USER_LOGIN=101
+        const val KEY_REQUEST_PROPERTY_SEARCH=102
 
         /**Bundles to transfer data within intents**/
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/activity_main_drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,80 +8,96 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.openclassrooms.realestatemanager.view.activities.MainActivity">
 
-    <include
-        android:id="@+id/activity_main_toolbar"
-        layout="@layout/toolbar_main"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/activity_main_fragments_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/activity_main_fragments_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/activity_main_navigation_bottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_main_toolbar">
-
-        <FrameLayout
-            android:id="@+id/activity_main_fragment_navigation"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"/>
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="?android:attr/listDivider" />
-
-        <TextView
-            android:id="@+id/activity_main_text_no_property"
+        <include
+            android:id="@+id/activity_main_toolbar"
+            layout="@layout/toolbar_main"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:padding="@dimen/components_margin_medium"
-            android:textSize="@dimen/text_size_body"
-            android:text="@string/info_no_property_selected"/>
+            app:layout_constraintBottom_toTopOf="@id/activity_main_fragments_layout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <FrameLayout
-            android:id="@+id/activity_main_fragment_property"
+        <LinearLayout
+            android:id="@+id/activity_main_fragments_layout"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:visibility="gone"/>
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/activity_main_navigation_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_main_toolbar">
 
-    </LinearLayout>
+            <FrameLayout
+                android:id="@+id/activity_main_fragment_navigation"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_main_button_add"
+            <View
+                android:id="@+id/divider"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="?android:attr/listDivider" />
+
+            <TextView
+                android:id="@+id/activity_main_text_no_property"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:padding="@dimen/components_margin_medium"
+                android:textSize="@dimen/text_size_body"
+                android:text="@string/info_no_property_selected"/>
+
+            <FrameLayout
+                android:id="@+id/activity_main_fragment_property"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/activity_main_button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/components_margin_large"
+            android:clickable="true"
+            android:focusable="true"
+            app:elevation="8dp"
+            app:srcCompat="@drawable/ic_add_white"
+            app:tint="@android:color/white"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/activity_main_navigation_bottom"/>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/activity_main_navigation_bottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            app:elevation="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/activity_main_fragments_layout"
+            app:menu="@menu/menu_navigation_bottom" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/activity_main_navigation_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/components_margin_large"
-        android:clickable="true"
-        android:focusable="true"
-        app:elevation="8dp"
-        app:srcCompat="@drawable/ic_add_white"
-        app:tint="@android:color/white"
-        app:backgroundTint="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/activity_main_navigation_bottom"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        style="@style/NavigationDrawerTheme"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/navigation_drawer_header"
+        app:menu="@menu/menu_navigation_drawer"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/activity_main_navigation_bottom"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        app:elevation="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/activity_main_fragments_layout"
-        app:menu="@menu/menu_navigation_bottom" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
