@@ -405,10 +405,12 @@ class MainActivity : BaseActivity(),
 
             FirebaseLinkToSQLite(this).createRealtor(this.firebaseUser!!, object:FirebaseLinkToSQLite.OnLinkResultListener{
                 override fun onLinkFailure() {
+                    //TODO handle
                     Log.d("TAG_LINK", "Failure")
                 }
 
                 override fun onLinkSuccess() {
+                    //TODO handle
                     Log.d("TAG_LINK", "Success")
                 }
             })
