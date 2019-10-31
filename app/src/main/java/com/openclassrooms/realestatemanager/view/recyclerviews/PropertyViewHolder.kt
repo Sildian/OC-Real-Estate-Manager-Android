@@ -52,7 +52,9 @@ class PropertyViewHolder(
 
     fun update(property: Property){
         this.propertyId=property.id
-        Glide.with(this.view).load(property.picturesPaths[0]).apply(RequestOptions.centerCropTransform()).into(this.picture)
+        if(property.picturesPaths.isNotEmpty()) {
+            Glide.with(this.view).load(property.picturesPaths[0]).apply(RequestOptions.centerCropTransform()).into(this.picture)
+        }
         this.adTitleText.setText(property.adTitle)
         this.cityText.setText(property.city)
         updatePriceText(property.price)

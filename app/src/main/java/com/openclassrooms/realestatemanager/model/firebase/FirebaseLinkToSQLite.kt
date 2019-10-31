@@ -81,53 +81,76 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
         }
     }
 
-    fun createPropertyInFirebase(property: Property, listener:OnLinkResultListener){
+    /**Creates or updates a property in Firebase**/
+
+    fun createOrUpdatePropertyInFirebase(property: Property, listener:OnLinkResultListener){
+
+        /*Uploads the pictures into Firebase, then proceeds to the creation / update*/
+
         uploadPropertyPicturesInFirebase(property, object:OnLinkResultListener{
             override fun onLinkFailure(e: Exception) {
                 Log.d("TAG_LINK", e.message)
+                proceedToCreateOrUpdatePropertyInFirebase(property, listener)
             }
             override fun onLinkSuccess() {
-                propertyViewModel.updateProperty(property)
-                PropertyFirebase.createOrUpdateProperty(property)
-                        .addOnFailureListener{e->listener.onLinkFailure(e)}
-                        .addOnSuccessListener { listener.onLinkSuccess() }
+                proceedToCreateOrUpdatePropertyInFirebase(property, listener)
             }
         })
+    }
+
+    /**Proceeds to create or update the property in Firebase**/
+
+    private fun proceedToCreateOrUpdatePropertyInFirebase(property:Property, listener:OnLinkResultListener){
+
+        /*Updates the property within SQLite to update the pictures paths*/
+
+        propertyViewModel.updateProperty(property)
+
+        /*Creates or updates the property in Firebase*/
+
+        PropertyFirebase.createOrUpdateProperty(property)
+                .addOnFailureListener{e->listener.onLinkFailure(e)}
+                .addOnSuccessListener { listener.onLinkSuccess() }
     }
 
     /**Uploads a property's pictures into Firebase storage**/
 
     private fun uploadPropertyPicturesInFirebase(property:Property, listener:OnLinkResultListener){
 
-        /*For each picture, if it is not already stored in Firebase (don't begin by 'https://'...*/
+        /*If pictures exist, for each picture, if it is not already stored in Firebase (path don't begin by 'https://'...*/
 
-        for(i in property.picturesPaths.indices){
-            if(!property.picturesPaths[i].startsWith("https://")){
+        if(property.picturesPaths.isEmpty()){
+            listener.onLinkSuccess()
+        }
+        else {
+            for (i in property.picturesPaths.indices) {
+                if (!property.picturesPaths[i].startsWith("https://")) {
 
-                /*Uploads the picture into Firebase*/
+                    /*Uploads the picture into Firebase*/
 
-                val pictureId = UUID.randomUUID().toString()
-                val pictureReference = FirebaseStorage.getInstance().getReference().child(pictureId)
-                pictureReference.putStream(FileInputStream(File(property.picturesPaths[i])))
+                    val pictureId = UUID.randomUUID().toString()
+                    val pictureReference = FirebaseStorage.getInstance().getReference().child(pictureId)
+                    pictureReference.putStream(FileInputStream(File(property.picturesPaths[i])))
 
-                        /*If failure, run the success listener because we still need to register the property*/
+                            /*If failure, sends the exception to the listener*/
 
-                        .addOnFailureListener { e ->
-                            if (i == property.picturesPaths.size - 1) {
-                                listener.onLinkSuccess()
-                            }
-                        }
-
-                        /*If success, gets the download url and replaces the property's current picture path by this url*/
-
-                        .addOnSuccessListener {
-                            pictureReference.downloadUrl.addOnSuccessListener {
-                                property.picturesPaths[i]=it.toString()
+                            .addOnFailureListener { e ->
                                 if (i == property.picturesPaths.size - 1) {
-                                    listener.onLinkSuccess()
+                                    listener.onLinkFailure(e)
                                 }
                             }
-                        }
+
+                            /*If success, gets the download url and replaces the property's current picture path by this url*/
+
+                            .addOnSuccessListener {
+                                pictureReference.downloadUrl.addOnSuccessListener {
+                                    property.picturesPaths[i] = it.toString()
+                                    if (i == property.picturesPaths.size - 1) {
+                                        listener.onLinkSuccess()
+                                    }
+                                }
+                            }
+                }
             }
         }
     }

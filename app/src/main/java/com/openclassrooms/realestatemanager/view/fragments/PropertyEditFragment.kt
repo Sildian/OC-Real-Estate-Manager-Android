@@ -359,7 +359,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
             /*Creates or updates the property in Firebase*/
 
-            FirebaseLinkToSQLite(activity!!).createPropertyInFirebase(
+            FirebaseLinkToSQLite(activity!!).createOrUpdatePropertyInFirebase(
                     property, object:FirebaseLinkToSQLite.OnLinkResultListener{
                 override fun onLinkFailure(e:Exception) {
                     //TODO handle
