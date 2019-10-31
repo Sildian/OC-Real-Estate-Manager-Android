@@ -21,7 +21,7 @@ object RealtorFirebase {
         return getCollectionReference().orderBy("name")
     }
 
-    fun createRealtor(realtor:Realtor): Task<Void>{
+    fun createOrUpdateRealtor(realtor:Realtor): Task<Void>{
         return getCollectionReference().document(realtor.id).set(realtor)
     }
 }

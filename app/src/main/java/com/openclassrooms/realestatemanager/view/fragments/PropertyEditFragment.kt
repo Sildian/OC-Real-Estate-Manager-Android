@@ -327,7 +327,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             property.adTitle = this.adTitleText.text.toString()
             property.price = Integer.parseInt(this.priceText.text.toString())
             property.typeId = (this.typeTextDropdown.tag as PropertyType).id
-            property.picturesPaths = this.picturesPaths.filterNotNull()
+            property.picturesPaths.clear()
+            property.picturesPaths.addAll(this.picturesPaths.filterNotNull())
             property.description = this.descriptionText.text.toString()
             property.size = Integer.parseInt(this.sizeText.text.toString())
             property.nbRooms = Integer.parseInt(this.nbRoomsText.text.toString())
@@ -358,7 +359,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
             /*Creates or updates the property in Firebase*/
 
-            FirebaseLinkToSQLite(activity!!).createOrUpdatePropertyInFirebase(
+            FirebaseLinkToSQLite(activity!!).createPropertyInFirebase(
                     property, object:FirebaseLinkToSQLite.OnLinkResultListener{
                 override fun onLinkFailure(e:Exception) {
                     //TODO handle
