@@ -1,22 +1,24 @@
 package com.openclassrooms.realestatemanager.model.firebase
 
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.auth.FirebaseUser
+import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.coremodel.Realtor
-import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.viewmodel.*
+import java.lang.Exception
 
 /**************************************************************************************************
  * Links the online database (Firebase) with the offline database (SQLite)
  *************************************************************************************************/
 
-class FirebaseLinkToSQLite(val activity:BaseActivity) {
+class FirebaseLinkToSQLite(val activity: FragmentActivity) {
 
     /**Interface allowing to listen the links results**/
 
     interface OnLinkResultListener{
-        fun onLinkFailure()
+        fun onLinkFailure(e:Exception)
         fun onLinkSuccess()
     }
 
@@ -32,13 +34,13 @@ class FirebaseLinkToSQLite(val activity:BaseActivity) {
 
     /**Creates a new realtor (in both databases)**/
 
-    fun createRealtor(firebaseUser:FirebaseUser, listener:OnLinkResultListener){
+    fun createRealtorInFirebaseAndSQLite(firebaseUser:FirebaseUser, listener:OnLinkResultListener){
         val realtor=Realtor(id=firebaseUser.uid, name=firebaseUser.displayName, pictureUrl=firebaseUser.photoUrl?.path)
 
         /*Creates (or updates) the realtor in Firebase*/
 
         RealtorFirebase.createRealtor(realtor)
-                .addOnFailureListener { listener.onLinkFailure() }
+                .addOnFailureListener{e->listener.onLinkFailure(e)}
                 .addOnSuccessListener {
 
                     /*Then if the realtor doesn't exist yet in SQLite, creates it within*/
@@ -58,7 +60,7 @@ class FirebaseLinkToSQLite(val activity:BaseActivity) {
 
         RealtorFirebase.getAllRealtors().addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             if(firebaseFirestoreException!=null){
-                listener.onLinkFailure()
+                listener.onLinkFailure(firebaseFirestoreException)
             }
             else if(querySnapshot!=null){
 
@@ -72,5 +74,11 @@ class FirebaseLinkToSQLite(val activity:BaseActivity) {
                 listener.onLinkSuccess()
             }
         }
+    }
+
+    fun createOrUpdatePropertyInFirebase(property: Property, listener:OnLinkResultListener){
+        PropertyFirebase.createOrUpdateProperty(property)
+                .addOnFailureListener{e->listener.onLinkFailure(e)}
+                .addOnSuccessListener { listener.onLinkSuccess() }
     }
 }

@@ -26,6 +26,7 @@ import com.openclassrooms.realestatemanager.model.support.PropertySearchSettings
 import com.openclassrooms.realestatemanager.view.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation_drawer_header.view.*
+import java.lang.Exception
 
 /**************************************************************************************************
  * Main activity for user interaction
@@ -401,12 +402,13 @@ class MainActivity : BaseActivity(),
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             updateNavigationDrawer()
 
-            /*Eventually creates a new realtor*/
+            /*Eventually creates a new realtor in Firebase and SQLite*/
 
-            FirebaseLinkToSQLite(this).createRealtor(this.firebaseUser!!, object:FirebaseLinkToSQLite.OnLinkResultListener{
-                override fun onLinkFailure() {
+            FirebaseLinkToSQLite(this).createRealtorInFirebaseAndSQLite(
+                    this.firebaseUser!!, object:FirebaseLinkToSQLite.OnLinkResultListener{
+                override fun onLinkFailure(e:Exception) {
                     //TODO handle
-                    Log.d("TAG_LINK", "Failure")
+                    Log.d("TAG_LINK", e.message)
                 }
 
                 override fun onLinkSuccess() {

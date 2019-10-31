@@ -24,6 +24,7 @@ import com.openclassrooms.realestatemanager.model.coremodel.Extra
 import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
 import com.openclassrooms.realestatemanager.model.coremodel.Realtor
+import com.openclassrooms.realestatemanager.model.firebase.FirebaseLinkToSQLite
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.view.activities.MainActivity
@@ -31,6 +32,7 @@ import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
 import kotlinx.android.synthetic.main.fragment_property_edit.view.*
 import pl.aprilapps.easyphotopicker.*
+import java.lang.Exception
 
 /**************************************************************************************************
  * Allows the user to create or edit a property
@@ -346,12 +348,28 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
             if (this.propertyId == null) {
                 this.propertyId = this.propertyViewModel.insertProperty(property).toInt()
+                property.id=this.propertyId
             } else {
                 property.id = this.propertyId
                 this.propertyViewModel.updateProperty(property)
             }
             val propertyId = this.propertyId
             savePropertyExtras(propertyId!!.toInt())
+
+            /*Creates or updates the property in Firebase*/
+
+            FirebaseLinkToSQLite(activity!!).createOrUpdatePropertyInFirebase(
+                    property, object:FirebaseLinkToSQLite.OnLinkResultListener{
+                override fun onLinkFailure(e:Exception) {
+                    //TODO handle
+                    Log.d("TAG_LINK", e.message)
+                }
+
+                override fun onLinkSuccess() {
+                    //TODO handle
+                    Log.d("TAG_LINK", "Success")
+                }
+            })
 
             /*Shows a confirmation message to the user and leaves the fragment*/
 
