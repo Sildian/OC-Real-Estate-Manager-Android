@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.model.sqlite.support
+package com.openclassrooms.realestatemanager.model.support
 
 import android.os.Parcel
 import com.openclassrooms.realestatemanager.utils.Utils

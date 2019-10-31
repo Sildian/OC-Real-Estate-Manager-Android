@@ -2,7 +2,7 @@ package com.openclassrooms.realestatemanager.model.sqlite
 
 import androidx.sqlite.db.SimpleSQLiteQuery
 import androidx.sqlite.db.SupportSQLiteQuery
-import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.model.sqlite.dataconverters.DateConverter
 import java.util.*
 
 /**************************************************************************************************
@@ -183,7 +183,7 @@ object SQLQueryGenerator {
 
         /*Converts the dates to timeStamps*/
 
-        val dateConverter=DateConverter()
+        val dateConverter= DateConverter()
         val minDate=if(minCriteria!=null)dateConverter.dateToTimestamp(minCriteria) else null
         val maxDate=if(maxCriteria!=null)dateConverter.dateToTimestamp(maxCriteria) else null
         

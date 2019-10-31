@@ -13,7 +13,7 @@ import com.google.android.material.chip.Chip
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.coremodel.Extra
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
-import com.openclassrooms.realestatemanager.model.sqlite.support.PropertySearchSettings
+import com.openclassrooms.realestatemanager.model.support.PropertySearchSettings
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.view.activities.MainActivity

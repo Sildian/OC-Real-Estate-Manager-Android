@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.sqlite.SQLQueryGenerator
-import com.openclassrooms.realestatemanager.model.sqlite.support.PropertySearchSettings
+import com.openclassrooms.realestatemanager.model.support.PropertySearchSettings
 import com.openclassrooms.realestatemanager.viewmodel.PropertyViewModel
 import com.openclassrooms.realestatemanager.viewmodel.ViewModelFactory
 import com.openclassrooms.realestatemanager.viewmodel.ViewModelInjection

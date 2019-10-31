@@ -9,14 +9,11 @@ import com.openclassrooms.realestatemanager.model.coremodel.Realtor
  * Firebase queries for Realtor
  *************************************************************************************************/
 
-class RealtorFirebase {
+object RealtorFirebase {
 
-    /**Collection references**/
+    /**Collection reference**/
 
-    companion object{
-        const val COLLECTION_NAME="Realtor"
-        private fun getCollectionReference() = FirebaseFirestore.getInstance().collection(COLLECTION_NAME)
-    }
+    private fun getCollectionReference() = FirebaseFirestore.getInstance().collection("realtor")
 
     /**Queries**/
 

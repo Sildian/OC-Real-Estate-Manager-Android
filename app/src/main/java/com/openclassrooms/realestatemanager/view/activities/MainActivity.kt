@@ -21,7 +21,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.model.sqlite.support.PropertySearchSettings
+import com.openclassrooms.realestatemanager.model.firebase.FirebaseLinkToSQLite
+import com.openclassrooms.realestatemanager.model.support.PropertySearchSettings
 import com.openclassrooms.realestatemanager.view.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation_drawer_header.view.*
@@ -250,6 +251,7 @@ class MainActivity : BaseActivity(),
         }else{
             FirebaseAuth.getInstance().signOut()
             this.firebaseUser=null
+            updateNavigationDrawer()
             Toast.makeText(this, R.string.toast_message_firebase_user_disconnected, Toast.LENGTH_LONG).show()
         }
     }
@@ -387,16 +389,31 @@ class MainActivity : BaseActivity(),
 
     private fun handleFirebaseUserLoginResult(resultCode: Int, data: Intent?){
 
-        /*If success, shows a message to the user*/
+        /*If success...*/
 
         if(resultCode== Activity.RESULT_OK) {
             this.firebaseUser = FirebaseAuth.getInstance().currentUser
+
+            /*Shows a message to the user and updates the navigation drawer*/
+
             val message=resources.getString(R.string.toast_message_firebase_user_connected)+
                     " "+this.firebaseUser?.displayName+"."
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
             updateNavigationDrawer()
 
-            /*Else, shows an other message depending on which error occurred*/
+            /*Eventually creates a new realtor*/
+
+            FirebaseLinkToSQLite(this).createRealtor(this.firebaseUser!!, object:FirebaseLinkToSQLite.OnLinkResultListener{
+                override fun onLinkFailure() {
+                    Log.d("TAG_LINK", "Failure")
+                }
+
+                override fun onLinkSuccess() {
+                    Log.d("TAG_LINK", "Success")
+                }
+            })
+
+            /*If failure, shows an other message depending on which error occurred*/
 
         }else{
             val loginResponse=IdpResponse.fromResultIntent(data)

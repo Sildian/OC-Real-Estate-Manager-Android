@@ -7,7 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.model.sqlite.support.PropertySearchSettings
+import com.openclassrooms.realestatemanager.model.support.PropertySearchSettings
 import com.openclassrooms.realestatemanager.view.fragments.PropertySearchFragment
 import kotlinx.android.synthetic.main.activity_property_search.*
 

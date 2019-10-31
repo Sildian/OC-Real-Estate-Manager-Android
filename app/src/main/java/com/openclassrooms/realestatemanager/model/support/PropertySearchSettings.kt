@@ -1,8 +1,8 @@
-package com.openclassrooms.realestatemanager.model.sqlite.support
+package com.openclassrooms.realestatemanager.model.support
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.openclassrooms.realestatemanager.model.sqlite.DateConverter
+import com.openclassrooms.realestatemanager.model.sqlite.dataconverters.DateConverter
 import java.util.*
 
 /**************************************************************************************************
