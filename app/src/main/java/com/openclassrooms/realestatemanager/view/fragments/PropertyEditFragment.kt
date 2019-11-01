@@ -352,6 +352,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
                 property.id=this.propertyId
             } else {
                 property.id = this.propertyId
+                property.firebaseId=this.propertyFirebaseId
                 this.propertyViewModel.updateProperty(property)
             }
             val propertyId = this.propertyId
@@ -397,6 +398,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
         this.propertyViewModel.getProperty(this.propertyId!!.toInt()).observe(this, Observer {
             val property = it
+            this.propertyFirebaseId=it.firebaseId
             this.adTitleText.setText(property.adTitle)
             this.priceText.setText(property.price.toString())
             val typeId = property.typeId

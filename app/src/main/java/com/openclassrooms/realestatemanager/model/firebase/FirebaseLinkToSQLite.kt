@@ -106,11 +106,25 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
 
         propertyViewModel.updateProperty(property)
 
-        /*Creates or updates the property in Firebase*/
+        /*If the property is new, creates it in Firebase. Then updates the property in SQLite with the generated Firebase id*/
 
-        PropertyFirebase.createOrUpdateProperty(property)
-                .addOnFailureListener{e->listener.onLinkFailure(e)}
-                .addOnSuccessListener { listener.onLinkSuccess() }
+        if(property.firebaseId.isNullOrEmpty()){
+            PropertyFirebase.createProperty(property)
+                    .addOnFailureListener { e->listener.onLinkFailure(e) }
+                    .addOnSuccessListener { documentReference ->
+                        property.firebaseId=documentReference.id
+                        this.propertyViewModel.updateProperty(property)
+                        listener.onLinkSuccess()
+                    }
+        }
+
+        /*Else updates the property in Firebase*/
+
+        else {
+            PropertyFirebase.updateProperty(property)
+                    .addOnFailureListener { e -> listener.onLinkFailure(e) }
+                    .addOnSuccessListener { listener.onLinkSuccess() }
+        }
     }
 
     /**Uploads a property's pictures into Firebase storage**/

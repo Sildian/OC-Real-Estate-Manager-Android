@@ -14,6 +14,7 @@ import java.util.*
 
 data class Property(
         @PrimaryKey (autoGenerate = true) var id:Int?=null,
+        var firebaseId:String?=null,
         var adTitle:String?=null,
         @ColumnInfo(name="typeId") var typeId:Int?=null,
         var price:Int?=null,
