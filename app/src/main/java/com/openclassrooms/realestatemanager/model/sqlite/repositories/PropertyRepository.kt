@@ -15,6 +15,8 @@ class PropertyRepository (val propertyDAO: PropertyDAO){
 
     fun getProperty(id:Int):LiveData<Property> = this.propertyDAO.getProperty(id)
 
+    fun getProperty(firebaseId:String):LiveData<Property> = this.propertyDAO.getProperty(firebaseId)
+
     fun getProperties(query:SupportSQLiteQuery) = this.propertyDAO.getProperties(query)
 
     fun insertProperty(property:Property):Long{

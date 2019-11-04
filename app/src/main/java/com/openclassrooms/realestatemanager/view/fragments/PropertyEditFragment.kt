@@ -360,18 +360,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
             /*Creates or updates the property in Firebase*/
 
-            FirebaseLinkToSQLite(activity!!).createOrUpdatePropertyInFirebase(
-                    property, object:FirebaseLinkToSQLite.OnLinkResultListener{
-                override fun onLinkFailure(e:Exception) {
-                    //TODO handle
-                    Log.d("TAG_LINK", e.message)
-                }
-
-                override fun onLinkSuccess() {
-                    //TODO handle
-                    Log.d("TAG_LINK", "Success")
-                }
-            })
+            createOrUpdatePropertyInFirebase(property)
 
             /*Shows a confirmation message to the user and leaves the fragment*/
 
@@ -450,6 +439,26 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         this.realtorViewModel.getRealtor(realtorId).observe(this, Observer{
             this.realtorTextDropDown.setText(it.toString(), false)
             this.realtorTextDropDown.tag=it
+        })
+    }
+
+    /*********************************************************************************************
+     * Firebase Link management
+     ********************************************************************************************/
+
+    private fun createOrUpdatePropertyInFirebase(property:Property){
+
+        FirebaseLinkToSQLite(activity!!).createOrUpdatePropertyInFirebase(
+                property, object:FirebaseLinkToSQLite.OnLinkResultListener{
+            override fun onLinkFailure(e:Exception) {
+                //TODO handle
+                Log.d("TAG_LINK", e.message)
+            }
+
+            override fun onLinkSuccess() {
+                //TODO handle
+                Log.d("TAG_LINK", "Success")
+            }
         })
     }
 

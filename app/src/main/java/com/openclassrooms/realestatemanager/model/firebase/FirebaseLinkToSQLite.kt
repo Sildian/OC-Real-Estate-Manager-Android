@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.storage.FirebaseStorage
 import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.coremodel.Realtor
@@ -167,5 +168,29 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
                 }
             }
         }
+    }
+
+    /**Updates the list of properties in SQLite**/
+
+    fun updatePropertiesInSQLite(listener:OnLinkResultListener) {
+
+        /*Gets all properties from Firebase*/
+
+        PropertyFirebase.getAllProperties().get()
+                .addOnFailureListener { e -> listener.onLinkFailure(e) }
+                .addOnSuccessListener { querySnapshot ->
+
+                    /*Then for each property, if it doesn't exist in SQLite, creates it within*/
+
+                    for (i in querySnapshot.documents.indices) {
+                        val property = querySnapshot.documents[i].toObject(Property::class.java)
+                        Log.d("TAG_LINK", querySnapshot.documents[i].id)
+                        property!!.firebaseId = querySnapshot.documents[i].id
+                        this.propertyViewModel.getProperty(property.firebaseId.toString()).observe(this.activity, Observer {
+                            if (it == null) this.propertyViewModel.insertProperty(property)
+                        })
+                    }
+                    listener.onLinkSuccess()
+                }
     }
 }

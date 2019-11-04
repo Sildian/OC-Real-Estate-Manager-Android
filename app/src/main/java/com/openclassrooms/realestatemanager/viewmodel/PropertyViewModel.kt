@@ -29,6 +29,8 @@ class PropertyViewModel (
 
     fun getProperty(id:Int): LiveData<Property> =this.propertyRepository.getProperty(id)
 
+    fun getProperty(firebaseId:String):LiveData<Property> = this.propertyRepository.getProperty(firebaseId)
+
     fun getProperties(query:SupportSQLiteQuery) = this.propertyRepository.getProperties(query)
 
     fun insertProperty(property:Property):Long{

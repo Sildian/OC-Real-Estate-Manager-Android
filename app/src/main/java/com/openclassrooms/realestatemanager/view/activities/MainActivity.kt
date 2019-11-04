@@ -117,6 +117,7 @@ class MainActivity : BaseActivity(),
         initializeNoPropertyText()
         initializeAddButton()
         showMainFragment(this.mainFragmentId)
+        if(this.firebaseUser!=null)downloadFirebaseDataIntoSQLite()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -404,18 +405,11 @@ class MainActivity : BaseActivity(),
 
             /*Eventually creates a new realtor in Firebase and SQLite*/
 
-            FirebaseLinkToSQLite(this).createRealtorInFirebaseAndSQLite(
-                    this.firebaseUser!!, object:FirebaseLinkToSQLite.OnLinkResultListener{
-                override fun onLinkFailure(e:Exception) {
-                    //TODO handle
-                    Log.d("TAG_LINK", e.message)
-                }
+            createRealtorInFirebaseAndSQLite()
 
-                override fun onLinkSuccess() {
-                    //TODO handle
-                    Log.d("TAG_LINK", "Success")
-                }
-            })
+            /*Updates all data in SQLite (by downloading from Firebase)*/
+
+            downloadFirebaseDataIntoSQLite()
 
             /*If failure, shows an other message depending on which error occurred*/
 
@@ -445,7 +439,7 @@ class MainActivity : BaseActivity(),
     }
 
     /*********************************************************************************************
-     * Queries management
+     * SQLite Queries management
      ********************************************************************************************/
 
     fun sortProperties(orderCriteria:String?, orderDesc:Boolean?){
@@ -462,5 +456,58 @@ class MainActivity : BaseActivity(),
         this.settings=settings
         this.navigationFragment.updateSettings(this.settings)
         this.navigationFragment.runPropertyQuery()
+    }
+
+    /*********************************************************************************************
+     * Firebase Link management
+     ********************************************************************************************/
+
+    private fun createRealtorInFirebaseAndSQLite(){
+
+        FirebaseLinkToSQLite(this).createRealtorInFirebaseAndSQLite(
+                this.firebaseUser!!, object:FirebaseLinkToSQLite.OnLinkResultListener{
+            override fun onLinkFailure(e:Exception) {
+                //TODO handle
+                Log.d("TAG_LINK", e.message)
+            }
+
+            override fun onLinkSuccess() {
+                //TODO handle
+                Log.d("TAG_LINK", "Success")
+            }
+        })
+    }
+
+    private fun downloadFirebaseDataIntoSQLite(){
+
+        FirebaseLinkToSQLite(this).updateRealtorsInSQLite(
+                object:FirebaseLinkToSQLite.OnLinkResultListener{
+                    override fun onLinkFailure(e: Exception) {
+                        Log.d("TAG_LINK", e.message)
+                        downloadFirebasePropertiesIntoSQLite()
+                    }
+
+                    override fun onLinkSuccess() {
+                        downloadFirebasePropertiesIntoSQLite()
+                    }
+                }
+        )
+    }
+
+    private fun downloadFirebasePropertiesIntoSQLite(){
+
+        FirebaseLinkToSQLite(this).updatePropertiesInSQLite(
+                object:FirebaseLinkToSQLite.OnLinkResultListener{
+                    override fun onLinkFailure(e: Exception) {
+                        //TODO handle
+                        Log.d("TAG_LINK", e.message)
+                    }
+
+                    override fun onLinkSuccess() {
+                        //TODO handle
+                        Log.d("TAG_LINK", "Success")
+                    }
+                }
+        )
     }
 }
