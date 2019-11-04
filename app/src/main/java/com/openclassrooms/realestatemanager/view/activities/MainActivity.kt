@@ -504,6 +504,22 @@ class MainActivity : BaseActivity(),
                     }
 
                     override fun onLinkSuccess() {
+                        uploadPropertiesIntoFirebase()
+                    }
+                }
+        )
+    }
+
+    private fun uploadPropertiesIntoFirebase(){
+
+        FirebaseLinkToSQLite(this).createAllPropertiesInFirebase(
+                object:FirebaseLinkToSQLite.OnLinkResultListener{
+                    override fun onLinkFailure(e: Exception) {
+                        //TODO handle
+                        Log.d("TAG_LINK", e.message)
+                    }
+
+                    override fun onLinkSuccess() {
                         //TODO handle
                         Log.d("TAG_LINK", "Success")
                     }
