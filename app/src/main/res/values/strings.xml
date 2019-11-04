@@ -8,16 +8,15 @@
     <string name="toolbar_title_property_search">Research</string>
 
     <!--Menu-->
-    <string name="menu_toolbar_add">Add</string>
-    <string name="menu_toolbar_edit">Edit</string>
-    <string name="menu_toolbar_search">Search</string>
-    <string name="menu_toolbar_save">Save</string>
-    <string name="menu_navigation_bottom_list">List</string>
-    <string name="menu_navigation_bottom_map">Map</string>
-    <string name="menu_navigation_bottom_loan">Loan</string>
+    <string name="menu_add">Add</string>
+    <string name="menu_edit">Edit</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_list">Properties</string>
+    <string name="menu_map">Map</string>
+    <string name="menu_log">Log in \/ out</string>
     <string name="menu_navigation_drawer_open">Open</string>
     <string name="menu_navigation_drawer_close">Close</string>
-    <string name="menu_navigation_drawer_log">Log in \/ out</string>
 
     <!--Text infos-->
     <string name="info_no_property_exist">No property exist in the database yet.\nCreate your first property by clicking on the \'+\' button.</string>

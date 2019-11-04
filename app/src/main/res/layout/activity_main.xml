@@ -26,7 +26,7 @@
             android:id="@+id/activity_main_fragment_navigation"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/activity_main_navigation_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/activity_main_toolbar" />
@@ -43,19 +43,7 @@
             app:tint="@android:color/white"
             app:backgroundTint="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/activity_main_navigation_bottom"/>
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/activity_main_navigation_bottom"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            app:elevation="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/activity_main_fragment_navigation"
-            app:menu="@menu/menu_navigation_bottom" />
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -64,9 +52,11 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="start"
-    style="@style/NavigationDrawerTheme"
     android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
     app:headerLayout="@layout/navigation_drawer_header"
-    app:menu="@menu/menu_navigation_drawer"/>
+    app:menu="@menu/menu_navigation_drawer"
+    app:itemTextColor="@android:color/white"
+    app:itemIconTint="@android:color/white"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

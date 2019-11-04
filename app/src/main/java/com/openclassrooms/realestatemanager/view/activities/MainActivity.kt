@@ -47,22 +47,21 @@ class MainActivity : BaseActivity(),
 
         /**Bundles for internal calls**/
 
-        const val KEY_BUNDLE_MAIN_FRAGMENT_ID="KEY_BUNDLE_MAIN_FRAGMENT_ID"
-        const val KEY_BUNDLE_SECOND_FRAGMENT_ID="KEY_BUNDLE_SECOND_FRAGMENT_ID"
+        const val KEY_BUNDLE_NAVIGATION_FRAGMENT_ID="KEY_BUNDLE_NAVIGATION_FRAGMENT_ID"
+        const val KEY_BUNDLE_PROPERTY_FRAGMENT_ID="KEY_BUNDLE_PROPERTY_FRAGMENT_ID"
 
         /**Fragments ids**/
 
-        /*Main fragment is the only one shown on phones. On tablets, Main fragment is the first shown on the screen*/
+        /*Navigation fragment is the only one shown on phones. On tablets, Main fragment is the first shown on the screen*/
 
-        const val ID_FRAGMENT_MAIN_LIST=1
-        const val ID_FRAGMENT_MAIN_MAP=2
-        const val ID_FRAGMENT_MAIN_LOAN=3
+        const val ID_FRAGMENT_NAVIGATION_LIST=1
+        const val ID_FRAGMENT_NAVIGATION_MAP=2
 
-        /*Second fragment is only shown on tablets*/
+        /*Property fragment is only shown on tablets*/
 
-        const val ID_FRAGMENT_SECOND_DETAIL=1
-        const val ID_FRAGMENT_SECOND_EDIT=2
-        const val ID_FRAGMENT_SECOND_SEARCH=3
+        const val ID_FRAGMENT_PROPERTY_DETAIL=1
+        const val ID_FRAGMENT_PROPERTY_EDIT=2
+        const val ID_FRAGMENT_PROPERTY_SEARCH=3
     }
 
     /*********************************************************************************************
@@ -72,9 +71,12 @@ class MainActivity : BaseActivity(),
     /**Menu bars**/
 
     private val toolbar by lazy {activity_main_toolbar as Toolbar}              //Toolbar (top)
-    private val bottomNavigationBar by lazy {activity_main_navigation_bottom}   //Navigation bar (bottom)
     private val drawerLayout by lazy {activity_main_drawer_layout}              //Drawer layout (side)
     private val navigationView by lazy {activity_main_navigation_view}          //Navigation view (side)
+    private val navigationHeader by lazy{                                       //Navigation header (side)
+        layoutInflater.inflate(R.layout.navigation_drawer_header, this.navigationView)}
+    private val userPictureImageView by lazy{navigationHeader.navigation_drawer_header_user_picture}    //User picture in navigationHeader
+    private val userNameTextView by lazy {navigationHeader.navigation_drawer_header_user_name}          //User name in navigationHeader
 
     /**Fragments**/
 
@@ -93,8 +95,8 @@ class MainActivity : BaseActivity(),
      * Data
      ********************************************************************************************/
 
-    private var mainFragmentId= ID_FRAGMENT_MAIN_LIST
-    private var secondFragmentId= ID_FRAGMENT_SECOND_DETAIL
+    private var mainFragmentId= ID_FRAGMENT_NAVIGATION_LIST
+    private var secondFragmentId= ID_FRAGMENT_PROPERTY_DETAIL
     private var settings:PropertySearchSettings?= null
 
     /*********************************************************************************************
@@ -112,7 +114,6 @@ class MainActivity : BaseActivity(),
         setContentView(R.layout.activity_main)
         initializeDataFromInstanceState(savedInstanceState)
         initializeToolbar()
-        initializeBottomNavigationBar()
         initializeNavigationDrawer()
         initializeNoPropertyText()
         initializeAddButton()
@@ -122,8 +123,8 @@ class MainActivity : BaseActivity(),
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(KEY_BUNDLE_MAIN_FRAGMENT_ID, this.mainFragmentId)
-        outState.putInt(KEY_BUNDLE_SECOND_FRAGMENT_ID, this.secondFragmentId)
+        outState.putInt(KEY_BUNDLE_NAVIGATION_FRAGMENT_ID, this.mainFragmentId)
+        outState.putInt(KEY_BUNDLE_PROPERTY_FRAGMENT_ID, this.secondFragmentId)
         outState.putParcelable(KEY_BUNDLE_PROPERTY_SETTINGS, this.settings)
     }
 
@@ -131,10 +132,14 @@ class MainActivity : BaseActivity(),
      * Menu management
      ********************************************************************************************/
 
+    /**Toolbar creation**/
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_toolbar_main, menu)
         return true
     }
+
+    /**For the toolbar**/
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
@@ -147,27 +152,26 @@ class MainActivity : BaseActivity(),
         return super.onOptionsItemSelected(item)
     }
 
+    /**For the navigation drawer (side)**/
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-        /*Bottom navigation bar*/
-
-        if(item.groupId==R.id.menu_navigation_bottom_group){
-
-            when(item.itemId){
-                R.id.menu_navigation_bottom_list-> this.mainFragmentId= ID_FRAGMENT_MAIN_LIST
-                R.id.menu_navigation_bottom_map-> this.mainFragmentId= ID_FRAGMENT_MAIN_MAP
-                R.id.menu_navigation_bottom_loan-> this.mainFragmentId= ID_FRAGMENT_MAIN_LOAN
-            }
-            showMainFragment(this.mainFragmentId)
-        }
-
-        /*Side navigation drawer*/
 
         if(item.groupId==R.id.menu_navigation_drawer_group){
 
             when(item.itemId){
-                R.id.menu_navigation_drawer_log->firebaseUserLog()
+                R.id.menu_navigation_drawer_list->{
+                    this.mainFragmentId= ID_FRAGMENT_NAVIGATION_LIST
+                    showMainFragment(this.mainFragmentId)
+                }
+                R.id.menu_navigation_drawer_map->{
+                    this.mainFragmentId= ID_FRAGMENT_NAVIGATION_MAP
+                    showMainFragment(this.mainFragmentId)
+                }
+                R.id.menu_navigation_drawer_log->
+                    firebaseUserLog()
             }
+
+            this.drawerLayout.closeDrawers()
         }
         return true
     }
@@ -178,8 +182,8 @@ class MainActivity : BaseActivity(),
 
     private fun initializeDataFromInstanceState(savedInstanceState: Bundle?){
         if(savedInstanceState!=null){
-            this.mainFragmentId=savedInstanceState.getInt(KEY_BUNDLE_MAIN_FRAGMENT_ID)
-            this.secondFragmentId=savedInstanceState.getInt(KEY_BUNDLE_SECOND_FRAGMENT_ID)
+            this.mainFragmentId=savedInstanceState.getInt(KEY_BUNDLE_NAVIGATION_FRAGMENT_ID)
+            this.secondFragmentId=savedInstanceState.getInt(KEY_BUNDLE_PROPERTY_FRAGMENT_ID)
             if(savedInstanceState.getParcelable<PropertySearchSettings>(KEY_BUNDLE_PROPERTY_SETTINGS)!=null) {
                 this.settings = savedInstanceState.getParcelable(KEY_BUNDLE_PROPERTY_SETTINGS)!!
             }
@@ -192,10 +196,6 @@ class MainActivity : BaseActivity(),
 
     private fun initializeToolbar(){
         setSupportActionBar(this.toolbar)
-    }
-
-    private fun initializeBottomNavigationBar(){
-        this.bottomNavigationBar.setOnNavigationItemSelectedListener (this)
     }
 
     private fun initializeNavigationDrawer(){
@@ -223,23 +223,20 @@ class MainActivity : BaseActivity(),
      ********************************************************************************************/
 
     private fun updateNavigationDrawer(){
-        val navigationHeader=layoutInflater.inflate(R.layout.navigation_drawer_header, this.navigationView)
-        val userPictureImageView=navigationHeader.navigation_drawer_header_user_picture
-        val userNameTextView=navigationHeader.navigation_drawer_header_user_name
         if(this.firebaseUser!=null) {
-            Glide.with(navigationHeader)
+            Glide.with(this.navigationHeader)
                     .load(this.firebaseUser!!.photoUrl)
                     .apply(RequestOptions.circleCropTransform())
                     .placeholder(R.drawable.ic_realtor_gray)
-                    .into(userPictureImageView)
-            userNameTextView.setText(this.firebaseUser!!.displayName)
+                    .into(this.userPictureImageView)
+            this.userNameTextView.text=this.firebaseUser!!.displayName
         }
         else{
-            Glide.with(navigationHeader)
+            Glide.with(this.navigationHeader)
                     .load(R.drawable.ic_realtor_gray)
                     .apply(RequestOptions.circleCropTransform())
-                    .into(userPictureImageView)
-            userNameTextView.setText(R.string.info_user_not_connected)
+                    .into(this.userPictureImageView)
+            this.userNameTextView.setText(R.string.info_user_not_connected)
         }
     }
 
@@ -264,14 +261,11 @@ class MainActivity : BaseActivity(),
 
     private fun showMainFragment(fragmentId:Int){
 
-        //TODO implement Loan
-
         /*Selects which fragment should be shown*/
 
         when(fragmentId){
-            ID_FRAGMENT_MAIN_LIST->this.navigationFragment= NavigationListFragment()
-            ID_FRAGMENT_MAIN_MAP->this.navigationFragment=NavigationMapFragment()
-            ID_FRAGMENT_MAIN_LOAN->Log.d("TAG_MENU", "Not implemented yet")
+            ID_FRAGMENT_NAVIGATION_LIST->this.navigationFragment= NavigationListFragment()
+            ID_FRAGMENT_NAVIGATION_MAP->this.navigationFragment=NavigationMapFragment()
         }
 
         /*Sends the current settings to the fragment*/
@@ -289,9 +283,9 @@ class MainActivity : BaseActivity(),
         /*Select which fragment should be shown, and sends the current settings only to PropertySearchFragment*/
 
         when (fragmentId) {
-            ID_FRAGMENT_SECOND_DETAIL -> this.propertyFragment = PropertyDetailFragment()
-            ID_FRAGMENT_SECOND_EDIT -> this.propertyFragment = PropertyEditFragment()
-            ID_FRAGMENT_SECOND_SEARCH -> {
+            ID_FRAGMENT_PROPERTY_DETAIL -> this.propertyFragment = PropertyDetailFragment()
+            ID_FRAGMENT_PROPERTY_EDIT -> this.propertyFragment = PropertyEditFragment()
+            ID_FRAGMENT_PROPERTY_SEARCH -> {
                 this.propertyFragment = PropertySearchFragment()
                 if(this.settings!=null) {
                     (this.propertyFragment as PropertySearchFragment).updateSettings(this.settings!!)
@@ -329,7 +323,7 @@ class MainActivity : BaseActivity(),
 
     fun openPropertyDetail(propertyId:Int){
         if(activity_main_fragment_property!=null){
-            showSecondFragment(ID_FRAGMENT_SECOND_DETAIL, propertyId)
+            showSecondFragment(ID_FRAGMENT_PROPERTY_DETAIL, propertyId)
         }else{
             startPropertyDetailActivity(propertyId)
         }
@@ -337,7 +331,7 @@ class MainActivity : BaseActivity(),
 
     fun openPropertyEdit(propertyId:Int?){
         if(activity_main_fragment_property!=null){
-            showSecondFragment(ID_FRAGMENT_SECOND_EDIT, propertyId)
+            showSecondFragment(ID_FRAGMENT_PROPERTY_EDIT, propertyId)
         }else{
             startPropertyEditActivity()
         }
@@ -345,7 +339,7 @@ class MainActivity : BaseActivity(),
 
     fun openPropertySearch(){
         if(activity_main_fragment_property!=null){
-            showSecondFragment(ID_FRAGMENT_SECOND_SEARCH, null)
+            showSecondFragment(ID_FRAGMENT_PROPERTY_SEARCH, null)
         }else{
             startPropertySearchActivity()
         }

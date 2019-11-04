@@ -7,7 +7,7 @@
             android:id="@+id/menu_toolbar_edit"
             android:icon="@drawable/ic_edit_white"
             app:showAsAction="ifRoom"
-            android:title="@string/menu_toolbar_edit">
+            android:title="@string/menu_edit">
         </item>
     </group>
 </menu>
