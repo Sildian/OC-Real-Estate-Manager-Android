@@ -5,8 +5,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.storage.FirebaseStorage
+import com.openclassrooms.realestatemanager.model.coremodel.ExtrasPerProperty
 import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.coremodel.Realtor
 import com.openclassrooms.realestatemanager.viewmodel.*
@@ -115,7 +115,7 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
                     .addOnSuccessListener { documentReference ->
                         property.firebaseId=documentReference.id
                         this.propertyViewModel.updateProperty(property)
-                        listener.onLinkSuccess()
+                        proceedToUpdatePropertyExtrasInFirebase(property, listener)
                     }
         }
 
@@ -124,8 +124,32 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
         else {
             PropertyFirebase.updateProperty(property)
                     .addOnFailureListener { e -> listener.onLinkFailure(e) }
-                    .addOnSuccessListener { listener.onLinkSuccess() }
+                    .addOnSuccessListener { proceedToUpdatePropertyExtrasInFirebase(property, listener) }
         }
+    }
+
+    /**Updates a property's extras in Firebase**/
+
+    private fun proceedToUpdatePropertyExtrasInFirebase(property:Property, listener:OnLinkResultListener){
+
+        /*Clears the existing extras in Firebase*/
+
+        PropertyFirebase.getAllPropertyExtras(property).get()
+                .addOnFailureListener { e->listener.onLinkFailure(e) }
+                .addOnSuccessListener {
+                    for (item in it) {
+                        PropertyFirebase.deletePropertyExtra(property, item.id)
+                    }
+
+                    /*Then updates the new extras*/
+
+                    this.propertyViewModel.getPropertyExtras(property.id!!).observe(this.activity, Observer{
+                        for(extra in it) {
+                            PropertyFirebase.updatePropertyExtra(property, extra)
+                                    .addOnFailureListener { e -> listener.onLinkFailure(e) }
+                        }
+                    })
+                }
     }
 
     /**Uploads a property's pictures into Firebase storage**/
@@ -184,10 +208,21 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
 
                     for (i in querySnapshot.documents.indices) {
                         val property = querySnapshot.documents[i].toObject(Property::class.java)
-                        Log.d("TAG_LINK", querySnapshot.documents[i].id)
                         property!!.firebaseId = querySnapshot.documents[i].id
                         this.propertyViewModel.getProperty(property.firebaseId.toString()).observe(this.activity, Observer {
-                            if (it == null) this.propertyViewModel.insertProperty(property)
+                            if (it == null) {
+                                val id=this.propertyViewModel.insertProperty(property).toInt()
+
+                                /*And get all extras related to this property*/
+
+                                PropertyFirebase.getAllPropertyExtras(property).get()
+                                        .addOnFailureListener { e->listener.onLinkFailure(e) }
+                                        .addOnSuccessListener {
+                                            for(extra in it.toObjects(ExtrasPerProperty::class.java)){
+                                                this.propertyViewModel.insertPropertyExtra(id, extra.extraId)
+                                            }
+                                        }
+                            }
                         })
                     }
                     listener.onLinkSuccess()

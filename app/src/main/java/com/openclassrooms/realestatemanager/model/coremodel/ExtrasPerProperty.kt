@@ -16,4 +16,9 @@ import androidx.room.ForeignKey
 data class ExtrasPerProperty (
         val propertyId:Int,
         val extraId:Int
-)
+){
+
+        /**Non argument constructor for Firebase**/
+
+        constructor():this(0, 0)
+}
