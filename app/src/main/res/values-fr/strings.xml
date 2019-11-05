@@ -65,7 +65,6 @@
     <string name="toast_message_firebase_user_disconnected">Vous êtes déconnecté.</string>
     <string name="toast_message_property_saved">Le bien immobilier est sauvegardé.</string>
 
-
     <!--Dialogs-->
     <string name="dialog_button_neutral">OK</string>
     <string name="dialog_title_firebase_log_error">Erreur de connexion</string>
@@ -78,6 +77,7 @@
     <string name="dialog_message_location_not_found">La localisation n\'a pu être trouvée. Veuillez réessayer plus tard.</string>
     <string name="dialog_title_permission_request">Permission</string>
     <string name="dialog_message_permission_request_location">Votre permission est nécessaire pour montrer votre localisation sur la carte.</string>
+    <string name="dialog_message_permission_request_write">Votre permission est nécessaire pour utiliser des images de votre appareil.</string>
     <string name="dialog_message_permission_request_write_and_camera">Votre permission est nécessaire pour prendre des photos avec votre appareil.</string>
     <string name="dialog_title_properties_empty">Aucun bien trouvé</string>
     <string name="dialog_message_no_property_exist">Aucun bien immobilier n\'est stocké dans la base de données pour le moment.\nPour ajouter votre premier bien, cliquez sur le bouton \'+\'.</string>

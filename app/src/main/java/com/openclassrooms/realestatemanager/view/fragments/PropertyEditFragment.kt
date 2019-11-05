@@ -48,7 +48,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
         /**Requests for internal calls**/
 
-        const val KEY_REQUEST_PERMISSION_WRITE_AND_CAMERA=101
+        const val KEY_REQUEST_PERMISSION_WRITE=101
+        const val KEY_REQUEST_PERMISSION_WRITE_AND_CAMERA=102
 
         /**Permissions**/
 
@@ -215,7 +216,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     }
 
     override fun onAddPictureButtonClick(position: Int) {
-        startAddPictureIntent()
+        requestWrite()
     }
 
     override fun onTakePictureButtonClick(position: Int) {
@@ -468,12 +469,36 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
+            KEY_REQUEST_PERMISSION_WRITE->if(grantResults.size>0){
+                when(grantResults[0]){
+                    PackageManager.PERMISSION_GRANTED -> startAddPictureIntent()
+                    PackageManager.PERMISSION_DENIED -> Log.d("TAG_PERMISSION", "Permission denied")
+                }
+            }
             KEY_REQUEST_PERMISSION_WRITE_AND_CAMERA -> if (grantResults.size > 0) {
                 when (grantResults[0]) {
                     PackageManager.PERMISSION_GRANTED -> startTakePictureIntent()
                     PackageManager.PERMISSION_DENIED -> Log.d("TAG_PERMISSION", "Permission denied")
                 }
             }
+        }
+    }
+
+    private fun requestWrite(){
+        if(Build.VERSION.SDK_INT>=23
+                &&activity!!.checkSelfPermission(KEY_PERMISSION_WRITE)!= PackageManager.PERMISSION_GRANTED){
+
+            if(shouldShowRequestPermissionRationale(KEY_PERMISSION_WRITE)){
+
+                (activity as BaseActivity).showSimpleDialog(
+                        resources.getString(R.string.dialog_title_permission_request),
+                        resources.getString(R.string.dialog_message_permission_request_write))
+
+            }else{
+                requestPermissions(arrayOf(KEY_PERMISSION_WRITE), KEY_REQUEST_PERMISSION_WRITE)
+            }
+        }else{
+            startAddPictureIntent()
         }
     }
 
