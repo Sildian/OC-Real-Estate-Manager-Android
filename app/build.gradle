@@ -90,6 +90,9 @@ dependencies {
 
     //EasyImage
     implementation 'com.github.jkwiecien:EasyImage:3.0.3'
+
+    //Leak canary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
 }
 repositories {
     mavenCentral()

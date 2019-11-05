@@ -85,15 +85,17 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
     /**Creates all properties from SQLite in Firebase if they do not exist within**/
 
     fun createAllPropertiesInFirebase(listener:OnLinkResultListener) {
+        var operationIsFinished=false
         val properties=arrayListOf<Property>()
         this.propertyViewModel.getAllProperties().observe(this.activity, Observer{
-            if(properties.isEmpty()) {
+            if(!operationIsFinished&&properties.isEmpty()) {
                 it.forEach {
                     if (it.firebaseId.isNullOrEmpty()) {
                         properties.add(it)
                     }
                 }
                 properties.forEach { createOrUpdatePropertyInFirebase(it, listener) }
+                operationIsFinished=true
             }
         })
     }
