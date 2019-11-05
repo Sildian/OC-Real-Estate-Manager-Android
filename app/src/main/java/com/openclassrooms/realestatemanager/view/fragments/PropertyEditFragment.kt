@@ -28,6 +28,7 @@ import com.openclassrooms.realestatemanager.model.firebase.FirebaseLinkToSQLite
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.view.activities.MainActivity
+import com.openclassrooms.realestatemanager.view.dialogs.ImageSwitcherDialog
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
 import kotlinx.android.synthetic.main.fragment_property_edit.view.*
@@ -210,6 +211,10 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     /*********************************************************************************************
      * Listens UI events on picturesRecyclerView
      ********************************************************************************************/
+
+    override fun onPictureClick(picturesPaths: List<String?>, position: Int) {
+        //Nothing
+    }
 
     override fun onDeletePictureButtonClick(position: Int) {
         removePicture(position)

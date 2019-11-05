@@ -22,6 +22,7 @@ import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.utils.LocationService
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.activities.MainActivity
+import com.openclassrooms.realestatemanager.view.dialogs.ImageSwitcherDialog
 import com.openclassrooms.realestatemanager.view.recyclerviews.CheckedTextAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
@@ -140,6 +141,10 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     /*********************************************************************************************
      * Listens UI events on picturesRecyclerView
      ********************************************************************************************/
+
+    override fun onPictureClick(picturesPaths: List<String?>, position: Int) {
+        ImageSwitcherDialog(context!!, picturesPaths, position).show()
+    }
 
     override fun onDeletePictureButtonClick(position: Int) {
         //Nothing

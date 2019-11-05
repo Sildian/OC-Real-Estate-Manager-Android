@@ -35,6 +35,10 @@ class PictureAdapter (
 
     /**Listens UI events**/
 
+    override fun onPictureClick(picturesPaths: List<String?>, position: Int) {
+        this.listener.onPictureClick(this.picturesPaths, position)
+    }
+
     override fun onDeletePictureButtonClick(position: Int) {
         this.listener.onDeletePictureButtonClick(position)
     }
