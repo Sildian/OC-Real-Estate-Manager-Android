@@ -58,7 +58,11 @@ class PictureViewHolder (
                 this.takePictureButton.visibility=View.VISIBLE
             }
             else{
-                Glide.with(view).load(picturePath).apply(RequestOptions.centerCropTransform()).into(this.picture)
+                Glide.with(view)
+                        .load(picturePath)
+                        .apply(RequestOptions.centerCropTransform())
+                        .placeholder(R.drawable.ic_picture_gray)
+                        .into(this.picture)
                 this.deleteButton.visibility=View.VISIBLE
                 this.addPictureButton.visibility=View.INVISIBLE
                 this.takePictureButton.visibility=View.INVISIBLE
@@ -68,7 +72,11 @@ class PictureViewHolder (
         /*Else, disables the buttons*/
 
         else{
-            Glide.with(view).load(picturePath).apply(RequestOptions.centerCropTransform()).into(this.picture)
+            Glide.with(view)
+                    .load(picturePath)
+                    .apply(RequestOptions.centerCropTransform())
+                    .placeholder(R.drawable.ic_picture_gray)
+                    .into(this.picture)
             this.deleteButton.visibility=View.INVISIBLE
             this.addPictureButton.visibility=View.INVISIBLE
             this.takePictureButton.visibility=View.INVISIBLE

@@ -16,11 +16,16 @@ import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.utils.Utils
 import kotlinx.android.synthetic.main.fragment_navigation_map.view.*
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.ResultReceiver
 import android.util.Log
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
@@ -216,7 +221,6 @@ class NavigationMapFragment : NavigationBaseFragment(),
      ********************************************************************************************/
 
     override fun getInfoWindow(marker: Marker?): View? {
-        //return null to let getInfoContents be called instead
         return null
     }
 
@@ -224,12 +228,12 @@ class NavigationMapFragment : NavigationBaseFragment(),
         val view=layoutInflater.inflate(R.layout.map_info_property, this.layout as ViewGroup, false)
         if(marker!=null) {
             val property = marker.tag as Property
-            updateInfoContent(view, property)
+            updateInfoContent(marker, view, property)
         }
         return view
     }
 
-    private fun updateInfoContent(view:View, property:Property){
+    private fun updateInfoContent(marker:Marker?, view:View, property:Property){
 
         /*Gets the UI components from the view*/
 
@@ -239,8 +243,28 @@ class NavigationMapFragment : NavigationBaseFragment(),
 
         /*Updates picture*/
 
-        Glide.with(view).load(property.picturesPaths[0])
-                .apply(RequestOptions.centerCropTransform()).into(propertyPicture)
+        if(property.picturesPaths.isNotEmpty()) {
+            Glide.with(view)
+                    .load(property.picturesPaths[0])
+                    .apply(RequestOptions.centerCropTransform())
+                    .placeholder(R.drawable.ic_picture_gray)
+                    .listener(object : RequestListener<Drawable> {
+
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                    Log.d("TAG_PICTURE", e?.message)
+                    return false
+                }
+
+                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    dataSource?.let {
+                        if (!dataSource.equals(DataSource.MEMORY_CACHE)) {
+                            marker?.showInfoWindow()
+                        }
+                    }
+                    return false
+                }
+            }).into(propertyPicture)
+        }
 
         /*Updates ad title*/
 

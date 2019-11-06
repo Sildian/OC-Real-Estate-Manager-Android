@@ -53,7 +53,13 @@ class PropertyViewHolder(
     fun update(property: Property){
         this.propertyId=property.id
         if(property.picturesPaths.isNotEmpty()) {
-            Glide.with(this.view).load(property.picturesPaths[0]).apply(RequestOptions.centerCropTransform()).into(this.picture)
+            Glide.with(this.view)
+                    .load(property.picturesPaths[0])
+                    .apply(RequestOptions.centerCropTransform())
+                    .placeholder(R.drawable.ic_picture_gray)
+                    .into(this.picture)
+        }else{
+            this.picture.setImageResource(R.drawable.ic_picture_gray)
         }
         this.adTitleText.setText(property.adTitle)
         this.cityText.setText(property.city)

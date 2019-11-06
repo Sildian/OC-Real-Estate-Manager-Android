@@ -232,10 +232,7 @@ class MainActivity : BaseActivity(),
             this.userNameTextView.text=this.firebaseUser!!.displayName
         }
         else{
-            Glide.with(this.navigationHeader)
-                    .load(R.drawable.ic_realtor_gray)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(this.userPictureImageView)
+            this.userPictureImageView.setImageResource(R.drawable.ic_realtor_gray)
             this.userNameTextView.setText(R.string.info_user_not_connected)
         }
     }
