@@ -67,6 +67,10 @@
 
     <!--Dialogs-->
     <string name="dialog_button_neutral">OK</string>
+    <string name="dialog_button_positive">Oui</string>
+    <string name="dialog_button_negative">Non</string>
+    <string name="dialog_title_log">Connexion</string>
+    <string name="dialog_message_log">Vous n\'êtes pas connecté à la base de données en ligne.\nSouhaitez-vous vous connecter?</string>
     <string name="dialog_title_firebase_log_error">Erreur de connexion</string>
     <string name="dialog_message_firebase_log_error_no_network">Le réseau n\'est pas disponible.\nVeuillez réessayer plus tard.</string>
     <string name="dialog_message_firebase_log_error_unknown">Une erreur inconnue est survenue.\nVeuillez réessayer plus tard.</string>

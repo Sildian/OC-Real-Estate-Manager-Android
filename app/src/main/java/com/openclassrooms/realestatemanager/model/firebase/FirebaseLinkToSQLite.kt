@@ -41,6 +41,7 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
     /**Creates a new realtor (in both databases)**/
 
     fun createRealtorInFirebaseAndSQLite(firebaseUser:FirebaseUser, listener:OnLinkResultListener){
+
         val realtor=Realtor(id=firebaseUser.uid, name=firebaseUser.displayName, pictureUrl=firebaseUser.photoUrl?.path)
 
         /*Creates (or updates) the realtor in Firebase*/
@@ -60,26 +61,23 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
 
     /**Updates the list of realtors in SQLite**/
 
-    fun updateRealtorsInSQLite(listener:OnLinkResultListener){
+    fun updateRealtorsInSQLite(listener:OnLinkResultListener) {
 
         /*Gets all realtors from Firebase*/
 
-        RealtorFirebase.getAllRealtors().addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            if(firebaseFirestoreException!=null){
-                listener.onLinkFailure(firebaseFirestoreException)
-            }
-            else if(querySnapshot!=null){
+        RealtorFirebase.getAllRealtors().get()
+                .addOnFailureListener { e -> listener.onLinkFailure(e) }
+                .addOnSuccessListener { querySnapshot ->
 
-                /*Then for each realtor, if it doesn't exist in SQLite, creates it within*/
+                    /*Then for each realtor, if it doesn't exist in SQLite, creates it within*/
 
-                for(realtor in querySnapshot.toObjects(Realtor::class.java)){
-                    this.realtorViewModel.getRealtor(realtor.id).observe(this.activity, Observer {
-                        if(it==null) this.realtorViewModel.insertRealtor(realtor)
-                    })
+                    for (realtor in querySnapshot.toObjects(Realtor::class.java)) {
+                        this.realtorViewModel.getRealtor(realtor.id).observe(this.activity, Observer {
+                            if (it == null) this.realtorViewModel.insertRealtor(realtor)
+                        })
+                    }
+                    listener.onLinkSuccess()
                 }
-                listener.onLinkSuccess()
-            }
-        }
     }
 
     /**Creates all properties from SQLite in Firebase if they do not exist within**/

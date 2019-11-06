@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.view.activities
 
 import android.app.Activity
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -78,6 +80,10 @@ class MainActivity : BaseActivity(),
     private val userPictureImageView by lazy{navigationHeader.navigation_drawer_header_user_picture}    //User picture in navigationHeader
     private val userNameTextView by lazy {navigationHeader.navigation_drawer_header_user_name}          //User name in navigationHeader
 
+    /**Progress bar**/
+
+    private val progressBar by lazy {activity_main_progress_bar}                //Progress bar
+
     /**Fragments**/
 
     private lateinit var navigationFragment: NavigationBaseFragment     //Allows to navigate between properties
@@ -118,7 +124,7 @@ class MainActivity : BaseActivity(),
         initializeNoPropertyText()
         initializeAddButton()
         showMainFragment(this.mainFragmentId)
-        if(this.firebaseUser!=null)downloadFirebaseDataIntoSQLite()
+        checkFirebaseUserIsLogged()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -168,7 +174,7 @@ class MainActivity : BaseActivity(),
                     showMainFragment(this.mainFragmentId)
                 }
                 R.id.menu_navigation_drawer_log->
-                    firebaseUserLog()
+                    logFirebaseUser()
             }
 
             this.drawerLayout.closeDrawers()
@@ -241,7 +247,23 @@ class MainActivity : BaseActivity(),
      * Firebase
      ********************************************************************************************/
 
-    private fun firebaseUserLog(){
+    private fun checkFirebaseUserIsLogged(){
+        if(this.firebaseUser!=null){
+            downloadFirebaseDataIntoSQLite()
+        }
+        else{
+            showAnswerDialog(
+                    resources.getString(R.string.dialog_title_log),
+                    resources.getString(R.string.dialog_message_log),
+                    DialogInterface.OnClickListener { dialog, which ->
+                        if(which==Dialog.BUTTON_POSITIVE){
+                            startFirebaseUserLoginActivity()
+                        }
+                    })
+        }
+    }
+
+    private fun logFirebaseUser(){
         if(this.firebaseUser==null){
             startFirebaseUserLoginActivity()
         }else{
@@ -471,6 +493,8 @@ class MainActivity : BaseActivity(),
 
     private fun downloadFirebaseDataIntoSQLite(){
 
+        this.progressBar.visibility=View.VISIBLE
+
         FirebaseLinkToSQLite(this).updateRealtorsInSQLite(
                 object:FirebaseLinkToSQLite.OnLinkResultListener{
                     override fun onLinkFailure(e: Exception) {
@@ -492,9 +516,11 @@ class MainActivity : BaseActivity(),
                     override fun onLinkFailure(e: Exception) {
                         //TODO handle
                         Log.d("TAG_LINK", e.message)
+                        progressBar.visibility=View.GONE
                     }
 
                     override fun onLinkSuccess() {
+                        progressBar.visibility=View.GONE
                         uploadPropertiesIntoFirebase()
                     }
                 }

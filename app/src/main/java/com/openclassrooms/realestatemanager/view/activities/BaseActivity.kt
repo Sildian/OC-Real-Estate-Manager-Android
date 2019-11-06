@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.view.activities
 
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -25,14 +26,6 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     /*********************************************************************************************
-     * Life cycle
-     ********************************************************************************************/
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    /*********************************************************************************************
      * Dialogs management
      ********************************************************************************************/
 
@@ -41,6 +34,18 @@ abstract class BaseActivity : AppCompatActivity() {
         dialog.setTitle(title)
         dialog.setMessage(message)
         dialog.setNeutralButton(R.string.dialog_button_neutral, { dialogNeutral, which -> })
+        dialog.create()
+        dialog.show()
+    }
+
+    fun showAnswerDialog(title:String, message:String, listener: DialogInterface.OnClickListener){
+        val dialog = AlertDialog.Builder(this)
+        dialog.setTitle(title)
+        dialog.setMessage(message)
+        dialog.setPositiveButton(R.string.dialog_button_positive,
+                {dialogPositive, which -> listener.onClick(dialogPositive, which)})
+        dialog.setNegativeButton(R.string.dialog_button_negative,
+                {dialogNegative, which -> listener.onClick(dialogNegative, which)})
         dialog.create()
         dialog.show()
     }
