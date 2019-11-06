@@ -132,7 +132,7 @@ class SQLQueryGeneratorTest {
         assertEquals(expectedResult, SQLQueryGenerator.generateRangeFilter(fieldName, min, max))
     }
 
-    @Ignore("Travi CI issue")
+    @Ignore("Travis CI issue")
     @Test
     fun given_adDateMin1Sept2019_when_generateRangeFilter_then_checkResult(){
         val fieldName="adDate"

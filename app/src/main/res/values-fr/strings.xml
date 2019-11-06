@@ -26,6 +26,7 @@
     <!--Text labels-->
     <string name="label_property_main_information">Informations principales</string>
     <string name="label_property_pictures">Photos</string>
+    <string name="label_property_min_nb_pictures">Nombre minimum de photos</string>
     <string name="label_property_extras">Les +</string>
     <string name="label_property_location">Emplacement</string>
     <string name="label_property_other_information">Autres informations</string>

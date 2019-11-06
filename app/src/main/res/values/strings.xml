@@ -27,6 +27,7 @@
     <!--Text labels-->
     <string name="label_property_main_information">Main information</string>
     <string name="label_property_pictures">Pictures</string>
+    <string name="label_property_min_nb_pictures">Min number of pictures</string>
     <string name="label_property_extras">Extras</string>
     <string name="label_property_location">Location</string>
     <string name="label_property_other_information">Other information</string>

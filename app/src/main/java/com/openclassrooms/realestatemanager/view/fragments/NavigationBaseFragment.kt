@@ -120,7 +120,7 @@ abstract class NavigationBaseFragment : Fragment() {
                 this.propertyViewModel?.getAllProperties()?.removeObservers(this)
             }
 
-            /*Then run the complex query and observes it*/
+            /*Then run the complex query*/
 
             this.propertyViewModel?.getProperties(SQLQueryGenerator.generatePropertyQuery(
                     minPrice = this.settings!!.minPrice, maxPrice = this.settings!!.maxPrice,
@@ -134,7 +134,21 @@ abstract class NavigationBaseFragment : Fragment() {
                     orderCriteria = this.settings!!.orderCriteria, orderDesc = this.settings!!.orderDesc))
                     ?.observe(this, Observer {
 
-                        onPropertiesReceived(it, resources.getString(R.string.info_no_property_match))
+                        var properties=listOf<Property>()
+                        val settings=this.settings
+
+                        /*If a min number of pictures is set, filters the list of properties (cannot be done by SQL)*/
+
+                        if(settings?.minNbPictures!=null){
+                            val minNbPictures=settings.minNbPictures!!
+                            properties=it.filter{it.picturesPaths.count()>=minNbPictures}
+                        }else{
+                            properties=it
+                        }
+
+                        /*Sends the result to the listener*/
+
+                        onPropertiesReceived(properties, resources.getString(R.string.info_no_property_match))
                     })
         }
     }

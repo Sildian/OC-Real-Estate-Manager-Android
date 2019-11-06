@@ -27,6 +27,7 @@ class PropertySearchSettings :Parcelable{
     var city:String?=null
     var country:String?=null
     var adTitle:String?=null
+    var minNbPictures:Int?=null
     var minAdDate: Date?=null
     var sold:Boolean?=null
     var minSaleDate:Date?=null
@@ -56,6 +57,8 @@ class PropertySearchSettings :Parcelable{
         this.city=parcel.readString()
         this.country=parcel.readString()
         this.adTitle=parcel.readString()
+        val minNbPicturesFromParcel=parcel.readValue(Int::class.java.classLoader) as Int?
+        this.minNbPictures=minNbPicturesFromParcel
         val minAdDateFromParcel=parcel.readValue(Long::class.java.classLoader) as Long?
         this.minAdDate= if(minAdDateFromParcel!=null) DateConverter().fromTimestamp(minAdDateFromParcel) else null
         val soldFromParcel=parcel.readValue(Int::class.java.classLoader) as Int?
@@ -80,6 +83,7 @@ class PropertySearchSettings :Parcelable{
         parcel.writeString(this.city)
         parcel.writeString(this.country)
         parcel.writeString(this.adTitle)
+        parcel.writeValue(if(this.minNbPictures!=null) this.minNbPictures else null)
         parcel.writeValue(if(this.minAdDate!=null) DateConverter().dateToTimestamp(this.minAdDate) else null)
         parcel.writeValue(if(this.sold==false) 0 else if(this.sold==true) 1 else null)
         parcel.writeValue(if(this.minSaleDate!=null) DateConverter().dateToTimestamp(this.minSaleDate) else null)
