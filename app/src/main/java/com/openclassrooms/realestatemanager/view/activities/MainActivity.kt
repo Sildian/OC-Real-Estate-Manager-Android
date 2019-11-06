@@ -480,13 +480,15 @@ class MainActivity : BaseActivity(),
         FirebaseLinkToSQLite(this).createRealtorInFirebaseAndSQLite(
                 this.firebaseUser!!, object:FirebaseLinkToSQLite.OnLinkResultListener{
             override fun onLinkFailure(e:Exception) {
-                //TODO handle
                 Log.d("TAG_LINK", e.message)
+                showSimpleDialog(
+                        resources.getString(R.string.dialog_title_firebase_link_error),
+                        resources.getString(R.string.dialog_message_firebase_link_error)
+                )
             }
 
             override fun onLinkSuccess() {
-                //TODO handle
-                Log.d("TAG_LINK", "Success")
+                //Nothing
             }
         })
     }
@@ -499,7 +501,11 @@ class MainActivity : BaseActivity(),
                 object:FirebaseLinkToSQLite.OnLinkResultListener{
                     override fun onLinkFailure(e: Exception) {
                         Log.d("TAG_LINK", e.message)
-                        downloadFirebasePropertiesIntoSQLite()
+                        progressBar.visibility=View.GONE
+                        showSimpleDialog(
+                                resources.getString(R.string.dialog_title_firebase_link_error),
+                                resources.getString(R.string.dialog_message_firebase_link_error)
+                        )
                     }
 
                     override fun onLinkSuccess() {
@@ -514,9 +520,12 @@ class MainActivity : BaseActivity(),
         FirebaseLinkToSQLite(this).updatePropertiesInSQLite(
                 object:FirebaseLinkToSQLite.OnLinkResultListener{
                     override fun onLinkFailure(e: Exception) {
-                        //TODO handle
                         Log.d("TAG_LINK", e.message)
                         progressBar.visibility=View.GONE
+                        showSimpleDialog(
+                                resources.getString(R.string.dialog_title_firebase_link_error),
+                                resources.getString(R.string.dialog_message_firebase_link_error)
+                        )
                     }
 
                     override fun onLinkSuccess() {
@@ -532,13 +541,11 @@ class MainActivity : BaseActivity(),
         FirebaseLinkToSQLite(this).createAllPropertiesInFirebase(
                 object:FirebaseLinkToSQLite.OnLinkResultListener{
                     override fun onLinkFailure(e: Exception) {
-                        //TODO handle
                         Log.d("TAG_LINK", e.message)
                     }
 
                     override fun onLinkSuccess() {
-                        //TODO handle
-                        Log.d("TAG_LINK", "Success")
+                        //Nothing
                     }
                 }
         )

@@ -76,6 +76,8 @@
     <string name="dialog_title_firebase_log_error">Log error!</string>
     <string name="dialog_message_firebase_log_error_no_network">The network is unavailable.\nPlease try again later.</string>
     <string name="dialog_message_firebase_log_error_unknown">An unknow error occurred.\nPlease try again later.</string>
+    <string name="dialog_title_firebase_link_error">Database error!</string>
+    <string name="dialog_message_firebase_link_error">An error occurred while trying to reach the online database.\nPlease try again later.</string>
     <string name="dialog_title_validation_issue">Caution!</string>
     <string name="dialog_message_input_not_valid">Some fields are not valid.\nPlease check these fields and try again.</string>
     <string name="dialog_title_sundry_issue">Issue!</string>

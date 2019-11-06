@@ -457,13 +457,14 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         FirebaseLinkToSQLite(activity!!).createOrUpdatePropertyInFirebase(
                 property, object:FirebaseLinkToSQLite.OnLinkResultListener{
             override fun onLinkFailure(e:Exception) {
-                //TODO handle
                 Log.d("TAG_LINK", e.message)
+                (activity!! as BaseActivity).showSimpleDialog(
+                        resources.getString(R.string.dialog_title_firebase_link_error),
+                        resources.getString(R.string.dialog_message_firebase_link_error)
+                )
             }
-
             override fun onLinkSuccess() {
-                //TODO handle
-                Log.d("TAG_LINK", "Success")
+                //Nothing
             }
         })
     }
