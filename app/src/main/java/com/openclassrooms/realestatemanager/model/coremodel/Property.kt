@@ -26,8 +26,8 @@ data class Property(
         var nbBedrooms:Int?=null,
         var nbBathrooms:Int?=null,
         var address:String?=null,
-        var postalCode:String?=null,
         var city:String?=null,
+        var state:String?=null,
         var country:String?=null,
         var buildYear: Int? =null,
         var adDate: Date?=null,
@@ -39,12 +39,12 @@ data class Property(
         /**Full address with line breaks (to display)**/
 
         fun getFullAddressToDisplay():String{
-                return this.address+"\n"+this.postalCode+" "+this.city+"\n"+this.country
+                return this.address+"\n"+this.city+", "+this.state+"\n"+this.country
         }
 
         /**Full address without line breaks (to use in location queries)**/
 
         fun getFullAddressToFetchLocation():String{
-                return this.address+" "+this.postalCode+" "+this.city+" "+this.country
+                return this.address+" "+this.city+" "+this.state+" "+this.country
         }
 }

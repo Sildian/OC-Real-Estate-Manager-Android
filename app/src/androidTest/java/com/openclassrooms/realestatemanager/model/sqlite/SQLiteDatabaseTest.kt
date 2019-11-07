@@ -179,26 +179,26 @@ class SQLiteDatabaseTest{
     }
 
     @Test
-    fun given_realtorIdPostalCode_when_generatePropertyQuery_then_checkResult(){
+    fun given_realtorIdCountry_when_generatePropertyQuery_then_checkResult(){
 
         val realtor1=Realtor("wedgeAntilles", "Wedge Antilles")
         val realtor2=Realtor("amiralAckbar", "Amiral Ackbar")
         this.database.realtorDAO.insertRealtor(realtor1)
         this.database.realtorDAO.insertRealtor(realtor2)
 
-        val p1=Property(adTitle="Small flat", realtorId="wedgeAntilles", postalCode = "03400")
-        val p2=Property(adTitle="Beautiful flat", realtorId="amiralAckbar", postalCode="59500")
-        val p3=Property(adTitle="House", realtorId="wedgeAntilles", postalCode = "59780")
+        val p1=Property(adTitle="Small flat", realtorId="wedgeAntilles", country = "Yavin")
+        val p2=Property(adTitle="Beautiful flat", realtorId="amiralAckbar", country="Mon Calamari")
+        val p3=Property(adTitle="House", realtorId="wedgeAntilles", country = "Dantouine")
         this.database.propertyDAO.insertProperty(p1)
         this.database.propertyDAO.insertProperty(p2)
         this.database.propertyDAO.insertProperty(p3)
 
-        val postalCode="59"
+        val country="Dantouine"
         val realtorId="wedgeAntilles"
 
         val properties=LiveDataTestUtil.getValue(
                 this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
-                        postalCode=postalCode, realtorId=realtorId)))
+                        country=country, realtorId=realtorId)))
 
         assertEquals(1, properties.size)
         assertEquals("House", properties[0].adTitle)

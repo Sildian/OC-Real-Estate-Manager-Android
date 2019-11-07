@@ -45,9 +45,9 @@
     <string name="label_property_nb_bedrooms">Chambres</string>
     <string name="label_property_nb_bathrooms">Salles de bain</string>
     <string name="label_property_build_date">Année construction</string>
-    <string name="label_property_address">Addresse</string>
-    <string name="label_property_postal_code">Code postal</string>
+    <string name="label_property_street">Addresse</string>
     <string name="label_property_city">Ville</string>
+    <string name="label_property_state">Etat \/ Région</string>
     <string name="label_property_country">Pays</string>
     <string name="label_property_realtor">Agent</string>
     <string name="label_property_ad_date">Date annonce</string>

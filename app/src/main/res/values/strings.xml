@@ -46,9 +46,9 @@
     <string name="label_property_nb_bedrooms">Bedrooms</string>
     <string name="label_property_nb_bathrooms">Bathrooms</string>
     <string name="label_property_build_date">Build year</string>
-    <string name="label_property_address">Address</string>
-    <string name="label_property_postal_code">Zip code</string>
+    <string name="label_property_street">Street</string>
     <string name="label_property_city">City</string>
+    <string name="label_property_state">State \/ Province</string>
     <string name="label_property_country">Country</string>
     <string name="label_property_realtor">Realtor</string>
     <string name="label_property_ad_date">Ad date</string>

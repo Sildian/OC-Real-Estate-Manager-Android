@@ -128,7 +128,7 @@ abstract class NavigationBaseFragment : Fragment() {
                     minSize = this.settings!!.minSize, maxSize = this.settings!!.maxSize,
                     minNbRooms = this.settings!!.minNbRooms, maxNbRooms = this.settings!!.maxNbRooms,
                     extrasIds = this.settings!!.extrasIds,
-                    postalCode = this.settings!!.postalCode, city = this.settings!!.city, country = this.settings!!.country,
+                    city = this.settings!!.city, state=this.settings!!.state, country = this.settings!!.country,
                     adTitle = this.settings!!.adTitle, minAdDate = this.settings!!.minAdDate,
                     sold = this.settings!!.sold, minSaleDate = this.settings!!.minSaleDate,
                     orderCriteria = this.settings!!.orderCriteria, orderDesc = this.settings!!.orderDesc))

@@ -28,7 +28,6 @@ import com.openclassrooms.realestatemanager.model.firebase.FirebaseLinkToSQLite
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.view.activities.MainActivity
-import com.openclassrooms.realestatemanager.view.dialogs.ImageSwitcherDialog
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
 import kotlinx.android.synthetic.main.fragment_property_edit.view.*
@@ -74,8 +73,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     private val nbBathroomsInputLayout by lazy {layout.fragment_property_edit_nb_bathrooms_layout}
     private val buildYearInputLayout by lazy {layout.fragment_property_edit_build_year_layout}
     private val addressInputLayout by lazy {layout.fragment_property_edit_address_layout}
-    private val postalCodeInputLayout by lazy {layout.fragment_property_edit_postal_code_layout}
     private val cityInputLayout by lazy {layout.fragment_property_edit_city_layout}
+    private val stateInputLayout by lazy {layout.fragment_property_edit_state_layout}
     private val countryInputLayout by lazy {layout.fragment_property_edit_country_layout}
     private val realtorInputLayout by lazy {layout.fragment_property_edit_realtor_layout}
     private val adDateInputLayout by lazy {layout.fragment_property_edit_ad_date_layout}
@@ -96,8 +95,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     private val extrasChipGroup by lazy {layout.fragment_property_edit_extras}
     private val extrasChips=ArrayList<Chip>()
     private val addressText by lazy {layout.fragment_property_edit_address}
-    private val postalCodeText by lazy {layout.fragment_property_edit_postal_code}
     private val cityText by lazy {layout.fragment_property_edit_city}
+    private val stateText by lazy {layout.fragment_property_edit_state}
     private val countryText by lazy {layout.fragment_property_edit_country}
     private val realtorTextDropDown by lazy {layout.fragment_property_edit_realtor}
     private val adDateText by lazy {layout.fragment_property_edit_ad_date}
@@ -262,8 +261,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         if(!checkTextIsNotEmpty(this.nbBathroomsText, this.nbBathroomsInputLayout)) isValid=false
         if(!checkTextIsNotEmpty(this.buildYearText, this.buildYearInputLayout)) isValid=false
         if(!checkTextIsNotEmpty(this.addressText, this.addressInputLayout)) isValid=false
-        if(!checkTextIsNotEmpty(this.postalCodeText, this.postalCodeInputLayout)) isValid=false
         if(!checkTextIsNotEmpty(this.cityText, this.cityInputLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.stateText, this.stateInputLayout)) isValid=false
         if(!checkTextIsNotEmpty(this.countryText, this.countryInputLayout)) isValid=false
         if(!checkTextIsNotEmpty(this.realtorTextDropDown, this.realtorInputLayout)) isValid=false
         if(!checkTextIsNotEmpty(this.adDateText, this.adDateInputLayout)) isValid=false
@@ -342,8 +341,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             property.nbBathrooms = Integer.parseInt(this.nbBathroomsText.text.toString())
             property.buildYear = Integer.parseInt(this.buildYearText.text.toString())
             property.address = this.addressText.text.toString()
-            property.postalCode = this.postalCodeText.text.toString()
             property.city = this.cityText.text.toString()
+            property.state = this.stateText.text.toString()
             property.country = this.countryText.text.toString()
             property.realtorId = (this.realtorTextDropDown.tag as Realtor).id
             property.adDate = Utils.getDateFromString(this.adDateText.text.toString())
@@ -406,8 +405,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             this.nbBathroomsText.setText(property.nbBathrooms.toString())
             this.buildYearText.setText(property.buildYear.toString())
             this.addressText.setText(property.address)
-            this.postalCodeText.setText(property.postalCode)
             this.cityText.setText(property.city)
+            this.stateText.setText(property.state)
             this.countryText.setText(property.country)
             val realtorId = property.realtorId
             if (realtorId != null) loadPropertyRealtor(realtorId)
@@ -458,10 +457,6 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
                 property, object:FirebaseLinkToSQLite.OnLinkResultListener{
             override fun onLinkFailure(e:Exception) {
                 Log.d("TAG_LINK", e.message)
-                (activity!! as BaseActivity).showSimpleDialog(
-                        resources.getString(R.string.dialog_title_firebase_link_error),
-                        resources.getString(R.string.dialog_message_firebase_link_error)
-                )
             }
             override fun onLinkSuccess() {
                 //Nothing

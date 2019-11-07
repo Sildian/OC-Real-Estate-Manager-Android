@@ -23,8 +23,8 @@ class PropertySearchSettings :Parcelable{
     var minNbRooms:Int?=null
     var maxNbRooms:Int?=null
     var extrasIds:ArrayList<Int?> = arrayListOf()
-    var postalCode:String?=null
     var city:String?=null
+    var state:String?=null
     var country:String?=null
     var adTitle:String?=null
     var minNbPictures:Int?=null
@@ -53,8 +53,8 @@ class PropertySearchSettings :Parcelable{
         this.minNbRooms=parcel.readValue(Int::class.java.classLoader) as Int?
         this.maxNbRooms=parcel.readValue(Int::class.java.classLoader) as Int?
         parcel.readList(this.extrasIds, null)
-        this.postalCode=parcel.readString()
         this.city=parcel.readString()
+        this.state=parcel.readString()
         this.country=parcel.readString()
         this.adTitle=parcel.readString()
         val minNbPicturesFromParcel=parcel.readValue(Int::class.java.classLoader) as Int?
@@ -79,8 +79,8 @@ class PropertySearchSettings :Parcelable{
         parcel.writeValue(this.minNbRooms)
         parcel.writeValue(this.maxNbRooms)
         parcel.writeList(this.extrasIds)
-        parcel.writeString(this.postalCode)
         parcel.writeString(this.city)
+        parcel.writeString(this.state)
         parcel.writeString(this.country)
         parcel.writeString(this.adTitle)
         parcel.writeValue(if(this.minNbPictures!=null) this.minNbPictures else null)

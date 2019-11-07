@@ -39,8 +39,8 @@ class PropertySearchFragment : PropertyBaseFragment() {
     private val nbRoomsRangeBar by lazy {layout.fragment_property_search_nb_rooms}
     private val extrasChipGroup by lazy {layout.fragment_property_search_extras}
     private val extrasChips=ArrayList<Chip>()
-    private val postalCodeText by lazy {layout.fragment_property_search_postal_code}
     private val cityText by lazy {layout.fragment_property_search_city}
+    private val stateText by lazy {layout.fragment_property_search_state}
     private val countryText by lazy {layout.fragment_property_search_country}
     private val adTitleText by lazy {layout.fragment_property_search_ad_title}
     private val minNbPicturesText by lazy {layout.fragment_property_search_nb_pictures}
@@ -161,8 +161,8 @@ class PropertySearchFragment : PropertyBaseFragment() {
         this.settings.maxNbRooms=getValueFromRangeBar(this.nbRoomsRangeBar, 1)
         this.settings.extrasIds.clear()
         this.settings.extrasIds.addAll(getIdsFromChips(this.extrasChips, Extra::class.java))
-        this.settings.postalCode=this.postalCodeText.text.toString()
         this.settings.city=this.cityText.text.toString()
+        this.settings.state=this.stateText.text.toString()
         this.settings.country=this.countryText.text.toString()
         this.settings.adTitle=this.adTitleText.text.toString()
         this.settings.minNbPictures=if(!this.minNbPicturesText.text.isNullOrEmpty())
@@ -183,8 +183,8 @@ class PropertySearchFragment : PropertyBaseFragment() {
         loadPriceRange()
         loadRange(this.sizeRangeBar, this.settings.minSize, this.settings.maxSize)
         loadRange(this.nbRoomsRangeBar, this.settings.minNbRooms, this.settings.maxNbRooms)
-        this.postalCodeText.setText(this.settings.postalCode)
         this.cityText.setText(this.settings.city)
+        this.stateText.setText(this.settings.state)
         this.countryText.setText(this.settings.country)
         this.adTitleText.setText(this.settings.adTitle)
         if(this.settings.minNbPictures!=null) this.minNbPicturesText.setText(this.settings.minNbPictures.toString())

@@ -19,7 +19,7 @@ object SQLQueryGenerator {
             minSize:Int?=null, maxSize:Int?=null,
             minNbRooms:Int?=null, maxNbRooms:Int?=null,
             extrasIds:List<Int?> = emptyList(),
-            postalCode:String?=null, city:String?=null, country:String?=null,
+            city:String?=null, state:String?=null, country:String?=null,
             realtorId:String?=null,
             adTitle:String?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
@@ -29,7 +29,7 @@ object SQLQueryGenerator {
             : SupportSQLiteQuery {
 
         val query = generatePropertyQueryString(minPrice, maxPrice, typeIds, minSize, maxSize,
-                minNbRooms, maxNbRooms, extrasIds, postalCode, city, country, realtorId,
+                minNbRooms, maxNbRooms, extrasIds, city, state, country, realtorId,
                 adTitle, minAdDate, maxAdDate, sold, minSaleDate, maxSaleDate, orderCriteria, orderDesc)
 
         return SimpleSQLiteQuery(query)
@@ -43,7 +43,7 @@ object SQLQueryGenerator {
             minSize:Int?=null, maxSize:Int?=null,
             minNbRooms:Int?=null, maxNbRooms:Int?=null,
             extrasIds:List<Int?> =emptyList(),
-            postalCode:String?=null, city:String?=null, country:String?=null,
+            city:String?=null, state:String?=null, country:String?=null,
             realtorId:String?=null,
             adTitle:String?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
@@ -60,8 +60,8 @@ object SQLQueryGenerator {
         tempFilters.add(generateRangeFilter("size", minSize, maxSize))
         tempFilters.add(generateRangeFilter("nbRooms", minNbRooms, maxNbRooms))
         tempFilters.add(generateListFilter("extraId", extrasIds))
-        tempFilters.add(generateLikeFilter("postalCode", postalCode, false, true))
         tempFilters.add(generateSimpleFilter("city", city))
+        tempFilters.add(generateSimpleFilter("state", state))
         tempFilters.add(generateSimpleFilter("country", country))
         tempFilters.add(generateSimpleFilter("realtorId", realtorId))
         tempFilters.add(generateLikeFilter("adTitle", adTitle, true, true))

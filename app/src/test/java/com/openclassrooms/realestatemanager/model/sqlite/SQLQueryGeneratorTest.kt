@@ -57,12 +57,12 @@ class SQLQueryGeneratorTest {
     }
 
     @Test
-    fun given_realtorIdPostalCode_when_generatePropertyQueryString_then_checkResult(){
-        val postalCode="59"
+    fun given_realtorIdCountry_when_generatePropertyQueryString_then_checkResult(){
+        val country="France"
         val realtorId="wedgeAntilles"
-        val expectedResult="SELECT * FROM Property WHERE postalCode LIKE '59%' AND realtorId='wedgeAntilles';"
+        val expectedResult="SELECT * FROM Property WHERE country='France' AND realtorId='wedgeAntilles';"
         assertEquals(expectedResult, SQLQueryGenerator.generatePropertyQueryString(
-                postalCode=postalCode, realtorId=realtorId))
+                country=country, realtorId=realtorId))
     }
 
     @Test
@@ -94,12 +94,12 @@ class SQLQueryGeneratorTest {
     /**generateLikeFilter**/
 
     @Test
-    fun given_postalCode_when_generateLikeFilter_then_checkResult(){
-        val fieldName="postalCode"
-        val criteria="59"
-        val anyBefore=false
+    fun given_adTitle_when_generateLikeFilter_then_checkResult(){
+        val fieldName="adTitle"
+        val criteria="super"
+        val anyBefore=true
         val anyAfter=true
-        val expectedResult="postalCode LIKE '59%'"
+        val expectedResult="adTitle LIKE '%super%'"
         assertEquals(expectedResult, SQLQueryGenerator.generateLikeFilter(fieldName, criteria, anyBefore, anyAfter))
     }
 
