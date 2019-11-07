@@ -150,7 +150,7 @@ class NavigationMapFragment : NavigationBaseFragment(),
             /*Else displays a message*/
 
         } else{
-            (activity as BaseActivity).showSimpleDialog(
+            (activity as BaseActivity).showInfoDialog(
                     resources.getString(R.string.dialog_title_properties_empty), emptyMessage)
         }
     }
@@ -194,14 +194,14 @@ class NavigationMapFragment : NavigationBaseFragment(),
                                 LatLng(it.latitude, it.longitude), 13f))
                     }else{
                         Log.d("TAG_LOCATION", "Location not found")
-                        (activity as BaseActivity).showSimpleDialog(
+                        (activity as BaseActivity).showErrorDialog(
                                 resources.getString(R.string.dialog_title_sundry_issue),
                                 resources.getString(R.string.dialog_message_location_not_found))
                     }
                 }
                 .addOnFailureListener {
                     Log.d("TAG_LOCATION", it.message)
-                    (activity as BaseActivity).showSimpleDialog(
+                    (activity as BaseActivity).showErrorDialog(
                             resources.getString(R.string.dialog_title_sundry_issue),
                             resources.getString(R.string.dialog_message_location_not_found))
                 }
@@ -307,7 +307,7 @@ class NavigationMapFragment : NavigationBaseFragment(),
         if(Build.VERSION.SDK_INT>=23
                 &&activity!!.checkSelfPermission(KEY_PERMISSION_LOCATION)!=PackageManager.PERMISSION_GRANTED){
             if(shouldShowRequestPermissionRationale(KEY_PERMISSION_LOCATION)){
-                (activity as BaseActivity).showSimpleDialog(
+                (activity as BaseActivity).showInfoDialog(
                         resources.getString(R.string.dialog_title_permission_request),
                         resources.getString(R.string.dialog_message_permission_request_location))
             }else{

@@ -321,7 +321,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         /*Checks that all input fields are valid and eventually shows a message*/
 
         if(!checkInputIsValid()){
-            (activity as BaseActivity).showSimpleDialog(
+            (activity as BaseActivity).showErrorDialog(
                     resources.getString(R.string.dialog_title_validation_issue),
                     resources.getString(R.string.dialog_message_input_not_valid))
         }else {
@@ -491,7 +491,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
             if(shouldShowRequestPermissionRationale(KEY_PERMISSION_WRITE)){
 
-                (activity as BaseActivity).showSimpleDialog(
+                (activity as BaseActivity).showInfoDialog(
                         resources.getString(R.string.dialog_title_permission_request),
                         resources.getString(R.string.dialog_message_permission_request_write))
 
@@ -511,7 +511,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             if(shouldShowRequestPermissionRationale(KEY_PERMISSION_WRITE)
                             ||shouldShowRequestPermissionRationale(KEY_PERMISSION_CAMERA)){
 
-                (activity as BaseActivity).showSimpleDialog(
+                (activity as BaseActivity).showInfoDialog(
                         resources.getString(R.string.dialog_title_permission_request),
                         resources.getString(R.string.dialog_message_permission_request_write_and_camera))
 
@@ -555,7 +555,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             override fun onImagePickerError(error: Throwable, source: MediaSource) {
                 super.onImagePickerError(error, source)
                 Log.d("TAG_PICTURE", error.message)
-                (activity as BaseActivity).showSimpleDialog(
+                (activity as BaseActivity).showErrorDialog(
                         resources.getString(R.string.dialog_title_sundry_issue),
                         resources.getString(R.string.dialog_message_picture_not_loaded)
                 )

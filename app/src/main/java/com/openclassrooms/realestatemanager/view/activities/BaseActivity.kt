@@ -29,24 +29,46 @@ abstract class BaseActivity : AppCompatActivity() {
      * Dialogs management
      ********************************************************************************************/
 
-    fun showSimpleDialog(title: String, message: String) {
+    fun showInfoDialog(title: String, message: String) {
         val dialog = AlertDialog.Builder(this)
-        dialog.setTitle(title)
-        dialog.setMessage(message)
-        dialog.setNeutralButton(R.string.dialog_button_neutral, { dialogNeutral, which -> })
-        dialog.create()
+                .setTitle(title)
+                .setMessage(message)
+                .setNeutralButton(R.string.dialog_button_neutral, { dialogNeutral, which -> })
+                .create()
         dialog.show()
     }
 
-    fun showAnswerDialog(title:String, message:String, listener: DialogInterface.OnClickListener){
+    fun showWarningDialog(title: String, message: String) {
         val dialog = AlertDialog.Builder(this)
-        dialog.setTitle(title)
-        dialog.setMessage(message)
-        dialog.setPositiveButton(R.string.dialog_button_positive,
-                {dialogPositive, which -> listener.onClick(dialogPositive, which)})
-        dialog.setNegativeButton(R.string.dialog_button_negative,
-                {dialogNegative, which -> listener.onClick(dialogNegative, which)})
-        dialog.create()
+                .setTitle(title)
+                .setMessage(message)
+                .setIcon(R.drawable.ic_warning_yellow)
+                .setNeutralButton(R.string.dialog_button_neutral, { dialogNeutral, which -> })
+                .create()
+        dialog.show()
+    }
+
+    fun showErrorDialog(title: String, message: String) {
+        val dialog = AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setIcon(R.drawable.ic_error_red)
+                .setNeutralButton(R.string.dialog_button_neutral, { dialogNeutral, which -> })
+                .create()
+        dialog.show()
+    }
+
+    fun showQuestionDialog(title:String, message:String, listener: DialogInterface.OnClickListener){
+        val dialog = AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(
+                        R.string.dialog_button_positive,
+                        {dialogPositive, which -> listener.onClick(dialogPositive, which)})
+                .setNegativeButton(
+                        R.string.dialog_button_negative,
+                        {dialogNegative, which -> listener.onClick(dialogNegative, which)})
+                .create()
         dialog.show()
     }
 }

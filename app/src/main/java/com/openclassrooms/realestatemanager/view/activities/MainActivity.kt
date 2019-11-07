@@ -16,8 +16,6 @@ import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.ErrorCodes
-import com.firebase.ui.auth.IdpResponse
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.model.firebase.FirebaseLinkToSQLite
 import com.openclassrooms.realestatemanager.model.support.PropertySearchSettings
+import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation_drawer_header.view.*
@@ -248,18 +247,33 @@ class MainActivity : BaseActivity(),
      ********************************************************************************************/
 
     private fun checkFirebaseUserIsLogged(){
-        if(this.firebaseUser!=null){
-            downloadFirebaseDataIntoSQLite()
-        }
-        else{
-            showAnswerDialog(
-                    resources.getString(R.string.dialog_title_log),
-                    resources.getString(R.string.dialog_message_log),
-                    DialogInterface.OnClickListener { dialog, which ->
-                        if(which==Dialog.BUTTON_POSITIVE){
-                            startFirebaseUserLoginActivity()
-                        }
-                    })
+
+        /*If the network is available and the user already logged, starts downloading data from Firebase*/
+
+        if(Utils.isInternetAvailable(this)) {
+            if (this.firebaseUser != null) {
+                downloadFirebaseDataIntoSQLite()
+            } else {
+
+                /*If the user is not logged, shows a dialog asking to connect to Firebase*/
+
+                showQuestionDialog(
+                        resources.getString(R.string.dialog_title_log),
+                        resources.getString(R.string.dialog_message_log),
+                        DialogInterface.OnClickListener { dialog, which ->
+                            if (which == Dialog.BUTTON_POSITIVE) {
+                                startFirebaseUserLoginActivity()
+                            }
+                        })
+            }
+        }else{
+
+            /*If the network is unavailable, just shows a message*/
+
+            showWarningDialog(
+                    resources.getString(R.string.dialog_title_sundry_issue),
+                    resources.getString(R.string.dialog_message_no_network)
+            )
         }
     }
 
@@ -424,22 +438,13 @@ class MainActivity : BaseActivity(),
 
             downloadFirebaseDataIntoSQLite()
 
-            /*If failure, shows an other message depending on which error occurred*/
-
         }else{
-            val loginResponse=IdpResponse.fromResultIntent(data)
 
-            if(loginResponse!=null) {
-                if (loginResponse.error?.errorCode == ErrorCodes.NO_NETWORK) {
-                    showSimpleDialog(
-                            resources.getString(R.string.dialog_title_firebase_log_error),
-                            resources.getString(R.string.dialog_message_firebase_log_error_no_network))
-                } else {
-                    showSimpleDialog(
-                            resources.getString(R.string.dialog_title_firebase_log_error),
-                            resources.getString(R.string.dialog_message_firebase_log_error_unknown))
-                }
-            }
+            /*If failure, shows an other message*/
+
+            showErrorDialog(
+                    resources.getString(R.string.dialog_title_firebase_log_error),
+                    resources.getString(R.string.dialog_message_firebase_log_error_unknown))
         }
     }
 
@@ -481,7 +486,7 @@ class MainActivity : BaseActivity(),
                 this.firebaseUser!!, object:FirebaseLinkToSQLite.OnLinkResultListener{
             override fun onLinkFailure(e:Exception) {
                 Log.d("TAG_LINK", e.message)
-                showSimpleDialog(
+                showErrorDialog(
                         resources.getString(R.string.dialog_title_firebase_link_error),
                         resources.getString(R.string.dialog_message_firebase_link_error)
                 )
@@ -502,7 +507,7 @@ class MainActivity : BaseActivity(),
                     override fun onLinkFailure(e: Exception) {
                         Log.d("TAG_LINK", e.message)
                         progressBar.visibility=View.GONE
-                        showSimpleDialog(
+                        showErrorDialog(
                                 resources.getString(R.string.dialog_title_firebase_link_error),
                                 resources.getString(R.string.dialog_message_firebase_link_error)
                         )
@@ -522,7 +527,7 @@ class MainActivity : BaseActivity(),
                     override fun onLinkFailure(e: Exception) {
                         Log.d("TAG_LINK", e.message)
                         progressBar.visibility=View.GONE
-                        showSimpleDialog(
+                        showErrorDialog(
                                 resources.getString(R.string.dialog_title_firebase_link_error),
                                 resources.getString(R.string.dialog_message_firebase_link_error)
                         )
