@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,7 @@ import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.view.activities.MainActivity
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureAdapter
 import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
+import kotlinx.android.synthetic.main.dialog_picture_description_request.view.*
 import kotlinx.android.synthetic.main.fragment_property_edit.view.*
 import pl.aprilapps.easyphotopicker.*
 import java.lang.Exception
@@ -161,7 +163,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     }
 
     private fun initializePicturesRecyclerView(){
-        this.pictureAdapter= PictureAdapter(this.picturesPaths, true, this)
+        this.pictureAdapter= PictureAdapter(this.picturesPaths, this.picturesDescriptions, true, this)
         this.picturesRecyclerView.adapter=this.pictureAdapter
         this.picturesRecyclerView.layoutManager=
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -211,7 +213,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
      * Listens UI events on picturesRecyclerView
      ********************************************************************************************/
 
-    override fun onPictureClick(picturesPaths: List<String?>, position: Int) {
+    override fun onPictureClick(picturesPaths: List<String?>, picturesDescriptions:List<String?>, position: Int) {
         //Nothing
     }
 
@@ -231,13 +233,41 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
      * Pictures management
      ********************************************************************************************/
 
-    fun addPicture(picturePath:String){
+    private fun requestPictureDescription(picturePath:String){
+
+        /*Shows a dialog requesting a description for the picture*/
+
+        val dialogView=requireActivity().layoutInflater
+                .inflate(R.layout.dialog_picture_description_request, null)
+        val dialog = AlertDialog.Builder(activity!!)
+                .setTitle(resources.getString(R.string.dialog_title_input))
+                .setMessage(resources.getString(R.string.dialog_message_input_picture_description))
+                .setView(dialogView)
+                .setPositiveButton(
+                        R.string.dialog_button_validate,
+                        {dialogPositive, which ->
+
+                            /*Once the positive button is clicked, adds the picture to the property*/
+
+                            val pictureDescription=dialogView.dialog_picture_description_request_text.text.toString()
+                            addPicture(picturePath, pictureDescription)
+                        })
+                .setNegativeButton(
+                        R.string.dialog_button_cancel,
+                        {dialogNegative, which -> })
+                .create()
+        dialog.show()
+    }
+
+    private fun addPicture(picturePath:String, pictureDescription:String){
         this.picturesPaths.add(this.picturesPaths.size-1, picturePath)
+        this.picturesDescriptions.add(this.picturesDescriptions.size-1, pictureDescription)
         this.pictureAdapter.notifyDataSetChanged()
     }
 
-    fun removePicture(position:Int){
+    private fun removePicture(position:Int){
         this.picturesPaths.removeAt(position)
+        this.picturesDescriptions.removeAt(position)
         this.pictureAdapter.notifyDataSetChanged()
     }
 
@@ -334,6 +364,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             property.typeId = (this.typeTextDropdown.tag as PropertyType).id
             property.picturesPaths.clear()
             property.picturesPaths.addAll(this.picturesPaths.filterNotNull())
+            property.picturesDescriptions.clear()
+            property.picturesDescriptions.addAll(this.picturesDescriptions.filterNotNull())
             property.description = this.descriptionText.text.toString()
             property.size = Integer.parseInt(this.sizeText.text.toString())
             property.nbRooms = Integer.parseInt(this.nbRoomsText.text.toString())
@@ -397,7 +429,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             this.priceText.setText(property.price.toString())
             val typeId = property.typeId
             if (typeId != null) loadPropertyType(typeId)
-            loadPropertyPictures(property.picturesPaths)
+            loadPropertyPictures(property.picturesPaths, property.picturesDescriptions)
             this.descriptionText.setText(property.description)
             this.sizeText.setText(property.size.toString())
             this.nbRoomsText.setText(property.nbRooms.toString())
@@ -425,10 +457,13 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         this.typeTextDropdown.tag=propertyType
     }
 
-    private fun loadPropertyPictures(picturesPaths:List<String>){
+    private fun loadPropertyPictures(picturesPaths:List<String>, picturesDescriptions:List<String>){
         this.picturesPaths.clear()
         this.picturesPaths.addAll(picturesPaths)
         this.picturesPaths.add(null)
+        this.picturesDescriptions.clear()
+        this.picturesDescriptions.addAll(picturesDescriptions)
+        this.picturesDescriptions.add(null)
         this.pictureAdapter.notifyDataSetChanged()
     }
 
@@ -548,7 +583,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
             override fun onMediaFilesPicked(imageFiles: Array<MediaFile>, source: MediaSource) {
                 for(image in imageFiles){
-                    addPicture(image.file.toURI().path)
+                    requestPictureDescription(image.file.toURI().path)
                 }
             }
 

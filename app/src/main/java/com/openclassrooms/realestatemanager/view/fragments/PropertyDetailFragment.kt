@@ -113,7 +113,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     }
 
     private fun initializePicturesRecyclerView(){
-        this.pictureAdapter= PictureAdapter(this.picturesPaths, false, this)
+        this.pictureAdapter= PictureAdapter(this.picturesPaths, this.picturesDescriptions, false, this)
         this.picturesRecyclerView.adapter=this.pictureAdapter
         this.picturesRecyclerView.layoutManager=
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -142,8 +142,8 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
      * Listens UI events on picturesRecyclerView
      ********************************************************************************************/
 
-    override fun onPictureClick(picturesPaths: List<String?>, position: Int) {
-        ImageSwitcherDialog(context!!, picturesPaths, position).show()
+    override fun onPictureClick(picturesPaths: List<String?>, picturesDescriptions:List<String?>, position: Int) {
+        ImageSwitcherDialog(context!!, picturesPaths, picturesDescriptions, position).show()
     }
 
     override fun onDeletePictureButtonClick(position: Int) {
@@ -187,7 +187,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
             val currency=getString(R.string.currency)
             val priceToDisplay=Utils.getFormatedFigure(if(price!=null) price.toLong() else 0)+" $currency"
             this.priceText.setText(priceToDisplay)
-            loadPropertyPictures(property.picturesPaths)
+            loadPropertyPictures(property.picturesPaths, property.picturesDescriptions)
             this.descriptionText.setText(property.description)
             this.sizeText.setText(property.size.toString())
             this.nbRoomsText.setText(property.nbRooms.toString())
@@ -210,9 +210,11 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
         })
     }
 
-    private fun loadPropertyPictures(picturesPaths:List<String>){
+    private fun loadPropertyPictures(picturesPaths:List<String>, picturesDescriptions: List<String?>){
         this.picturesPaths.clear()
         this.picturesPaths.addAll(picturesPaths)
+        this.picturesDescriptions.clear()
+        this.picturesDescriptions.addAll(picturesDescriptions)
         this.pictureAdapter.notifyDataSetChanged()
     }
 

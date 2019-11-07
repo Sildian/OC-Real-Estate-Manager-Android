@@ -71,6 +71,8 @@
     <string name="dialog_button_neutral">OK</string>
     <string name="dialog_button_positive">Yes</string>
     <string name="dialog_button_negative">No</string>
+    <string name="dialog_button_validate">Validate</string>
+    <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_title_log">Log</string>
     <string name="dialog_message_log">You\'re currently not log in the online database.\nDo you want to log in?</string>
     <string name="dialog_title_firebase_log_error">Log error!</string>
@@ -91,6 +93,8 @@
     <string name="dialog_title_properties_empty">No property found</string>
     <string name="dialog_message_no_property_exist">No property exist in the database yet.\nCreate your first property by clicking on the \'+\' button.</string>
     <string name="dialog_message_no_property_match">No property match your current research.\nPlease try other parameters.</string>
+    <string name="dialog_title_input">Input</string>
+    <string name="dialog_message_input_picture_description">Please fill a description for the picture.</string>
 
     <!--Images content descriptions-->
     <string name="content_description_picture">Picture</string>

@@ -70,6 +70,8 @@
     <string name="dialog_button_neutral">OK</string>
     <string name="dialog_button_positive">Oui</string>
     <string name="dialog_button_negative">Non</string>
+    <string name="dialog_button_validate">Valider</string>
+    <string name="dialog_button_cancel">Annuler</string>
     <string name="dialog_title_log">Connexion</string>
     <string name="dialog_message_log">Vous n\'êtes pas connecté à la base de données en ligne.\nSouhaitez-vous vous connecter?</string>
     <string name="dialog_title_firebase_log_error">Erreur de connexion</string>
@@ -90,6 +92,8 @@
     <string name="dialog_title_properties_empty">Aucun bien trouvé</string>
     <string name="dialog_message_no_property_exist">Aucun bien immobilier n\'est stocké dans la base de données pour le moment.\nPour ajouter votre premier bien, cliquez sur le bouton \'+\'.</string>
     <string name="dialog_message_no_property_match">Aucun bien immobilier ne correspond à votre recherche.\nVeuillez essayer d\'autres paramètres.</string>
+    <string name="dialog_title_input">Saisie</string>
+    <string name="dialog_message_input_picture_description">Veuillez saisir une description pour cette photo.</string>
 
     <!--Images content descriptions-->
     <string name="content_description_picture">Image</string>

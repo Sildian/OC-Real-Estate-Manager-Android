@@ -12,6 +12,7 @@ import com.openclassrooms.realestatemanager.R
 
 class PictureAdapter (
         val picturesPaths:List<String?>,
+        val picturesDescriptions:List<String?>,
         val editable:Boolean,
         val listener:PictureViewHolder.Listener
 )
@@ -35,8 +36,8 @@ class PictureAdapter (
 
     /**Listens UI events**/
 
-    override fun onPictureClick(picturesPaths: List<String?>, position: Int) {
-        this.listener.onPictureClick(this.picturesPaths, position)
+    override fun onPictureClick(picturesPaths: List<String?>, picturesDescriptions:List<String?>, position: Int) {
+        this.listener.onPictureClick(this.picturesPaths, this.picturesDescriptions, position)
     }
 
     override fun onDeletePictureButtonClick(position: Int) {

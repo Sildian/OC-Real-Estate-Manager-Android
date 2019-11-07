@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.dialog_image_switcher.*
 class ImageSwitcherDialog(
         context: Context,
         val picturesPaths:List<String?>,
+        val picturesDescriptions:List<String?>,
         var currentImagePosition:Int)
 
     : Dialog(context, R.style.Theme_MaterialComponents_NoActionBar),
@@ -34,6 +35,7 @@ class ImageSwitcherDialog(
     /**UI components**/
 
     private val imageSwitcher by lazy {dialog_image_switcher_switcher}
+    private val pictureDescriptionText by lazy {dialog_image_switcher_description}
 
     /**Gesture detector**/
 
@@ -45,6 +47,7 @@ class ImageSwitcherDialog(
         super.onCreate(savedInstanceState)
         setContentView(R.layout.dialog_image_switcher)
         initializeImageSwitcher()
+        initializeDescription()
         initializeGestureDetector()
     }
 
@@ -72,6 +75,10 @@ class ImageSwitcherDialog(
                 .into(this.imageSwitcher.currentView as ImageView)
     }
 
+    private fun initializeDescription(){
+        this.pictureDescriptionText.text=this.picturesDescriptions[this.currentImagePosition]
+    }
+
     private fun initializeGestureDetector(){
         this.gestureDetector= GestureDetectorCompat(context, this)
     }
@@ -96,6 +103,7 @@ class ImageSwitcherDialog(
         Glide.with(context).load(this.picturesPaths[this.currentImagePosition])
                 .into(this.imageSwitcher.nextView as ImageView)
         this.imageSwitcher.showNext()
+        this.pictureDescriptionText.text=this.picturesDescriptions[this.currentImagePosition]
     }
 
     /**Gesture events management**/

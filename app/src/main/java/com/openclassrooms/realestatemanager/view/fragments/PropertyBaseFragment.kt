@@ -49,10 +49,11 @@ abstract class PropertyBaseFragment : Fragment() {
 
     /**Data related to the current property**/
 
-    protected var propertyId:Int?=null                                      //Property id
-    protected var propertyFirebaseId:String?=null                           //Property Firebase id
-    protected val picturesPaths:ArrayList<String?> = arrayListOf(null)      //The list of pictures paths
-    protected val extras:ArrayList<String> = arrayListOf()                  //The list of extras
+    protected var propertyId:Int?=null                                          //Property id
+    protected var propertyFirebaseId:String?=null                               //Property Firebase id
+    protected val picturesPaths:ArrayList<String?> = arrayListOf(null)          //The list of pictures paths
+    protected val picturesDescriptions:ArrayList<String?> =arrayListOf(null)    //The list of pictures descriptions
+    protected val extras:ArrayList<String> = arrayListOf()                      //The list of extras
 
     /*********************************************************************************************
      * Life cycle

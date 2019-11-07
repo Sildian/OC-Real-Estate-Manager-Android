@@ -22,7 +22,7 @@ class PictureViewHolder (
     /**Interface allowing to listen UI events**/
 
     interface Listener{
-        fun onPictureClick(picturesPaths:List<String?>, position:Int)
+        fun onPictureClick(picturesPaths:List<String?>, picturesDescriptions:List<String?>, position:Int)
         fun onDeletePictureButtonClick(position:Int)
         fun onAddPictureButtonClick(position:Int)
         fun onTakePictureButtonClick(position:Int)
@@ -38,7 +38,7 @@ class PictureViewHolder (
     /**Sends UI events to the listener**/
 
     init{
-        this.picture.setOnClickListener{this.listener.onPictureClick(emptyList(), adapterPosition)}
+        this.picture.setOnClickListener{this.listener.onPictureClick(emptyList(), emptyList(), adapterPosition)}
         this.deleteButton.setOnClickListener { this.listener.onDeletePictureButtonClick(adapterPosition) }
         this.addPictureButton.setOnClickListener { this.listener.onAddPictureButtonClick(adapterPosition) }
         this.takePictureButton.setOnClickListener { this.listener.onTakePictureButtonClick(adapterPosition) }

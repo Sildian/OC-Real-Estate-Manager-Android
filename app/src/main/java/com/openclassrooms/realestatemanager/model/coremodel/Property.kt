@@ -20,6 +20,7 @@ data class Property(
         var price:Int?=null,
         @ColumnInfo(name="realtorId") var realtorId:String?=null,
         var picturesPaths:ArrayList<String> = arrayListOf(),
+        var picturesDescriptions:ArrayList<String> = arrayListOf(),
         var description:String?=null,
         var size:Int?=null,
         var nbRooms:Int?=null,
