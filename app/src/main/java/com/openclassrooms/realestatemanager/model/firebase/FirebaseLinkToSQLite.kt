@@ -38,9 +38,9 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
     private val realtorViewModel: RealtorViewModel= ViewModelProviders.of(
             this.activity, this.viewModelFactory).get(RealtorViewModel::class.java)
 
-    /**Creates a new realtor (in both databases)**/
+    /**Creates a new realtor in Firebase**/
 
-    fun createRealtorInFirebaseAndSQLite(firebaseUser:FirebaseUser, listener:OnLinkResultListener){
+    fun createRealtorInFirebase(firebaseUser:FirebaseUser, listener:OnLinkResultListener){
 
         val realtor=Realtor(id=firebaseUser.uid, name=firebaseUser.displayName, pictureUrl=firebaseUser.photoUrl?.path)
 
@@ -49,13 +49,6 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
         RealtorFirebase.createOrUpdateRealtor(realtor)
                 .addOnFailureListener{e->listener.onLinkFailure(e)}
                 .addOnSuccessListener {
-
-                    /*Then if the realtor doesn't exist yet in SQLite, creates it within*/
-
-                    this.realtorViewModel.getRealtor(realtor.id).observe(this.activity, Observer {
-                        if(it==null) this.realtorViewModel.insertRealtor(realtor)
-                    })
-                    listener.onLinkSuccess()
                 }
     }
 

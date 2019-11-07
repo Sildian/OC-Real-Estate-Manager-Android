@@ -432,7 +432,7 @@ class MainActivity : BaseActivity(),
 
             /*Eventually creates a new realtor in Firebase and SQLite*/
 
-            createRealtorInFirebaseAndSQLite()
+            createRealtorInFirebase()
 
             /*Updates all data in SQLite (by downloading from Firebase)*/
 
@@ -480,9 +480,9 @@ class MainActivity : BaseActivity(),
      * Firebase Link management
      ********************************************************************************************/
 
-    private fun createRealtorInFirebaseAndSQLite(){
+    private fun createRealtorInFirebase(){
 
-        FirebaseLinkToSQLite(this).createRealtorInFirebaseAndSQLite(
+        FirebaseLinkToSQLite(this).createRealtorInFirebase(
                 this.firebaseUser!!, object:FirebaseLinkToSQLite.OnLinkResultListener{
             override fun onLinkFailure(e:Exception) {
                 Log.d("TAG_LINK", e.message)
