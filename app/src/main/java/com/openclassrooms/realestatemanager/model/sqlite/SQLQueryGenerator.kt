@@ -125,9 +125,9 @@ object SQLQueryGenerator {
     fun generateSimpleFilter(fieldName:String, criteria:Boolean?):String{
         var result=""
         if(criteria!=null){
-            when {
-                criteria==true-> result = "$fieldName=1"
-                criteria==false-> result = "$fieldName=0"
+            when (criteria) {
+                true -> result = "$fieldName=1"
+                false -> result = "$fieldName=0"
             }
         }
         return result

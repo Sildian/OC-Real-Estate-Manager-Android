@@ -29,10 +29,10 @@ class ViewModelFactory(
                 return RealtorViewModel(realtorRepository, executor) as T
 
             modelClass.isAssignableFrom(PropertyTypeViewModel::class.java)->
-                return PropertyTypeViewModel(propertyTypeRepository, executor) as T
+                return PropertyTypeViewModel(propertyTypeRepository) as T
 
             modelClass.isAssignableFrom(ExtraViewModel::class.java)->
-                return ExtraViewModel(extraRepository, executor) as T
+                return ExtraViewModel(extraRepository) as T
 
             else->
                 throw IllegalArgumentException("Unknown ViewModel class")

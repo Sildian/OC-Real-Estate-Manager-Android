@@ -13,8 +13,7 @@ import com.openclassrooms.realestatemanager.model.sqlite.dataconverters.StringsL
  * SQLite Database management
  *************************************************************************************************/
 
-@Database(entities=arrayOf(
-        Property::class, Realtor::class, PropertyType::class, Extra::class, ExtrasPerProperty::class),
+@Database(entities= [Property::class, Realtor::class, PropertyType::class, Extra::class, ExtrasPerProperty::class],
         version=1,
         exportSchema = false)
 
@@ -56,7 +55,7 @@ abstract class SQLiteDatabase:RoomDatabase() {
             if (INSTANCE == null) {
                 synchronized(SQLiteDatabase::class.java) {
                     if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                        INSTANCE = Room.databaseBuilder(context.applicationContext,
                                 SQLiteDatabase::class.java, "RealEstateManager.db")
                                 .addCallback(prepopulateDatabase())
                                 .build()

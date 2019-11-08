@@ -4,15 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
 import com.openclassrooms.realestatemanager.model.sqlite.repositories.PropertyTypeRepository
-import java.util.concurrent.Executor
 
 /**************************************************************************************************
  * ViewModel for PropertyType
  *************************************************************************************************/
 
 class PropertyTypeViewModel(
-        val propertyTypeRepository: PropertyTypeRepository,
-        val executor: Executor)
+        val propertyTypeRepository: PropertyTypeRepository)
     :ViewModel()
 {
     fun getAllPropertyTypes(): LiveData<List<PropertyType>> = this.propertyTypeRepository.getAllPropertyTypes()

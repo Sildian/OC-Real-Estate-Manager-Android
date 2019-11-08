@@ -57,11 +57,7 @@ class ImageSwitcherDialog(
 
         /*Factory*/
 
-        this.imageSwitcher.setFactory(object:ViewSwitcher.ViewFactory{
-            override fun makeView(): View {
-                return ImageView(context)
-            }
-        })
+        this.imageSwitcher.setFactory { ImageView(context) }
 
         /*Sets the images animations*/
 
@@ -132,9 +128,9 @@ class ImageSwitcherDialog(
         /*Show the next or previous image (swipe left -> next image, swipe right -> previous image*/
 
         if(e1!=null&&e2!=null) {
-            if (e2.getX() < e1.getX()) {
+            if (e2.x < e1.x) {
                 increaseCurrentImagePosition()
-            } else if (e2.getX() > e1.getX()) {
+            } else if (e2.x > e1.x) {
                 decreaseCurrentImagePosition()
             }
         }

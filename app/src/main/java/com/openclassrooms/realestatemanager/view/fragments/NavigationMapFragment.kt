@@ -257,7 +257,7 @@ class NavigationMapFragment : NavigationBaseFragment(),
 
                 override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
                     dataSource?.let {
-                        if (!dataSource.equals(DataSource.MEMORY_CACHE)) {
+                        if (dataSource != DataSource.MEMORY_CACHE) {
                             marker?.showInfoWindow()
                         }
                     }
@@ -268,14 +268,14 @@ class NavigationMapFragment : NavigationBaseFragment(),
 
         /*Updates ad title*/
 
-        propertyAdTitle.setText(property.adTitle)
+        propertyAdTitle.text = property.adTitle
 
         /*Updates price*/
 
         val price=property.price
         val currency=view.resources.getString(R.string.currency)
-        val priceToDisplay=Utils.getFormatedFigure(if(price!=null) price.toLong() else 0)+" $currency"
-        propertyPrice.setText(priceToDisplay)
+        val priceToDisplay=Utils.getFormatedFigure(price?.toLong() ?: 0)+" $currency"
+        propertyPrice.text = priceToDisplay
     }
 
     override fun onInfoWindowClick(marker: Marker?) {
@@ -294,7 +294,7 @@ class NavigationMapFragment : NavigationBaseFragment(),
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
-            KEY_REQUEST_PERMISSION_LOCATION -> if (grantResults.size > 0) {
+            KEY_REQUEST_PERMISSION_LOCATION -> if (grantResults.isNotEmpty()) {
                 when (grantResults[0]) {
                     PackageManager.PERMISSION_GRANTED -> showUserLocation()
                     PackageManager.PERMISSION_DENIED -> Log.d("TAG_PERMISSION", "Permission denied")

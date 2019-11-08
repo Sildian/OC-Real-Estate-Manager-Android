@@ -14,6 +14,6 @@ data class Extra (
 ){
 
     override fun toString(): String {
-        return if(this.name!=null) this.name else ""
+        return this.name ?: ""
     }
 }

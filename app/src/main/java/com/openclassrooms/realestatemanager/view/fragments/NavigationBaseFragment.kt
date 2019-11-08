@@ -139,11 +139,11 @@ abstract class NavigationBaseFragment : Fragment() {
 
                         /*If a min number of pictures is set, filters the list of properties (cannot be done by SQL)*/
 
-                        if(settings?.minNbPictures!=null){
+                        properties = if(settings?.minNbPictures!=null){
                             val minNbPictures=settings.minNbPictures!!
-                            properties=it.filter{it.picturesPaths.count()>=minNbPictures}
+                            it.filter{it.picturesPaths.count()>=minNbPictures}
                         }else{
-                            properties=it
+                            it
                         }
 
                         /*Sends the result to the listener*/

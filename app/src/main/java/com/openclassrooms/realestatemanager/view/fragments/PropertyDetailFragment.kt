@@ -181,23 +181,23 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
 
         this.propertyViewModel.getProperty(this.propertyId!!.toInt()).observe(this, Observer {
             val property=it
-            this.adTitleText.setText(property.adTitle)
+            this.adTitleText.text = property.adTitle
             val price=property.price
             if(property.typeId!=null) loadPropertyType(property.typeId!!.toInt())
             val currency=getString(R.string.currency)
-            val priceToDisplay=Utils.getFormatedFigure(if(price!=null) price.toLong() else 0)+" $currency"
-            this.priceText.setText(priceToDisplay)
+            val priceToDisplay=Utils.getFormatedFigure(price?.toLong() ?: 0)+" $currency"
+            this.priceText.text = priceToDisplay
             loadPropertyPictures(property.picturesPaths, property.picturesDescriptions)
-            this.descriptionText.setText(property.description)
-            this.sizeText.setText(property.size.toString())
-            this.nbRoomsText.setText(property.nbRooms.toString())
-            this.nbBedroomsText.setText(property.nbBedrooms.toString())
-            this.nbBathroomsText.setText(property.nbBathrooms.toString())
-            this.buildYearText.setText(property.buildYear.toString())
-            this.locationText.setText(property.getFullAddressToDisplay())
+            this.descriptionText.text = property.description
+            this.sizeText.text = property.size.toString()
+            this.nbRoomsText.text = property.nbRooms.toString()
+            this.nbBedroomsText.text = property.nbBedrooms.toString()
+            this.nbBathroomsText.text = property.nbBathrooms.toString()
+            this.buildYearText.text = property.buildYear.toString()
+            this.locationText.text = property.getFullAddressToDisplay()
             startLocationService(property.getFullAddressToFetchLocation())
             loadRealtor(property.realtorId.toString())
-            this.adDateText.setText(Utils.getStringFromDate(property.adDate))
+            this.adDateText.text = Utils.getStringFromDate(property.adDate)
             updateSoldStatus(property.sold, property.saleDate)
         })
 
@@ -206,7 +206,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
 
     private fun loadPropertyType(typeId:Int){
         this.propertyTypeViewModel.getPropertyType(typeId).observe(this, Observer {
-            this.typeText.setText(it.name)
+            this.typeText.text = it.name
         })
     }
 
@@ -236,7 +236,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
 
     private fun loadRealtor(realtorId:String){
         this.realtorViewModel.getRealtor(realtorId).observe(this, Observer {
-            this.realtorText.setText(it.name)
+            this.realtorText.text = it.name
         })
     }
 
@@ -245,7 +245,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
             this.soldText.visibility=View.VISIBLE
             val saleDateToDisplay=Utils.getStringFromDate(saleDate)
             val textToDisplay=resources.getString(R.string.label_property_sold_on)+" $saleDateToDisplay"
-            this.soldText.setText(textToDisplay)
+            this.soldText.text = textToDisplay
         }
         else{
             this.soldText.visibility=View.GONE

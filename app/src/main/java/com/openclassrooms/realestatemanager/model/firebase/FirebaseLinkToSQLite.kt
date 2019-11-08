@@ -177,7 +177,7 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
                     /*Uploads the picture into Firebase*/
 
                     val pictureId = UUID.randomUUID().toString()
-                    val pictureReference = FirebaseStorage.getInstance().getReference().child(pictureId)
+                    val pictureReference = FirebaseStorage.getInstance().reference.child(pictureId)
                     pictureReference.putStream(FileInputStream(File(property.picturesPaths[i])))
 
                             /*If failure, sends the exception to the listener*/

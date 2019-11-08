@@ -17,6 +17,6 @@ class CheckedTextViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     /**Update**/
 
     fun update(text:String){
-        this.text.setText(text)
+        this.text.text = text
     }
 }

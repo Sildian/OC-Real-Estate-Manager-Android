@@ -244,17 +244,17 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
                 .setMessage(resources.getString(R.string.dialog_message_input_picture_description))
                 .setView(dialogView)
                 .setPositiveButton(
-                        R.string.dialog_button_validate,
-                        {dialogPositive, which ->
+                        R.string.dialog_button_validate
+                ) { dialogPositive, which ->
 
-                            /*Once the positive button is clicked, adds the picture to the property*/
+                    /*Once the positive button is clicked, adds the picture to the property*/
 
-                            val pictureDescription=dialogView.dialog_picture_description_request_text.text.toString()
-                            addPicture(picturePath, pictureDescription)
-                        })
+                    val pictureDescription=dialogView.dialog_picture_description_request_text.text.toString()
+                    addPicture(picturePath, pictureDescription)
+                }
                 .setNegativeButton(
-                        R.string.dialog_button_cancel,
-                        {dialogNegative, which -> })
+                        R.string.dialog_button_cancel
+                ) { dialogNegative, which -> }
                 .create()
         dialog.show()
     }
@@ -505,13 +505,13 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
-            KEY_REQUEST_PERMISSION_WRITE->if(grantResults.size>0){
+            KEY_REQUEST_PERMISSION_WRITE->if(grantResults.isNotEmpty()){
                 when(grantResults[0]){
                     PackageManager.PERMISSION_GRANTED -> startAddPictureIntent()
                     PackageManager.PERMISSION_DENIED -> Log.d("TAG_PERMISSION", "Permission denied")
                 }
             }
-            KEY_REQUEST_PERMISSION_WRITE_AND_CAMERA -> if (grantResults.size > 0) {
+            KEY_REQUEST_PERMISSION_WRITE_AND_CAMERA -> if (grantResults.isNotEmpty()) {
                 when (grantResults[0]) {
                     PackageManager.PERMISSION_GRANTED -> startTakePictureIntent()
                     PackageManager.PERMISSION_DENIED -> Log.d("TAG_PERMISSION", "Permission denied")

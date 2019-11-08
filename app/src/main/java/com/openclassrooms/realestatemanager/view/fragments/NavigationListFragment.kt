@@ -68,7 +68,7 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
         /*If the list is empty, then shows a message*/
 
         if(properties.isEmpty()){
-            this.propertiesEmptyText.setText(emptyMessage)
+            this.propertiesEmptyText.text = emptyMessage
             this.propertiesEmptyText.visibility=View.VISIBLE
         }else{
             this.propertiesEmptyText.visibility=View.GONE
@@ -135,13 +135,13 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
         val orderCriteria:String?
         val orderDesc:Boolean?
 
-        when(this.sortCriteriaChipGroup.checkedChipId){
-            R.id.fragment_navigation_list_sort_price->orderCriteria="price"
-            R.id.fragment_navigation_list_sort_size->orderCriteria="size"
-            R.id.fragment_navigation_list_sort_nb_rooms->orderCriteria="nbRooms"
-            R.id.fragment_navigation_list_sort_ad_date->orderCriteria="adDate"
-            R.id.fragment_navigation_list_sort_sale_date->orderCriteria="saleDate"
-            else->orderCriteria=null
+        orderCriteria = when(this.sortCriteriaChipGroup.checkedChipId){
+            R.id.fragment_navigation_list_sort_price-> "price"
+            R.id.fragment_navigation_list_sort_size-> "size"
+            R.id.fragment_navigation_list_sort_nb_rooms-> "nbRooms"
+            R.id.fragment_navigation_list_sort_ad_date-> "adDate"
+            R.id.fragment_navigation_list_sort_sale_date-> "saleDate"
+            else-> null
         }
 
         orderDesc=this.sortDescSwitch.isChecked

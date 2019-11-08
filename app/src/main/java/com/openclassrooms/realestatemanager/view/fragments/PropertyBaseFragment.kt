@@ -116,9 +116,9 @@ abstract class PropertyBaseFragment : Fragment() {
 
         /*When the user selects a data, stores this data as tag of the view*/
 
-        parentView.setOnItemClickListener({ parent, view, position, id ->
+        parentView.setOnItemClickListener { parent, view, position, id ->
             parentView.tag=adapter.getItem(position)
-        })
+        }
     }
 
     /**Initializes a text including a datePicker

@@ -21,7 +21,7 @@ interface PropertyDAO {
     @Query("SELECT * FROM Property WHERE firebaseId=:firebaseId")
     fun getProperty(firebaseId:String):LiveData<Property>
 
-    @RawQuery(observedEntities = arrayOf(Property::class))
+    @RawQuery(observedEntities = [Property::class])
     fun getProperties(query:SupportSQLiteQuery):LiveData<List<Property>>
 
     @Insert

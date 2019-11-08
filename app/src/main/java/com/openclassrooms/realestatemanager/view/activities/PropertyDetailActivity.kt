@@ -6,7 +6,6 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.view.fragments.PropertyDetailFragment
 import kotlinx.android.synthetic.main.activity_property_detail.*
 
 /**************************************************************************************************

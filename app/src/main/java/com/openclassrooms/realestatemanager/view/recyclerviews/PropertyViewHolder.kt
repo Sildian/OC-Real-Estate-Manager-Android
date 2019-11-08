@@ -61,16 +61,16 @@ class PropertyViewHolder(
         }else{
             this.picture.setImageResource(R.drawable.ic_picture_gray)
         }
-        this.adTitleText.setText(property.adTitle)
-        this.cityText.setText(property.city)
+        this.adTitleText.text = property.adTitle
+        this.cityText.text = property.city
         updatePriceText(property.price)
         updateSoldText(property.sold)
     }
 
     private fun updatePriceText(price:Int?){
         val currency=this.view.resources.getString(R.string.currency)
-        val priceToDisplay=Utils.getFormatedFigure(if(price!=null) price.toLong() else 0)+" $currency"
-        this.priceText.setText(priceToDisplay)
+        val priceToDisplay=Utils.getFormatedFigure(price?.toLong() ?: 0)+" $currency"
+        this.priceText.text = priceToDisplay
     }
 
     private fun updateSoldText(sold:Boolean){

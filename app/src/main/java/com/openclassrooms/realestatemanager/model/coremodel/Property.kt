@@ -7,10 +7,8 @@ import java.util.*
  * Property
  *************************************************************************************************/
 
-@Entity(foreignKeys = arrayOf(
-        ForeignKey(entity=PropertyType::class, parentColumns = arrayOf("id"), childColumns = arrayOf("typeId")),
-        ForeignKey(entity=Realtor::class, parentColumns = arrayOf("id"), childColumns = arrayOf("realtorId"))),
-        indices=arrayOf(Index(value=["typeId", "realtorId"])))
+@Entity(foreignKeys = [ForeignKey(entity=PropertyType::class, parentColumns = arrayOf("id"), childColumns = arrayOf("typeId")), ForeignKey(entity=Realtor::class, parentColumns = arrayOf("id"), childColumns = arrayOf("realtorId"))],
+        indices= [Index(value=["typeId", "realtorId"])])
 
 data class Property(
         @PrimaryKey (autoGenerate = true) var id:Int?=null,

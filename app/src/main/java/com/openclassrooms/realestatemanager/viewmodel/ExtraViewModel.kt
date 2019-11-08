@@ -4,15 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.openclassrooms.realestatemanager.model.coremodel.Extra
 import com.openclassrooms.realestatemanager.model.sqlite.repositories.ExtraRepository
-import java.util.concurrent.Executor
 
 /**************************************************************************************************
  * ViewModel for PropertyType
  *************************************************************************************************/
 
-class ExtraViewModel (
-        val extraRepository: ExtraRepository,
-        val executor:Executor)
+class ExtraViewModel(
+        val extraRepository: ExtraRepository)
     : ViewModel()
 {
     fun gelAllExtra(): LiveData<List<Extra>> = this.extraRepository.gelAllExtras()

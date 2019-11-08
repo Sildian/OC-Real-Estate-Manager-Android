@@ -1,11 +1,9 @@
 package com.openclassrooms.realestatemanager.model.sqlite
 
 import com.openclassrooms.realestatemanager.utils.Utils
-import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Ignore
-import java.util.*
+import org.junit.Test
 
 class SQLQueryGeneratorTest {
 

@@ -236,8 +236,8 @@ class PropertySearchFragment : PropertyBaseFragment() {
      */
 
     private fun loadRange(rangeBar:RangeBar, minValue:Int?, maxValue:Int?){
-        val min=if(minValue!=null) minValue.toFloat() else rangeBar.tickStart
-        val max=if(maxValue!=null) maxValue.toFloat() else rangeBar.tickEnd
+        val min= minValue?.toFloat() ?: rangeBar.tickStart
+        val max= maxValue?.toFloat() ?: rangeBar.tickEnd
         rangeBar.setRangePinsByValue(min, max)
     }
 
@@ -249,8 +249,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
     private fun loadOffsetPeriod(dateText:AutoCompleteTextView, offsetDate:Date?){
         if(offsetDate!=null) {
             val date = Date()
-            val offsetMonths=Utils.calculateDifferenceBetweenDates(date, offsetDate)
-            when(offsetMonths){
+            when(Utils.calculateDifferenceBetweenDates(date, offsetDate)){
 
                 /*Shows the appropriated text depending on the number of months offset*/
 

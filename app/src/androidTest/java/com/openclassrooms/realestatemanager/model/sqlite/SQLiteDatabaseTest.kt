@@ -1,17 +1,16 @@
 package com.openclassrooms.realestatemanager.model.sqlite
 
-import org.junit.Assert.*
-import org.junit.Test
-import org.junit.Before
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.test.platform.app.InstrumentationRegistry
-import org.junit.After
-import org.junit.Rule
 import androidx.room.Room
+import androidx.test.platform.app.InstrumentationRegistry
 import com.openclassrooms.realestatemanager.model.coremodel.*
 import com.openclassrooms.realestatemanager.utils.Utils
-import java.util.*
-import kotlin.math.min
+import org.junit.After
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 
 class SQLiteDatabaseTest{
 
