@@ -61,6 +61,14 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     }
 
     /*********************************************************************************************
+     * Interface allowing to watch initializations events
+     ********************************************************************************************/
+
+    interface InitializationListener{
+        fun onInitializationCompleted()
+    }
+
+    /*********************************************************************************************
      * UI components
      ********************************************************************************************/
 
@@ -128,22 +136,30 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
         /*Initializes all the UI components*/
 
-        initializeTypeTextDropdown()
-        initializePicturesRecyclerView()
-        initializeExtrasChipGroup()
-        initializeRealtorTextDropdown()
-        initializeAdDateText()
-        initializeSaleInfo()
-        initializeButtons()
+        initializeTypeTextDropdown(object:InitializationListener{
+            override fun onInitializationCompleted() {
+                initializePicturesRecyclerView()
+                initializeExtrasChipGroup(object:InitializationListener{
+                    override fun onInitializationCompleted() {
+                        initializeRealtorTextDropdown(object:InitializationListener{
+                            override fun onInitializationCompleted() {
+                                initializeAdDateText()
+                                initializeSaleInfo()
+                                initializeButtons()
 
-        /*Initializes pictures support items*/
+                                /*Initializes pictures support items*/
 
-        initializeEasyImage()
+                                initializeEasyImage()
 
-        /*If a property id exists, then loads the property's data*/
+                                /*If a property id exists, then loads the property's data*/
 
-        if(this.propertyId!=null) loadProperty()
-
+                                if(propertyId!=null) loadProperty()
+                            }
+                        })
+                    }
+                })
+            }
+        })
         return this.layout
     }
 
@@ -157,9 +173,10 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
      * Initializations
      ********************************************************************************************/
 
-    private fun initializeTypeTextDropdown(){
+    private fun initializeTypeTextDropdown(listener:InitializationListener){
         this.propertyTypeViewModel.getAllPropertyTypes().observe(this, Observer{
             initializeTextDropDown(this.typeTextDropdown, R.layout.dropdown_menu_standard, it)
+            listener.onInitializationCompleted()
         })
     }
 
@@ -170,15 +187,17 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
     }
 
-    private fun initializeExtrasChipGroup(){
+    private fun initializeExtrasChipGroup(listener:InitializationListener){
         this.extraViewModel.gelAllExtra().observe(this, Observer{
             initializeChipGroup(this.extrasChipGroup, this.extrasChips, R.layout.chip_standard, it)
+            listener.onInitializationCompleted()
         })
     }
 
-    private fun initializeRealtorTextDropdown(){
+    private fun initializeRealtorTextDropdown(listener:InitializationListener){
         this.realtorViewModel.getAllRealtors().observe(this, Observer{
             initializeTextDropDown(this.realtorTextDropDown, R.layout.dropdown_menu_standard, it)
+            listener.onInitializationCompleted()
         })
     }
 
