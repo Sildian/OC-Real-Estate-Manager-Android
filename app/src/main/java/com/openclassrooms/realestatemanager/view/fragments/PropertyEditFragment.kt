@@ -210,6 +210,14 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             this.saleInfoLayout.visibility=View.GONE
         }else {
             initializeDateText(this.saleDateText)
+            this.soldSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+                if(isChecked){
+                    this.saleDateInputLayout.setBoxBackgroundColorResource(android.R.color.transparent)
+                }else{
+                    this.saleDateText.text=null
+                    this.saleDateInputLayout.setBoxBackgroundColorResource(R.color.colorGray)
+                }
+            }
         }
     }
 
@@ -472,8 +480,10 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             if (realtorId != null) loadPropertyRealtor(realtorId)
             this.adDateText.setText(Utils.getStringFromDate(property.adDate))
             this.soldSwitch.isChecked = property.sold
-            if (property.saleDate != null)
+            if (property.saleDate != null) {
                 this.saleDateText.setText(Utils.getStringFromDate(property.saleDate))
+                this.saleDateInputLayout.setBoxBackgroundColorResource(android.R.color.transparent)
+            }
         })
 
         loadPropertyExtras(propertyId!!)
