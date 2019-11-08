@@ -13,6 +13,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -237,10 +238,16 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     private fun requestPictureDescription(picturePath:String){
 
-        /*Shows a dialog requesting a description for the picture*/
+        /*Prepares the UI for the dialog*/
 
         val dialogView=requireActivity().layoutInflater
                 .inflate(R.layout.dialog_picture_description_request, null)
+        val pictureDescriptionPicture=dialogView.dialog_picture_description_request_picture
+        val pictureDescriptionText=dialogView.dialog_picture_description_request_text
+        pictureDescriptionPicture.setImageURI(picturePath.toUri())
+
+        /*Shows the dialog requesting a description for the picture*/
+
         val dialog = AlertDialog.Builder(activity!!)
                 .setTitle(resources.getString(R.string.dialog_title_input))
                 .setMessage(resources.getString(R.string.dialog_message_input_picture_description))
@@ -251,7 +258,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
                     /*Once the positive button is clicked, adds the picture to the property*/
 
-                    val pictureDescription=dialogView.dialog_picture_description_request_text.text.toString()
+                    val pictureDescription=pictureDescriptionText.text.toString()
                     addPicture(picturePath, pictureDescription)
                 }
                 .setNegativeButton(

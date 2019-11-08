@@ -213,6 +213,7 @@ class MainActivity : BaseActivity(),
         updateNavigationDrawer()
     }
 
+    @Suppress("PLUGIN_WARNING")
     private fun initializeNoPropertyText(){
         if(activity_main_text_no_property!=null){
             this.noPropertyText=activity_main_text_no_property
@@ -246,6 +247,7 @@ class MainActivity : BaseActivity(),
      * Firebase
      ********************************************************************************************/
 
+    @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     private fun checkFirebaseUserIsLogged(){
 
         /*If the network is available and the user already logged, starts downloading data from Firebase*/
@@ -340,11 +342,13 @@ class MainActivity : BaseActivity(),
                 R.id.activity_main_fragment_property, this.propertyFragment).commit()
     }
 
+    @Suppress("PLUGIN_WARNING")
     private fun initSecondFragment(){
         this.noPropertyText.visibility= View.GONE
         activity_main_fragment_property.visibility=View.VISIBLE
     }
 
+    @Suppress("PLUGIN_WARNING")
     fun resetSecondFragment(){
         this.noPropertyText.visibility= View.VISIBLE
         activity_main_fragment_property.visibility=View.GONE
@@ -416,6 +420,7 @@ class MainActivity : BaseActivity(),
         startActivityForResult(propertySearchIntent, KEY_REQUEST_PROPERTY_SEARCH)
     }
 
+    @Suppress("UNUSED_PARAMETER")
     private fun handleFirebaseUserLoginResult(resultCode: Int, data: Intent?){
 
         /*If success...*/
