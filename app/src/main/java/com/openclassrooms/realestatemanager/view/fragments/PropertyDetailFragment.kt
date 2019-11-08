@@ -105,6 +105,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
      * UI Initialization
      ********************************************************************************************/
 
+    @Suppress("PLUGIN_WARNING")
     private fun initializeEditButton(){
         if(this.layout.fragment_property_detail_button_edit!=null){
             this.editButton=this.layout.fragment_property_detail_button_edit

@@ -106,6 +106,7 @@ abstract class PropertyBaseFragment : Fragment() {
      * @param data : the list of data feeding the menu
      */
 
+    @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     protected fun <T:Any> initializeTextDropDown(
             parentView: AutoCompleteTextView, childLayoutId:Int, data:List<T>){
 
@@ -125,6 +126,7 @@ abstract class PropertyBaseFragment : Fragment() {
      * @param view : the view containing the datePicker
      */
 
+    @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     protected fun initializeDateText(view: AutoCompleteTextView){
         view.inputType= InputType.TYPE_NULL
         view.setOnFocusChangeListener { v, hasFocus ->

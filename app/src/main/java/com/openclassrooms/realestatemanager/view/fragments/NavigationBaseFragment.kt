@@ -134,7 +134,7 @@ abstract class NavigationBaseFragment : Fragment() {
                     orderCriteria = this.settings!!.orderCriteria, orderDesc = this.settings!!.orderDesc))
                     ?.observe(this, Observer {
 
-                        var properties=listOf<Property>()
+                        val properties:List<Property>
                         val settings=this.settings
 
                         /*If a min number of pictures is set, filters the list of properties (cannot be done by SQL)*/

@@ -28,6 +28,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * Dialogs management
      ********************************************************************************************/
 
+    @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     fun showInfoDialog(title: String, message: String) {
         val dialog = AlertDialog.Builder(this)
                 .setTitle(title)
@@ -37,6 +38,7 @@ abstract class BaseActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     fun showWarningDialog(title: String, message: String) {
         val dialog = AlertDialog.Builder(this)
                 .setTitle(title)
@@ -47,6 +49,7 @@ abstract class BaseActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     fun showErrorDialog(title: String, message: String) {
         val dialog = AlertDialog.Builder(this)
                 .setTitle(title)

@@ -79,12 +79,14 @@ class NavigationListFragment : NavigationBaseFragment(), PropertyViewHolder.List
      * UI Initialization
      ********************************************************************************************/
 
+    @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     private fun initializeSortDesSwitch(){
         this.sortDescSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             sortProperties()
         }
     }
-    
+
+    @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     private fun initializeSortCriteriaChipGroup(){
         this.sortCriteriaChipGroup.setOnCheckedChangeListener { group, checkedId ->
             sortProperties()

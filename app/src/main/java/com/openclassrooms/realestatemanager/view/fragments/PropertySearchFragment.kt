@@ -135,6 +135,7 @@ class PropertySearchFragment : PropertyBaseFragment() {
                 resources.getStringArray(R.array.choice_date).toList())
     }
 
+    @Suppress("PLUGIN_WARNING")
     private fun initializeButtons(){
         if(this.layout.fragment_property_search_button_back!=null&&this.layout.fragment_property_search_button_search!=null){
             this.backButton=this.layout.fragment_property_search_button_back

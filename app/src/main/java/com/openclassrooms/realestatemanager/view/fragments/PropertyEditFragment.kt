@@ -193,6 +193,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         }
     }
 
+    @Suppress("PLUGIN_WARNING")
     private fun initializeButtons(){
         if(this.layout.fragment_property_edit_button_cancel!=null&&this.layout.fragment_property_edit_button_save!=null){
             this.cancelButton=this.layout.fragment_property_edit_button_cancel
@@ -233,6 +234,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
      * Pictures management
      ********************************************************************************************/
 
+    @Suppress("UNUSED_ANONYMOUS_PARAMETER")
     private fun requestPictureDescription(picturePath:String){
 
         /*Shows a dialog requesting a description for the picture*/
