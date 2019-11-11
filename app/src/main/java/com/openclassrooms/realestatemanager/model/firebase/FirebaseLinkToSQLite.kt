@@ -200,6 +200,7 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
                             }
                 }
             }
+            listener.onLinkSuccess()
         }
     }
 
