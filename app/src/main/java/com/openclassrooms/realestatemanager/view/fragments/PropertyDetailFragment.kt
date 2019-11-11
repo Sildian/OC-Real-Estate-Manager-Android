@@ -190,7 +190,10 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
             this.priceText.text = priceToDisplay
             loadPropertyPictures(property.picturesPaths, property.picturesDescriptions)
             this.descriptionText.text = property.description
-            this.sizeText.text = property.size.toString()
+            val size=property.size
+            val sizeUnit=resources.getString(R.string.size_unit)
+            val sizeToDisplay=Utils.getFormatedFigure(size?.toLong() ?: 0)+" $sizeUnit"
+            this.sizeText.text = sizeToDisplay
             this.nbRoomsText.text = property.nbRooms.toString()
             this.nbBedroomsText.text = property.nbBedrooms.toString()
             this.nbBathroomsText.text = property.nbBathrooms.toString()
