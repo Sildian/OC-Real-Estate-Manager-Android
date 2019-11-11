@@ -208,6 +208,8 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
 
     fun updatePropertiesInSQLite(listener:OnLinkResultListener) {
 
+        var operationIsFinished=false
+
         /*Gets all properties from Firebase*/
 
         PropertyFirebase.getAllProperties().get()
@@ -220,18 +222,40 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
                         val property = querySnapshot.documents[i].toObject(Property::class.java)
                         property!!.firebaseId = querySnapshot.documents[i].id
                         this.propertyViewModel.getProperty(property.firebaseId.toString()).observe(this.activity, Observer {
-                            if (it == null) {
-                                val id=this.propertyViewModel.insertProperty(property).toInt()
 
-                                /*And get all extras related to this property*/
+                            if(!operationIsFinished) {
 
-                                PropertyFirebase.getAllPropertyExtras(property).get()
-                                        .addOnFailureListener { e->listener.onLinkFailure(e) }
-                                        .addOnSuccessListener {
-                                            for(extra in it.toObjects(ExtrasPerProperty::class.java)){
-                                                this.propertyViewModel.insertPropertyExtra(id, extra.extraId)
+                                if (it == null) {
+                                    val id = this.propertyViewModel.insertProperty(property).toInt()
+
+                                    /*And get all extras related to this property*/
+
+                                    PropertyFirebase.getAllPropertyExtras(property).get()
+                                            .addOnFailureListener { e -> listener.onLinkFailure(e) }
+                                            .addOnSuccessListener {
+                                                for (extra in it.toObjects(ExtrasPerProperty::class.java)) {
+                                                    this.propertyViewModel.insertPropertyExtra(id, extra.extraId)
+                                                }
                                             }
-                                        }
+                                } else {
+
+                                    /*If the property already exists in SQLite, updates it*/
+
+                                    property.id = it.id
+                                    this.propertyViewModel.updateProperty(property)
+
+                                    PropertyFirebase.getAllPropertyExtras(property).get()
+                                            .addOnFailureListener { e -> listener.onLinkFailure(e) }
+                                            .addOnSuccessListener {
+                                                this.propertyViewModel.deletePropertyExtra(property.id!!)
+                                                for (extra in it.toObjects(ExtrasPerProperty::class.java)) {
+                                                    this.propertyViewModel.insertPropertyExtra(property.id!!, extra.extraId)
+                                                }
+                                            }
+                                }
+
+                                if(i==querySnapshot.documents.size-1)
+                                    operationIsFinished=true
                             }
                         })
                     }
