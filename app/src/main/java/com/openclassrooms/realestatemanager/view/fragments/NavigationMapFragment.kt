@@ -27,6 +27,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
@@ -66,7 +67,7 @@ class NavigationMapFragment : NavigationBaseFragment(),
      * UI components
      ********************************************************************************************/
 
-    private val mapView by lazy {layout.fragment_navigation_map_map}
+    private var mapView:MapView?=null
 
     /*********************************************************************************************
      * Map & location support
@@ -87,32 +88,32 @@ class NavigationMapFragment : NavigationBaseFragment(),
 
     override fun onStart() {
         super.onStart()
-        this.mapView.onStart()
+        this.mapView?.onStart()
     }
 
     override fun onResume() {
         super.onResume()
-        this.mapView.onResume()
+        this.mapView?.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        this.mapView.onPause()
+        this.mapView?.onPause()
     }
 
     override fun onStop() {
         super.onStop()
-        this.mapView.onStop()
+        this.mapView?.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        this.mapView.onDestroy()
+        this.mapView?.onDestroy()
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        this.mapView.onLowMemory()
+        this.mapView?.onLowMemory()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -122,7 +123,7 @@ class NavigationMapFragment : NavigationBaseFragment(),
             mapViewBundle=Bundle()
             outState.putBundle(KEY_BUNDLE_MAP_VIEW, mapViewBundle)
         }
-        this.mapView.onSaveInstanceState(mapViewBundle)
+        this.mapView?.onSaveInstanceState(mapViewBundle)
     }
 
     /*********************************************************************************************
@@ -165,8 +166,14 @@ class NavigationMapFragment : NavigationBaseFragment(),
             if (savedInstanceState != null) {
                 mapViewBundle = savedInstanceState.getBundle(KEY_BUNDLE_MAP_VIEW)
             }
-            this.mapView.onCreate(mapViewBundle)
-            this.mapView.getMapAsync(this)
+            this.mapView=this.layout.fragment_navigation_map_map
+            this.mapView?.onCreate(mapViewBundle)
+            this.mapView?.getMapAsync(this)
+        }
+        else{
+            (activity as BaseActivity).showErrorDialog(
+                    resources.getString(R.string.dialog_title_sundry_issue),
+                    resources.getString(R.string.dialog_message_no_network))
         }
     }
 
