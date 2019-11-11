@@ -208,8 +208,6 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
 
     fun updatePropertiesInSQLite(listener:OnLinkResultListener) {
 
-        var operationIsFinished=false
-
         /*Gets all properties from Firebase*/
 
         PropertyFirebase.getAllProperties().get()
@@ -218,12 +216,15 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
 
                     /*Then for each property, if it doesn't exist in SQLite, creates it within*/
 
+                    val propertyIsUpdated= arrayOfNulls<Boolean>(querySnapshot.documents.size)
+
                     for (i in querySnapshot.documents.indices) {
+                        propertyIsUpdated[i]=false
                         val property = querySnapshot.documents[i].toObject(Property::class.java)
                         property!!.firebaseId = querySnapshot.documents[i].id
                         this.propertyViewModel.getProperty(property.firebaseId.toString()).observe(this.activity, Observer {
 
-                            if(!operationIsFinished) {
+                            if(!propertyIsUpdated[i]!!) {
 
                                 if (it == null) {
                                     val id = this.propertyViewModel.insertProperty(property).toInt()
@@ -253,9 +254,7 @@ class FirebaseLinkToSQLite(val activity: FragmentActivity) {
                                                 }
                                             }
                                 }
-
-                                if(i==querySnapshot.documents.size-1)
-                                    operationIsFinished=true
+                                propertyIsUpdated[i]=true
                             }
                         })
                     }
