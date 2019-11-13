@@ -1,10 +1,12 @@
 package com.openclassrooms.realestatemanager.view.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
+import com.google.android.material.snackbar.Snackbar
 import com.openclassrooms.realestatemanager.R
 import kotlinx.android.synthetic.main.activity_property_detail.*
 
@@ -18,6 +20,7 @@ class PropertyDetailActivity : BaseActivity() {
      * UI components
      ********************************************************************************************/
 
+    private val coordinatorLayout by lazy {activity_property_detail_coordinator_layout}
     private val toolbar by lazy {activity_property_detail_toolbar as Toolbar }
 
     /*********************************************************************************************
@@ -80,9 +83,23 @@ class PropertyDetailActivity : BaseActivity() {
      * Intents management
      ********************************************************************************************/
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            KEY_REQUEST_PROPERTY_EDIT->handlePropertyEditResult(resultCode, data)
+        }
+    }
+
     fun startPropertyEditActivity(){
         val propertyEditIntent= Intent(this, PropertyEditActivity::class.java)
         propertyEditIntent.putExtra(KEY_BUNDLE_PROPERTY_ID, this.propertyId)
-        startActivity(propertyEditIntent)
+        startActivityForResult(propertyEditIntent, KEY_REQUEST_PROPERTY_EDIT)
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    private fun handlePropertyEditResult(resultCode: Int, data: Intent?){
+        if(resultCode== Activity.RESULT_OK){
+            Snackbar.make(this.coordinatorLayout, R.string.toast_message_property_saved, Snackbar.LENGTH_LONG).show()
+        }
     }
 }

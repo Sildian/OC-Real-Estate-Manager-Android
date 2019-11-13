@@ -18,6 +18,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
 import com.openclassrooms.realestatemanager.R
@@ -78,6 +79,10 @@ class MainActivity : BaseActivity(),
         layoutInflater.inflate(R.layout.navigation_drawer_header, this.navigationView)}
     private val userPictureImageView by lazy{navigationHeader.navigation_drawer_header_user_picture}    //User picture in navigationHeader
     private val userNameTextView by lazy {navigationHeader.navigation_drawer_header_user_name}          //User name in navigationHeader
+
+    /**Coordinator layout**/
+
+    private val coordinatorLayout by lazy {activity_main_coordinator_layout}    //Coordinator layout
 
     /**Progress bar**/
 
@@ -244,6 +249,14 @@ class MainActivity : BaseActivity(),
     }
 
     /*********************************************************************************************
+     * Messages
+     ********************************************************************************************/
+
+    fun showSnackbar(message:String){
+        Snackbar.make(this.coordinatorLayout, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    /*********************************************************************************************
      * Firebase
      ********************************************************************************************/
 
@@ -286,7 +299,7 @@ class MainActivity : BaseActivity(),
             FirebaseAuth.getInstance().signOut()
             this.firebaseUser=null
             updateNavigationDrawer()
-            Toast.makeText(this, R.string.toast_message_firebase_user_disconnected, Toast.LENGTH_LONG).show()
+            Snackbar.make(this.coordinatorLayout, R.string.toast_message_firebase_user_disconnected, Snackbar.LENGTH_LONG).show()
         }
     }
 
@@ -390,6 +403,7 @@ class MainActivity : BaseActivity(),
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode){
             KEY_REQUEST_FIREBASE_USER_LOGIN->handleFirebaseUserLoginResult(resultCode, data)
+            KEY_REQUEST_PROPERTY_EDIT->handlePropertyEditResult(resultCode, data)
             KEY_REQUEST_PROPERTY_SEARCH->handlePropertySearchResult(resultCode, data)
         }
     }
@@ -411,7 +425,7 @@ class MainActivity : BaseActivity(),
 
     private fun startPropertyEditActivity(){
         val propertyEditIntent= Intent(this, PropertyEditActivity::class.java)
-        startActivity(propertyEditIntent)
+        startActivityForResult(propertyEditIntent, KEY_REQUEST_PROPERTY_EDIT)
     }
 
     private fun startPropertySearchActivity(){
@@ -432,7 +446,7 @@ class MainActivity : BaseActivity(),
 
             val message=resources.getString(R.string.toast_message_firebase_user_connected)+
                     " "+this.firebaseUser?.displayName+"."
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+            Snackbar.make(this.coordinatorLayout, message, Snackbar.LENGTH_LONG).show()
             updateNavigationDrawer()
 
             /*Eventually creates a new realtor in Firebase and SQLite*/
@@ -450,6 +464,13 @@ class MainActivity : BaseActivity(),
             showErrorDialog(
                     resources.getString(R.string.dialog_title_firebase_log_error),
                     resources.getString(R.string.dialog_message_firebase_log_error_unknown))
+        }
+    }
+
+    @Suppress("UNUSED_PARAMETER")
+    private fun handlePropertyEditResult(resultCode: Int, data: Intent?){
+        if(resultCode==Activity.RESULT_OK){
+            Snackbar.make(this.coordinatorLayout, R.string.toast_message_property_saved, Snackbar.LENGTH_LONG).show()
         }
     }
 

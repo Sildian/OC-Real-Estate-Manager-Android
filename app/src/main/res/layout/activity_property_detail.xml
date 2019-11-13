@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/activity_property_detail_coordinator_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.PropertyDetailActivity"
-    android:orientation="vertical">
+    tools:context=".view.activities.PropertyDetailActivity">
 
-    <include
-        layout="@layout/toolbar_main"
-        android:id="@+id/activity_property_detail_toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <fragment
-        android:id="@+id/activity_property_detail_fragment"
-        android:name="com.openclassrooms.realestatemanager.view.fragments.PropertyDetailFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <include
+            layout="@layout/toolbar_main"
+            android:id="@+id/activity_property_detail_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-</LinearLayout>
+        <fragment
+            android:id="@+id/activity_property_detail_fragment"
+            android:name="com.openclassrooms.realestatemanager.view.fragments.PropertyDetailFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

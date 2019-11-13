@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.view.fragments
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -435,9 +436,13 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
             createOrUpdatePropertyInFirebase(property)
 
-            /*Shows a confirmation message to the user and leaves the fragment*/
+            /*Leaves the fragment*/
 
-            Toast.makeText(context!!, R.string.toast_message_property_saved, Toast.LENGTH_LONG).show()
+            if(activity is MainActivity){
+                (activity as MainActivity).showSnackbar(resources.getString(R.string.toast_message_property_saved))
+            }else {
+                activity!!.setResult(Activity.RESULT_OK)
+            }
             finish(propertyId)
         }
     }
