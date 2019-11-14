@@ -19,10 +19,11 @@ object ViewModelInjection {
         val propertyTypeDataSource= providePropertyTypeDataSource(database)
         val extraDataSource= provideExtraDataSource(database)
         val extrasPerPropertyDataSource= provideExtrasPerPropertyDataSource(database)
+        val pictureDataSources= providePictureDataSources(database)
         val executor= provideExecutor()
         return ViewModelFactory(
                 propertyDataSource, realtorDataSource, propertyTypeDataSource,
-                extraDataSource, extrasPerPropertyDataSource ,executor)
+                extraDataSource, extrasPerPropertyDataSource, pictureDataSources, executor)
     }
 
     fun providePropertyDataSource(database: SQLiteDatabase) : PropertyRepository{
@@ -43,6 +44,10 @@ object ViewModelInjection {
 
     fun provideExtrasPerPropertyDataSource(database: SQLiteDatabase):ExtrasPerPropertyRepository{
         return ExtrasPerPropertyRepository(database.extrasPerPropertyDAO)
+    }
+
+    fun providePictureDataSources(database:SQLiteDatabase):PictureRepository{
+        return PictureRepository(database.pictureDAO)
     }
 
     fun provideExecutor(): Executor {

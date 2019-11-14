@@ -340,4 +340,18 @@ class SQLiteDatabaseTest{
         val extras=LiveDataTestUtil.getValue(this.database.extrasPerPropertyDAO.getPropertyExtras(1))
         assertTrue(extras.isEmpty())
     }
+
+    /**Picture**/
+
+    @Test
+    fun given_picture1and2_when_getPropertyPictures_then_checkResult(){
+        val house=Property(adTitle="House", price=500000)
+        val picture1=Picture(path="https://picture1", description = "Picture 1", propertyId = 1)
+        val picture2=Picture(path="https://picture2", description = "Picture 2", propertyId = 1)
+        this.database.propertyDAO.insertProperty(house)
+        this.database.pictureDAO.insertPropertyPicture(picture1)
+        this.database.pictureDAO.insertPropertyPicture(picture2)
+        val pictures=LiveDataTestUtil.getValue(this.database.pictureDAO.getPropertyPictures(1))
+        assertEquals(2, pictures.size)
+    }
 }

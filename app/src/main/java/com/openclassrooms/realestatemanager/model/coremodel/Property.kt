@@ -7,18 +7,17 @@ import java.util.*
  * Property
  *************************************************************************************************/
 
-@Entity(foreignKeys = [ForeignKey(entity=PropertyType::class, parentColumns = arrayOf("id"), childColumns = arrayOf("typeId")), ForeignKey(entity=Realtor::class, parentColumns = arrayOf("id"), childColumns = arrayOf("realtorId"))],
+@Entity(foreignKeys = [ForeignKey(entity=PropertyType::class, parentColumns = arrayOf("id"), childColumns = arrayOf("typeId")),
+        ForeignKey(entity=Realtor::class, parentColumns = arrayOf("id"), childColumns = arrayOf("realtorId"))],
         indices= [Index(value=["typeId", "realtorId"])])
 
 data class Property(
         @PrimaryKey (autoGenerate = true) var id:Int?=null,
-        var firebaseId:String?=null,
         var adTitle:String?=null,
         @ColumnInfo(name="typeId") var typeId:Int?=null,
         var price:Int?=null,
         @ColumnInfo(name="realtorId") var realtorId:String?=null,
-        var picturesPaths:ArrayList<String> = arrayListOf(),
-        var picturesDescriptions:ArrayList<String> = arrayListOf(),
+        var mainPicturePath:String?=null,
         var description:String?=null,
         var size:Int?=null,
         var nbRooms:Int?=null,

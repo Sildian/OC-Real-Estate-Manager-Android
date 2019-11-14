@@ -52,9 +52,9 @@ class PropertyViewHolder(
 
     fun update(property: Property){
         this.propertyId=property.id
-        if(property.picturesPaths.isNotEmpty()) {
+        if(property.mainPicturePath!=null) {
             Glide.with(this.view)
-                    .load(property.picturesPaths[0])
+                    .load(property.mainPicturePath)
                     .apply(RequestOptions.centerCropTransform())
                     .placeholder(R.drawable.ic_picture_gray)
                     .into(this.picture)

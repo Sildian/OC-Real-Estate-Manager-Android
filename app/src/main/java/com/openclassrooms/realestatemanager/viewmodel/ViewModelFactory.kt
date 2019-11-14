@@ -15,6 +15,7 @@ class ViewModelFactory(
         val propertyTypeRepository: PropertyTypeRepository,
         val extraRepository: ExtraRepository,
         val extrasPerPropertyRepository: ExtrasPerPropertyRepository,
+        val pictureRepository: PictureRepository,
         val executor: Executor)
     : ViewModelProvider.Factory {
 
@@ -24,7 +25,7 @@ class ViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         when{
             modelClass.isAssignableFrom(PropertyViewModel::class.java)->
-                return PropertyViewModel(propertyRepository, extrasPerPropertyRepository, executor) as T
+                return PropertyViewModel(propertyRepository, extrasPerPropertyRepository, pictureRepository, executor) as T
 
             modelClass.isAssignableFrom(RealtorViewModel::class.java)->
                 return RealtorViewModel(realtorRepository, executor) as T

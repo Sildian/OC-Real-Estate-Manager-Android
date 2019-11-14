@@ -187,4 +187,24 @@ class SQLQueryGeneratorTest {
         val expectedResult="INNER JOIN ExtrasPerProperty ON Property.id=ExtrasPerProperty.propertyId"
         assertEquals(expectedResult, SQLQueryGenerator.generateJointure(table1Name, table2Name, field1Name, field2Name))
     }
+
+    /**generateFunction**/
+
+    @Test
+    fun given_countPaths_when_generateFunction_then_checkResult(){
+        val functionName="COUNT"
+        val fieldName="path"
+        val resultFieldName="nbPictures"
+        val expectedResult="COUNT (path) AS nbPictures"
+        assertEquals(expectedResult, SQLQueryGenerator.generateFunction(functionName, fieldName, resultFieldName))
+    }
+
+    /**generateFunctionMonitoringGroup**/
+
+    @Test
+    fun given_id_when_generateFunctionMonitoringGroup_then_checkResult(){
+        val fieldName="id"
+        val expectedResult="GROUP BY id"
+        assertEquals(expectedResult, SQLQueryGenerator.generateFunctionMonitoringGroup(fieldName))
+    }
 }

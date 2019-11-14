@@ -1,34 +1,23 @@
 package com.openclassrooms.realestatemanager.view.activities
 
 import android.app.Activity
-import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.firebase.ui.auth.AuthUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.model.firebase.FirebaseLinkToSQLite
 import com.openclassrooms.realestatemanager.model.support.PropertySearchSettings
-import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.fragments.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.navigation_drawer_header.view.*
-import java.lang.Exception
 
 /**************************************************************************************************
  * Main activity for user interaction
@@ -84,10 +73,6 @@ class MainActivity : BaseActivity(),
 
     private val coordinatorLayout by lazy {activity_main_coordinator_layout}    //Coordinator layout
 
-    /**Progress bar**/
-
-    private val progressBar by lazy {activity_main_progress_bar}                //Progress bar
-
     /**Fragments**/
 
     private lateinit var navigationFragment: NavigationBaseFragment     //Allows to navigate between properties
@@ -110,12 +95,6 @@ class MainActivity : BaseActivity(),
     private var settings:PropertySearchSettings?= null
 
     /*********************************************************************************************
-     * Firebase items
-     ********************************************************************************************/
-
-    private var firebaseUser= FirebaseAuth.getInstance().currentUser
-
-    /*********************************************************************************************
      * Life cycle
      ********************************************************************************************/
 
@@ -128,7 +107,6 @@ class MainActivity : BaseActivity(),
         initializeNoPropertyText()
         initializeAddButton()
         showMainFragment(this.mainFragmentId)
-        checkFirebaseUserIsLogged()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -177,8 +155,6 @@ class MainActivity : BaseActivity(),
                     this.mainFragmentId= ID_FRAGMENT_NAVIGATION_MAP
                     showMainFragment(this.mainFragmentId)
                 }
-                R.id.menu_navigation_drawer_log->
-                    logFirebaseUser()
             }
 
             this.drawerLayout.closeDrawers()
@@ -215,7 +191,6 @@ class MainActivity : BaseActivity(),
         toggle.syncState()
 
         this.navigationView.setNavigationItemSelectedListener(this)
-        updateNavigationDrawer()
     }
 
     @Suppress("PLUGIN_WARNING")
@@ -230,77 +205,11 @@ class MainActivity : BaseActivity(),
     }
 
     /*********************************************************************************************
-     * UI update
-     ********************************************************************************************/
-
-    private fun updateNavigationDrawer(){
-        if(this.firebaseUser!=null) {
-            Glide.with(this.navigationHeader)
-                    .load(this.firebaseUser!!.photoUrl)
-                    .apply(RequestOptions.circleCropTransform())
-                    .placeholder(R.drawable.ic_realtor_gray)
-                    .into(this.userPictureImageView)
-            this.userNameTextView.text=this.firebaseUser!!.displayName
-        }
-        else{
-            this.userPictureImageView.setImageResource(R.drawable.ic_realtor_gray)
-            this.userNameTextView.setText(R.string.info_user_not_connected)
-        }
-    }
-
-    /*********************************************************************************************
      * Messages
      ********************************************************************************************/
 
     fun showSnackbar(message:String){
         Snackbar.make(this.coordinatorLayout, message, Snackbar.LENGTH_LONG).show()
-    }
-
-    /*********************************************************************************************
-     * Firebase
-     ********************************************************************************************/
-
-    @Suppress("UNUSED_ANONYMOUS_PARAMETER")
-    private fun checkFirebaseUserIsLogged(){
-
-        /*If the network is available and the user already logged, starts downloading data from Firebase*/
-
-        if(Utils.isInternetAvailable(this)) {
-            if (this.firebaseUser != null) {
-                downloadFirebaseDataIntoSQLite()
-            } else {
-
-                /*If the user is not logged, shows a dialog asking to connect to Firebase*/
-
-                showQuestionDialog(
-                        resources.getString(R.string.dialog_title_log),
-                        resources.getString(R.string.dialog_message_log),
-                        DialogInterface.OnClickListener { dialog, which ->
-                            if (which == Dialog.BUTTON_POSITIVE) {
-                                startFirebaseUserLoginActivity()
-                            }
-                        })
-            }
-        }else{
-
-            /*If the network is unavailable, just shows a message*/
-
-            showWarningDialog(
-                    resources.getString(R.string.dialog_title_sundry_issue),
-                    resources.getString(R.string.dialog_message_no_network)
-            )
-        }
-    }
-
-    private fun logFirebaseUser(){
-        if(this.firebaseUser==null){
-            startFirebaseUserLoginActivity()
-        }else{
-            FirebaseAuth.getInstance().signOut()
-            this.firebaseUser=null
-            updateNavigationDrawer()
-            Snackbar.make(this.coordinatorLayout, R.string.toast_message_firebase_user_disconnected, Snackbar.LENGTH_LONG).show()
-        }
     }
 
     /*********************************************************************************************
@@ -402,19 +311,9 @@ class MainActivity : BaseActivity(),
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode){
-            KEY_REQUEST_FIREBASE_USER_LOGIN->handleFirebaseUserLoginResult(resultCode, data)
             KEY_REQUEST_PROPERTY_EDIT->handlePropertyEditResult(resultCode, data)
             KEY_REQUEST_PROPERTY_SEARCH->handlePropertySearchResult(resultCode, data)
         }
-    }
-
-    private fun startFirebaseUserLoginActivity(){
-        startActivityForResult(AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setAvailableProviders(listOf(AuthUI.IdpConfig.EmailBuilder().build()))
-                .setIsSmartLockEnabled(false, true)
-                .build(),
-                KEY_REQUEST_FIREBASE_USER_LOGIN)
     }
 
     private fun startPropertyDetailActivity(propertyId:Int){
@@ -432,39 +331,6 @@ class MainActivity : BaseActivity(),
         val propertySearchIntent= Intent(this, PropertySearchActivity::class.java)
         propertySearchIntent.putExtra(KEY_BUNDLE_PROPERTY_SETTINGS, this.settings)
         startActivityForResult(propertySearchIntent, KEY_REQUEST_PROPERTY_SEARCH)
-    }
-
-    @Suppress("UNUSED_PARAMETER")
-    private fun handleFirebaseUserLoginResult(resultCode: Int, data: Intent?){
-
-        /*If success...*/
-
-        if(resultCode== Activity.RESULT_OK) {
-            this.firebaseUser = FirebaseAuth.getInstance().currentUser
-
-            /*Shows a message to the user and updates the navigation drawer*/
-
-            val message=resources.getString(R.string.toast_message_firebase_user_connected)+
-                    " "+this.firebaseUser?.displayName+"."
-            Snackbar.make(this.coordinatorLayout, message, Snackbar.LENGTH_LONG).show()
-            updateNavigationDrawer()
-
-            /*Eventually creates a new realtor in Firebase and SQLite*/
-
-            createRealtorInFirebase()
-
-            /*Updates all data in SQLite (by downloading from Firebase)*/
-
-            downloadFirebaseDataIntoSQLite()
-
-        }else{
-
-            /*If failure, shows an other message*/
-
-            showErrorDialog(
-                    resources.getString(R.string.dialog_title_firebase_log_error),
-                    resources.getString(R.string.dialog_message_firebase_log_error_unknown))
-        }
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -500,85 +366,5 @@ class MainActivity : BaseActivity(),
         this.settings=settings
         this.navigationFragment.updateSettings(this.settings)
         this.navigationFragment.runPropertyQuery()
-    }
-
-    /*********************************************************************************************
-     * Firebase Link management
-     ********************************************************************************************/
-
-    private fun createRealtorInFirebase(){
-
-        FirebaseLinkToSQLite(this).createRealtorInFirebase(
-                this.firebaseUser!!, object:FirebaseLinkToSQLite.OnLinkResultListener{
-            override fun onLinkFailure(e:Exception) {
-                Log.d("TAG_LINK", e.message)
-                showErrorDialog(
-                        resources.getString(R.string.dialog_title_firebase_link_error),
-                        resources.getString(R.string.dialog_message_firebase_link_error)
-                )
-            }
-
-            override fun onLinkSuccess() {
-                //Nothing
-            }
-        })
-    }
-
-    private fun downloadFirebaseDataIntoSQLite(){
-
-        this.progressBar.visibility=View.VISIBLE
-
-        FirebaseLinkToSQLite(this).updateRealtorsInSQLite(
-                object:FirebaseLinkToSQLite.OnLinkResultListener{
-                    override fun onLinkFailure(e: Exception) {
-                        Log.d("TAG_LINK", e.message)
-                        progressBar.visibility=View.GONE
-                        showErrorDialog(
-                                resources.getString(R.string.dialog_title_firebase_link_error),
-                                resources.getString(R.string.dialog_message_firebase_link_error)
-                        )
-                    }
-
-                    override fun onLinkSuccess() {
-                        downloadFirebasePropertiesIntoSQLite()
-                    }
-                }
-        )
-    }
-
-    private fun downloadFirebasePropertiesIntoSQLite(){
-
-        FirebaseLinkToSQLite(this).updatePropertiesInSQLite(
-                object:FirebaseLinkToSQLite.OnLinkResultListener{
-                    override fun onLinkFailure(e: Exception) {
-                        Log.d("TAG_LINK", e.message)
-                        progressBar.visibility=View.GONE
-                        showErrorDialog(
-                                resources.getString(R.string.dialog_title_firebase_link_error),
-                                resources.getString(R.string.dialog_message_firebase_link_error)
-                        )
-                    }
-
-                    override fun onLinkSuccess() {
-                        progressBar.visibility=View.GONE
-                        uploadPropertiesIntoFirebase()
-                    }
-                }
-        )
-    }
-
-    private fun uploadPropertiesIntoFirebase(){
-
-        FirebaseLinkToSQLite(this).createAllPropertiesInFirebase(
-                object:FirebaseLinkToSQLite.OnLinkResultListener{
-                    override fun onLinkFailure(e: Exception) {
-                        Log.d("TAG_LINK", e.message)
-                    }
-
-                    override fun onLinkSuccess() {
-                        //Nothing
-                    }
-                }
-        )
     }
 }

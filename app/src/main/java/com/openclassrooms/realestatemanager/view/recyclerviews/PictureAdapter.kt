@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.model.coremodel.Picture
 
 /************************************************************************************************
  * Monitors data related to a property's pictures in a RecyclerView
@@ -11,8 +12,7 @@ import com.openclassrooms.realestatemanager.R
  ***********************************************************************************************/
 
 class PictureAdapter (
-        val picturesPaths:List<String?>,
-        val picturesDescriptions:List<String?>,
+        val pictures:List<Picture?>,
         val editable:Boolean,
         val listener:PictureViewHolder.Listener
 )
@@ -27,17 +27,17 @@ class PictureAdapter (
     }
 
     override fun getItemCount(): Int {
-        return this.picturesPaths.size
+        return this.pictures.size
     }
 
     override fun onBindViewHolder(holder: PictureViewHolder, position: Int) {
-        holder.update(this.picturesPaths[position])
+        holder.update(this.pictures[position])
     }
 
     /**Listens UI events**/
 
-    override fun onPictureClick(picturesPaths: List<String?>, picturesDescriptions:List<String?>, position: Int) {
-        this.listener.onPictureClick(this.picturesPaths, this.picturesDescriptions, position)
+    override fun onPictureClick(pictures: List<Picture?>, position: Int) {
+        this.listener.onPictureClick(this.pictures, position)
     }
 
     override fun onDeletePictureButtonClick(position: Int) {

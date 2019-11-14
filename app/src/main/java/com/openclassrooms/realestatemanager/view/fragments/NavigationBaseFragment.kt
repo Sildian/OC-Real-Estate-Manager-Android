@@ -129,26 +129,16 @@ abstract class NavigationBaseFragment : Fragment() {
                     minNbRooms = this.settings!!.minNbRooms, maxNbRooms = this.settings!!.maxNbRooms,
                     extrasIds = this.settings!!.extrasIds,
                     city = this.settings!!.city, state=this.settings!!.state, country = this.settings!!.country,
-                    adTitle = this.settings!!.adTitle, minAdDate = this.settings!!.minAdDate,
+                    adTitle = this.settings!!.adTitle,
+                    minNbPictures = this.settings!!.minNbPictures,
+                    minAdDate = this.settings!!.minAdDate,
                     sold = this.settings!!.sold, minSaleDate = this.settings!!.minSaleDate,
                     orderCriteria = this.settings!!.orderCriteria, orderDesc = this.settings!!.orderDesc))
                     ?.observe(this, Observer {
 
-                        val properties:List<Property>
-                        val settings=this.settings
-
-                        /*If a min number of pictures is set, filters the list of properties (cannot be done by SQL)*/
-
-                        properties = if(settings?.minNbPictures!=null){
-                            val minNbPictures=settings.minNbPictures!!
-                            it.filter{it.picturesPaths.count()>=minNbPictures}
-                        }else{
-                            it
-                        }
-
                         /*Sends the result to the listener*/
 
-                        onPropertiesReceived(properties, resources.getString(R.string.info_no_property_match))
+                        onPropertiesReceived(it, resources.getString(R.string.info_no_property_match))
                     })
         }
     }

@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.sqlite.db.SupportSQLiteQuery
 import com.openclassrooms.realestatemanager.model.coremodel.ExtrasPerProperty
+import com.openclassrooms.realestatemanager.model.coremodel.Picture
 import com.openclassrooms.realestatemanager.model.coremodel.Property
 import com.openclassrooms.realestatemanager.model.sqlite.repositories.ExtrasPerPropertyRepository
+import com.openclassrooms.realestatemanager.model.sqlite.repositories.PictureRepository
 import com.openclassrooms.realestatemanager.model.sqlite.repositories.PropertyRepository
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -19,6 +21,7 @@ import java.util.concurrent.Callable
 class PropertyViewModel (
         val propertyRepository:PropertyRepository,
         val extrasPerPropertyRepository: ExtrasPerPropertyRepository,
+        val pictureRepository:PictureRepository,
         val executor: Executor)
     : ViewModel()
 {
@@ -28,8 +31,6 @@ class PropertyViewModel (
     fun getAllProperties(): LiveData<List<Property>> =this.propertyRepository.getAllProperties()
 
     fun getProperty(id:Int): LiveData<Property> =this.propertyRepository.getProperty(id)
-
-    fun getProperty(firebaseId:String):LiveData<Property> = this.propertyRepository.getProperty(firebaseId)
 
     fun getProperties(query:SupportSQLiteQuery) = this.propertyRepository.getProperties(query)
 
@@ -58,6 +59,23 @@ class PropertyViewModel (
     fun deletePropertyExtra(propertyId: Int){
         this.executor.execute{
             this.extrasPerPropertyRepository.deletePropertyExtra(propertyId)
+        }
+    }
+
+    /**Picture access**/
+
+    fun getPropertyPictures(propertyId:Int):LiveData<List<Picture>> =
+            this.pictureRepository.getPropertyPictures(propertyId)
+
+    fun insertPropertyPicture(picture:Picture){
+        this.executor.execute {
+            this.pictureRepository.insertPropertyPicture(picture)
+        }
+    }
+
+    fun deletePropertyPicture(id:Int){
+        this.executor.execute {
+            this.pictureRepository.deletePropertyPicture(id)
         }
     }
 }

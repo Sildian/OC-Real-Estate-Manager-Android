@@ -13,7 +13,7 @@ import com.openclassrooms.realestatemanager.model.sqlite.dataconverters.StringsL
  * SQLite Database management
  *************************************************************************************************/
 
-@Database(entities= [Property::class, Realtor::class, PropertyType::class, Extra::class, ExtrasPerProperty::class],
+@Database(entities= [Property::class, Realtor::class, PropertyType::class, Extra::class, ExtrasPerProperty::class, Picture::class],
         version=1,
         exportSchema = false)
 
@@ -28,6 +28,7 @@ abstract class SQLiteDatabase:RoomDatabase() {
     abstract val propertyTypeDAO: PropertyTypeDAO
     abstract val extraDAO: ExtraDAO
     abstract val extrasPerPropertyDAO:ExtrasPerPropertyDAO
+    abstract val pictureDAO:PictureDAO
 
     companion object {
 

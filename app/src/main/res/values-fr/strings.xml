@@ -72,13 +72,6 @@
     <string name="dialog_button_negative">Non</string>
     <string name="dialog_button_validate">Valider</string>
     <string name="dialog_button_cancel">Annuler</string>
-    <string name="dialog_title_log">Connexion</string>
-    <string name="dialog_message_log">Vous n\'êtes pas connecté à la base de données en ligne.\nSouhaitez-vous vous connecter?</string>
-    <string name="dialog_title_firebase_log_error">Erreur de connexion</string>
-    <string name="dialog_message_firebase_log_error_no_network">Le réseau n\'est pas disponible.\nVeuillez réessayer plus tard.</string>
-    <string name="dialog_message_firebase_log_error_unknown">Une erreur inconnue est survenue.\nVeuillez réessayer plus tard.</string>
-    <string name="dialog_title_firebase_link_error">Erreur base de données!</string>
-    <string name="dialog_message_firebase_link_error">Une erreur est survenue au moment d\'interroger la base de données en ligne.\nVeuillez réessayer plus tard.</string>
     <string name="dialog_title_validation_issue">Attention!</string>
     <string name="dialog_message_input_not_valid">Certains champs ne sont pas valides.\nVeuillez vérifier ces champs et réessayer.</string>
     <string name="dialog_title_sundry_issue">Problème</string>

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.model.coremodel.Picture
 import kotlinx.android.synthetic.main.list_pictures_item.view.*
 
 /************************************************************************************************
@@ -22,7 +23,7 @@ class PictureViewHolder (
     /**Interface allowing to listen UI events**/
 
     interface Listener{
-        fun onPictureClick(picturesPaths:List<String?>, picturesDescriptions:List<String?>, position:Int)
+        fun onPictureClick(pictures:List<Picture?>, position:Int)
         fun onDeletePictureButtonClick(position:Int)
         fun onAddPictureButtonClick(position:Int)
         fun onTakePictureButtonClick(position:Int)
@@ -38,7 +39,7 @@ class PictureViewHolder (
     /**Sends UI events to the listener**/
 
     init{
-        this.picture.setOnClickListener{this.listener.onPictureClick(emptyList(), emptyList(), adapterPosition)}
+        this.picture.setOnClickListener{this.listener.onPictureClick(emptyList(), adapterPosition)}
         this.deleteButton.setOnClickListener { this.listener.onDeletePictureButtonClick(adapterPosition) }
         this.addPictureButton.setOnClickListener { this.listener.onAddPictureButtonClick(adapterPosition) }
         this.takePictureButton.setOnClickListener { this.listener.onTakePictureButtonClick(adapterPosition) }
@@ -46,12 +47,12 @@ class PictureViewHolder (
 
     /**UI update**/
 
-    fun update(picturePath:String?){
+    fun update(picture: Picture?){
 
         /*If editable, enables the buttons to edit the picture (add a new picture or delete an existing picture)*/
 
         if(editable){
-            if(picturePath==null){
+            if(picture==null){
                 this.picture.setImageResource(R.drawable.ic_picture_gray)
                 this.deleteButton.visibility=View.INVISIBLE
                 this.addPictureButton.visibility=View.VISIBLE
@@ -59,7 +60,7 @@ class PictureViewHolder (
             }
             else{
                 Glide.with(view)
-                        .load(picturePath)
+                        .load(picture.path)
                         .apply(RequestOptions.centerCropTransform())
                         .placeholder(R.drawable.ic_picture_gray)
                         .into(this.picture)
@@ -73,7 +74,7 @@ class PictureViewHolder (
 
         else{
             Glide.with(view)
-                    .load(picturePath)
+                    .load(picture?.path)
                     .apply(RequestOptions.centerCropTransform())
                     .placeholder(R.drawable.ic_picture_gray)
                     .into(this.picture)

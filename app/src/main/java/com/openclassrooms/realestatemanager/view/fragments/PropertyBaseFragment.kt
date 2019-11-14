@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.openclassrooms.realestatemanager.model.coremodel.Extra
+import com.openclassrooms.realestatemanager.model.coremodel.Picture
 import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
 import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.view.dialogs.DatePickerFragment
@@ -51,8 +52,7 @@ abstract class PropertyBaseFragment : Fragment() {
 
     protected var propertyId:Int?=null                                          //Property id
     protected var propertyFirebaseId:String?=null                               //Property Firebase id
-    protected val picturesPaths:ArrayList<String?> = arrayListOf(null)          //The list of pictures paths
-    protected val picturesDescriptions:ArrayList<String?> =arrayListOf(null)    //The list of pictures descriptions
+    protected val pictures:ArrayList<Picture?> = arrayListOf(null)              //The list of pictures
     protected val extras:ArrayList<String> = arrayListOf()                      //The list of extras
 
     /*********************************************************************************************

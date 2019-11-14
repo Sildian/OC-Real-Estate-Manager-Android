@@ -250,9 +250,9 @@ class NavigationMapFragment : NavigationBaseFragment(),
 
         /*Updates picture*/
 
-        if(property.picturesPaths.isNotEmpty()) {
+        if(property.mainPicturePath!=null) {
             Glide.with(view)
-                    .load(property.picturesPaths[0])
+                    .load(property.mainPicturePath)
                     .apply(RequestOptions.centerCropTransform())
                     .placeholder(R.drawable.ic_picture_gray)
                     .listener(object : RequestListener<Drawable> {

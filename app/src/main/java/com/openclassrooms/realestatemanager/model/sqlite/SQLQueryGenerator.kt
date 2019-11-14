@@ -22,6 +22,7 @@ object SQLQueryGenerator {
             city:String?=null, state:String?=null, country:String?=null,
             realtorId:String?=null,
             adTitle:String?=null,
+            minNbPictures:Int?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
             sold:Boolean?=null,
             minSaleDate:Date?=null, maxSaleDate:Date?=null,
@@ -30,7 +31,8 @@ object SQLQueryGenerator {
 
         val query = generatePropertyQueryString(minPrice, maxPrice, typeIds, minSize, maxSize,
                 minNbRooms, maxNbRooms, extrasIds, city, state, country, realtorId,
-                adTitle, minAdDate, maxAdDate, sold, minSaleDate, maxSaleDate, orderCriteria, orderDesc)
+                adTitle, minNbPictures, minAdDate, maxAdDate,
+                sold, minSaleDate, maxSaleDate, orderCriteria, orderDesc)
 
         return SimpleSQLiteQuery(query)
     }
@@ -46,6 +48,7 @@ object SQLQueryGenerator {
             city:String?=null, state:String?=null, country:String?=null,
             realtorId:String?=null,
             adTitle:String?=null,
+            minNbPictures:Int?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
             sold:Boolean?=null,
             minSaleDate:Date?=null, maxSaleDate:Date?=null,
@@ -72,13 +75,23 @@ object SQLQueryGenerator {
 
         /*Writes the fields and tables selection (SELECT, FROM)*/
 
-        val result=StringBuilder("SELECT * FROM Property")
+        val result=StringBuilder("SELECT *")
+        if(minNbPictures!=null){
+            val function= generateFunction("COUNT", "path", "nbPictures")
+            result.append(", $function")
+        }
+        result.append(" FROM Property")
 
         /*Writes jointure (INNER JOIN)*/
 
         if(extrasIds.isNotEmpty()){
             val jointure= generateJointure(
                     "Property", "ExtrasPerProperty", "id", "propertyId")
+            result.append(" $jointure")
+        }
+        if(minNbPictures!=null){
+            val jointure= generateJointure(
+                    "Property", "Picture", "id", "propertyId")
             result.append(" $jointure")
         }
 
@@ -92,6 +105,14 @@ object SQLQueryGenerator {
                     result.append(" AND ")
                 }
             }
+        }
+
+        /*Writes the function monitoring command (GROUP BY / HAVING)*/
+
+        if(minNbPictures!=null){
+            val functionGroup= generateFunctionMonitoringGroup("Property.id")
+            val functionFilter= generateRangeFilter("nbPictures", minNbPictures, null)
+            result.append(" $functionGroup HAVING $functionFilter")
         }
 
         /*Writes the sort command (ORDER BY)*/
@@ -267,5 +288,23 @@ object SQLQueryGenerator {
 
     fun generateJointure(table1Name:String, table2Name:String, field1Name:String, field2Name:String):String{
         return "INNER JOIN $table2Name ON $table1Name.$field1Name=$table2Name.$field2Name"
+    }
+
+    /**Generates a function
+     * @param functionName : the function name (for example : COUNT)
+     * @param fieldName : the name of the field where the function is applied
+     * @param resultFieldName : the name of the resulted field created by the function
+     */
+
+    fun generateFunction(functionName:String, fieldName:String, resultFieldName:String):String{
+        return "$functionName ($fieldName) AS $resultFieldName"
+    }
+
+    /**Monitors the function : groups the results
+     * @param fieldName : the field where the group is applied
+     */
+
+    fun generateFunctionMonitoringGroup(fieldName:String):String{
+        return "GROUP BY $fieldName"
     }
 }

@@ -12,20 +12,20 @@ import android.widget.ViewSwitcher
 import androidx.core.view.GestureDetectorCompat
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.model.coremodel.Picture
 import kotlinx.android.synthetic.main.dialog_image_switcher.*
 
 /**************************************************************************************************
  * This dialog shows a set of images.
  * The user can swipe left or right to see the previous or next image
  * @Param context : the context
- * @param picturesPaths : the list of pictures paths (uri or url)
+ * @param pictures : the list of pictures
  * @param currentImagePosition : the current position in the pictures paths
  *************************************************************************************************/
 
 class ImageSwitcherDialog(
         context: Context,
-        val picturesPaths:List<String?>,
-        val picturesDescriptions:List<String?>,
+        val pictures:List<Picture?>,
         var currentImagePosition:Int)
 
     : Dialog(context, R.style.Theme_MaterialComponents_NoActionBar),
@@ -67,12 +67,12 @@ class ImageSwitcherDialog(
 
         /*Sets the current image*/
 
-        Glide.with(context).load(this.picturesPaths[this.currentImagePosition])
+        Glide.with(context).load(this.pictures[this.currentImagePosition]?.path)
                 .into(this.imageSwitcher.currentView as ImageView)
     }
 
     private fun initializeDescription(){
-        this.pictureDescriptionText.text=this.picturesDescriptions[this.currentImagePosition]
+        this.pictureDescriptionText.text=this.pictures[this.currentImagePosition]?.description
     }
 
     private fun initializeGestureDetector(){
@@ -89,17 +89,17 @@ class ImageSwitcherDialog(
     }
 
     private fun increaseCurrentImagePosition(){
-        if(this.currentImagePosition<this.picturesPaths.size-1){
+        if(this.currentImagePosition<this.pictures.size-1){
             this.currentImagePosition++
             refreshImageSwitcher()
         }
     }
 
     private fun refreshImageSwitcher(){
-        Glide.with(context).load(this.picturesPaths[this.currentImagePosition])
+        Glide.with(context).load(this.pictures[this.currentImagePosition]?.path)
                 .into(this.imageSwitcher.nextView as ImageView)
         this.imageSwitcher.showNext()
-        this.pictureDescriptionText.text=this.picturesDescriptions[this.currentImagePosition]
+        this.pictureDescriptionText.text=this.pictures[this.currentImagePosition]?.description
     }
 
     /**Gesture events management**/

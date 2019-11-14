@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.net.toUri
 import androidx.lifecycle.Observer
@@ -23,11 +22,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.model.coremodel.Extra
-import com.openclassrooms.realestatemanager.model.coremodel.Property
-import com.openclassrooms.realestatemanager.model.coremodel.PropertyType
-import com.openclassrooms.realestatemanager.model.coremodel.Realtor
-import com.openclassrooms.realestatemanager.model.firebase.FirebaseLinkToSQLite
+import com.openclassrooms.realestatemanager.model.coremodel.*
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import com.openclassrooms.realestatemanager.view.activities.MainActivity
@@ -36,7 +31,6 @@ import com.openclassrooms.realestatemanager.view.recyclerviews.PictureViewHolder
 import kotlinx.android.synthetic.main.dialog_picture_description_request.view.*
 import kotlinx.android.synthetic.main.fragment_property_edit.view.*
 import pl.aprilapps.easyphotopicker.*
-import java.lang.Exception
 
 /**************************************************************************************************
  * Allows the user to create or edit a property
@@ -126,7 +120,8 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
      * Pictures support
      ********************************************************************************************/
 
-    private lateinit var easyImage:EasyImage
+    private lateinit var easyImage:EasyImage                            //EasyImage support allowing to pick pictures on the device
+    private val deletePicturesIdsTag:ArrayList<Int> =arrayListOf()      //Tags allowing to delete pictures from the database
 
     /*********************************************************************************************
      * Life cycle
@@ -182,7 +177,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
     }
 
     private fun initializePicturesRecyclerView(){
-        this.pictureAdapter= PictureAdapter(this.picturesPaths, this.picturesDescriptions, true, this)
+        this.pictureAdapter= PictureAdapter(this.pictures, true, this)
         this.picturesRecyclerView.adapter=this.pictureAdapter
         this.picturesRecyclerView.layoutManager=
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -243,7 +238,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
      * Listens UI events on picturesRecyclerView
      ********************************************************************************************/
 
-    override fun onPictureClick(picturesPaths: List<String?>, picturesDescriptions:List<String?>, position: Int) {
+    override fun onPictureClick(pictures: List<Picture?>, position: Int) {
         //Nothing
     }
 
@@ -287,7 +282,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
                     /*Once the positive button is clicked, adds the picture to the property*/
 
                     val pictureDescription=pictureDescriptionText.text.toString()
-                    addPicture(picturePath, pictureDescription)
+                    addPicture(Picture(path=picturePath, description = pictureDescription))
                 }
                 .setNegativeButton(
                         R.string.dialog_button_cancel
@@ -296,15 +291,14 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         dialog.show()
     }
 
-    private fun addPicture(picturePath:String, pictureDescription:String){
-        this.picturesPaths.add(this.picturesPaths.size-1, picturePath)
-        this.picturesDescriptions.add(this.picturesDescriptions.size-1, pictureDescription)
+    private fun addPicture(picture:Picture){
+        this.pictures.add(this.pictures.size-1, picture)
         this.pictureAdapter.notifyDataSetChanged()
     }
 
     private fun removePicture(position:Int){
-        this.picturesPaths.removeAt(position)
-        this.picturesDescriptions.removeAt(position)
+        this.deletePicturesIdsTag.add(this.pictures[position]?.id!!)
+        this.pictures.removeAt(position)
         this.pictureAdapter.notifyDataSetChanged()
     }
 
@@ -399,10 +393,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
             property.adTitle = this.adTitleText.text.toString()
             property.price = Integer.parseInt(this.priceText.text.toString())
             property.typeId = (this.typeTextDropdown.tag as PropertyType).id
-            property.picturesPaths.clear()
-            property.picturesPaths.addAll(this.picturesPaths.filterNotNull())
-            property.picturesDescriptions.clear()
-            property.picturesDescriptions.addAll(this.picturesDescriptions.filterNotNull())
+            if(this.pictures.isNotEmpty()) property.mainPicturePath=this.pictures[0]?.path
             property.description = this.descriptionText.text.toString()
             property.size = Integer.parseInt(this.sizeText.text.toString())
             property.nbRooms = Integer.parseInt(this.nbRoomsText.text.toString())
@@ -426,15 +417,11 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
                 property.id=this.propertyId
             } else {
                 property.id = this.propertyId
-                property.firebaseId=this.propertyFirebaseId
                 this.propertyViewModel.updateProperty(property)
             }
             val propertyId = this.propertyId
-            savePropertyExtras(propertyId!!.toInt())
-
-            /*Creates or updates the property in Firebase*/
-
-            createOrUpdatePropertyInFirebase(property)
+            savePropertyExtras(propertyId!!)
+            savePropertyPictures(propertyId)
 
             /*Leaves the fragment*/
 
@@ -457,6 +444,18 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         }
     }
 
+    private fun savePropertyPictures(propertyId:Int){
+        this.deletePicturesIdsTag.forEach {
+            this.propertyViewModel.deletePropertyPicture(it)
+        }
+        this.pictures.forEach {
+            if(it?.id==null&&it?.path!=null){
+                val pictureToInsert=Picture(path=it.path, description=it.description, propertyId=propertyId)
+                this.propertyViewModel.insertPropertyPicture(pictureToInsert)
+            }
+        }
+    }
+
     /*********************************************************************************************
      * Loads property's items
      ********************************************************************************************/
@@ -465,12 +464,10 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
 
         this.propertyViewModel.getProperty(this.propertyId!!.toInt()).observe(this, Observer {
             val property = it
-            this.propertyFirebaseId=it.firebaseId
             this.adTitleText.setText(property.adTitle)
             this.priceText.setText(property.price.toString())
             val typeId = property.typeId
             if (typeId != null) loadPropertyType(typeId)
-            loadPropertyPictures(property.picturesPaths, property.picturesDescriptions)
             this.descriptionText.setText(property.description)
             this.sizeText.setText(property.size.toString())
             this.nbRoomsText.setText(property.nbRooms.toString())
@@ -492,6 +489,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         })
 
         loadPropertyExtras(propertyId!!)
+        loadPropertyPictures(propertyId!!)
     }
 
     private fun loadPropertyType(typeId:Int){
@@ -500,14 +498,13 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         this.typeTextDropdown.tag=propertyType
     }
 
-    private fun loadPropertyPictures(picturesPaths:List<String>, picturesDescriptions:List<String>){
-        this.picturesPaths.clear()
-        this.picturesPaths.addAll(picturesPaths)
-        this.picturesPaths.add(null)
-        this.picturesDescriptions.clear()
-        this.picturesDescriptions.addAll(picturesDescriptions)
-        this.picturesDescriptions.add(null)
-        this.pictureAdapter.notifyDataSetChanged()
+    private fun loadPropertyPictures(propertyId:Int){
+        this.propertyViewModel.getPropertyPictures(propertyId).observe(this, Observer {
+            this.pictures.clear()
+            this.pictures.addAll(it)
+            this.pictures.add(null)
+            this.pictureAdapter.notifyDataSetChanged()
+        })
     }
 
     private fun loadPropertyExtras(propertyId:Int){
@@ -522,23 +519,6 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         this.realtorViewModel.getRealtor(realtorId).observe(this, Observer{
             this.realtorTextDropDown.setText(it.toString(), false)
             this.realtorTextDropDown.tag=it
-        })
-    }
-
-    /*********************************************************************************************
-     * Firebase Link management
-     ********************************************************************************************/
-
-    private fun createOrUpdatePropertyInFirebase(property:Property){
-
-        FirebaseLinkToSQLite(activity!!).createOrUpdatePropertyInFirebase(
-                property, object:FirebaseLinkToSQLite.OnLinkResultListener{
-            override fun onLinkFailure(e:Exception) {
-                Log.d("TAG_LINK", e.message)
-            }
-            override fun onLinkSuccess() {
-                //Nothing
-            }
         })
     }
 

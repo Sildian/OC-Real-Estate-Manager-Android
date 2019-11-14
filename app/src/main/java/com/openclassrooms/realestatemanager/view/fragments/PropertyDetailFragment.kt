@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.model.coremodel.Picture
 import com.openclassrooms.realestatemanager.utils.LocationService
 import com.openclassrooms.realestatemanager.utils.Utils
 import com.openclassrooms.realestatemanager.view.activities.MainActivity
@@ -114,7 +115,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
     }
 
     private fun initializePicturesRecyclerView(){
-        this.pictureAdapter= PictureAdapter(this.picturesPaths, this.picturesDescriptions, false, this)
+        this.pictureAdapter= PictureAdapter(this.pictures, false, this)
         this.picturesRecyclerView.adapter=this.pictureAdapter
         this.picturesRecyclerView.layoutManager=
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
@@ -143,8 +144,8 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
      * Listens UI events on picturesRecyclerView
      ********************************************************************************************/
 
-    override fun onPictureClick(picturesPaths: List<String?>, picturesDescriptions:List<String?>, position: Int) {
-        ImageSwitcherDialog(context!!, picturesPaths, picturesDescriptions, position).show()
+    override fun onPictureClick(pictures: List<Picture?>, position: Int) {
+        ImageSwitcherDialog(context!!, pictures, position).show()
     }
 
     override fun onDeletePictureButtonClick(position: Int) {
@@ -188,7 +189,6 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
             val currency=getString(R.string.currency)
             val priceToDisplay=Utils.getFormatedFigure(price?.toLong() ?: 0)+" $currency"
             this.priceText.text = priceToDisplay
-            loadPropertyPictures(property.picturesPaths, property.picturesDescriptions)
             this.descriptionText.text = property.description
             val size=property.size
             val sizeUnit=resources.getString(R.string.size_unit)
@@ -206,6 +206,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
         })
 
         loadPropertyExtras(propertyId!!)
+        loadPropertyPictures(propertyId!!)
     }
 
     private fun loadPropertyType(typeId:Int){
@@ -214,12 +215,12 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
         })
     }
 
-    private fun loadPropertyPictures(picturesPaths:List<String>, picturesDescriptions: List<String?>){
-        this.picturesPaths.clear()
-        this.picturesPaths.addAll(picturesPaths)
-        this.picturesDescriptions.clear()
-        this.picturesDescriptions.addAll(picturesDescriptions)
-        this.pictureAdapter.notifyDataSetChanged()
+    private fun loadPropertyPictures(propertyId:Int){
+        this.propertyViewModel.getPropertyPictures(propertyId).observe(this, Observer {
+            this.pictures.clear()
+            this.pictures.addAll(it)
+            this.pictureAdapter.notifyDataSetChanged()
+        })
     }
 
     private fun loadPropertyExtras(propertyId:Int){
