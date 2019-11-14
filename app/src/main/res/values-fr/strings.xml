@@ -19,6 +19,9 @@
     <string name="menu_navigation_drawer_open">Ouverture</string>
     <string name="menu_navigation_drawer_close">Fermeture</string>
 
+    <!--Buttons-->
+    <string name="button_loan_calculate">Calcul</string>
+
     <!--Text infos-->
     <string name="info_no_property_exist">Aucun bien immobilier n\'est stocké dans la base de données pour le moment.\nPour ajouter votre premier bien, cliquez sur le bouton \'+\'.</string>
     <string name="info_no_property_match">Aucun bien immobilier ne correspond à votre recherche.\nVeuillez essayer d\'autres paramètres.</string>
@@ -57,6 +60,12 @@
     <string name="label_property_sort">Tri</string>
     <string name="label_property_sort_asc">Croissant</string>
     <string name="label_property_sort_desc">Décroissant</string>
+    <string name="label_loan_investment">Investissement</string>
+    <string name="label_loan_contribution">Apport</string>
+    <string name="label_loan_loan">Montant du prêt</string>
+    <string name="label_loan_nb_years">Durée du prêt (années)</string>
+    <string name="label_loan_interest_rate">Taux d\'intérêt</string>
+    <string name="label_loan_monthly_payments">Mensualités</string>
 
     <!--Text error messages-->
     <string name="error_mandatory_field">Obligatoire</string>
