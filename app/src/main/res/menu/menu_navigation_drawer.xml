@@ -13,6 +13,11 @@
             android:title="@string/menu_map">
         </item>
         <item
+            android:id="@+id/menu_navigation_drawer_loan"
+            android:icon="@drawable/ic_currency_white"
+            android:title="@string/menu_loan">
+        </item>
+        <item
             android:id="@+id/menu_navigation_drawer_log"
             android:icon="@drawable/ic_log_white"
             android:title="@string/menu_log">

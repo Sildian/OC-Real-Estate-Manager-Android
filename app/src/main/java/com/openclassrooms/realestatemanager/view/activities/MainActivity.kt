@@ -155,6 +155,8 @@ class MainActivity : BaseActivity(),
                     this.mainFragmentId= ID_FRAGMENT_NAVIGATION_MAP
                     showMainFragment(this.mainFragmentId)
                 }
+                R.id.menu_navigation_drawer_loan->
+                    openLoan()
             }
 
             this.drawerLayout.closeDrawers()
@@ -304,6 +306,10 @@ class MainActivity : BaseActivity(),
         }
     }
 
+    fun openLoan(){
+        startLoanActivity()
+    }
+
     /*********************************************************************************************
      * Intents management
      ********************************************************************************************/
@@ -331,6 +337,11 @@ class MainActivity : BaseActivity(),
         val propertySearchIntent= Intent(this, PropertySearchActivity::class.java)
         propertySearchIntent.putExtra(KEY_BUNDLE_PROPERTY_SETTINGS, this.settings)
         startActivityForResult(propertySearchIntent, KEY_REQUEST_PROPERTY_SEARCH)
+    }
+
+    private fun startLoanActivity(){
+        val loanIntent=Intent(this, LoanActivity::class.java)
+        startActivity(loanIntent)
     }
 
     @Suppress("UNUSED_PARAMETER")
