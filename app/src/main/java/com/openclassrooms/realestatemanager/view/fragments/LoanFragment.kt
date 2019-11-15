@@ -5,9 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.utils.LoanAlgorithm
+import com.openclassrooms.realestatemanager.utils.Utils
+import com.openclassrooms.realestatemanager.view.activities.BaseActivity
 import kotlinx.android.synthetic.main.fragment_loan.view.*
 
 /**************************************************************************************************
@@ -64,15 +68,23 @@ class LoanFragment : Fragment() {
      ********************************************************************************************/
 
     private fun calculateLoanAmounts(){
-        val loanAmount=calculateLoanAmount()
-        calculateMonthlyPaymentsAmount(loanAmount)
+        if(checkInputIsValid()) {
+            val loanAmount = calculateLoanAmount()
+            calculateMonthlyPaymentsAmount(loanAmount)
+        }
+        else{
+            (activity as BaseActivity).showErrorDialog(
+                    resources.getString(R.string.dialog_title_validation_issue),
+                    resources.getString(R.string.dialog_message_input_not_valid))
+        }
     }
 
     private fun calculateLoanAmount():Long{
         val investmentAmount:Long=this.investmentAmount.text.toString().toLong()
         val contributionAmount:Long=this.contributionAmount.text.toString().toLong()
         val result=LoanAlgorithm.calculateLoanAmount(investmentAmount, contributionAmount)
-        val loanAmountToDisplay=resources.getString(R.string.label_loan_loan)+" : "+result
+        val formatedResult= Utils.getFormatedFigure(result)
+        val loanAmountToDisplay=resources.getString(R.string.label_loan_loan)+" : "+formatedResult
         this.loanAmount.text=loanAmountToDisplay
         return result
     }
@@ -81,7 +93,35 @@ class LoanFragment : Fragment() {
         val duration:Int=this.duration.text.toString().toInt()
         val interestRate:Double=this.interestRate.text.toString().toDouble()
         val result=LoanAlgorithm.calculateLoanMonthlyPayments(loanAmount, duration, interestRate)
-        val monthlyPaymentsToDisplay=resources.getString(R.string.label_loan_monthly_payments)+" : "+result
+        val formatedResult=Utils.getFormatedFigure(result)
+        val monthlyPaymentsToDisplay=resources.getString(R.string.label_loan_monthly_payments)+" : "+formatedResult
         this.monthlyPayments.text=monthlyPaymentsToDisplay
+    }
+
+    /*********************************************************************************************
+     * Input control
+     ********************************************************************************************/
+
+    /**Checks that all input fields are valid**/
+
+    private fun checkInputIsValid():Boolean{
+        var isValid=true
+        if(!checkTextIsNotEmpty(this.investmentAmount, this.investmentAmountLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.contributionAmount, this.contributionAmountLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.duration, this.durationLayout)) isValid=false
+        if(!checkTextIsNotEmpty(this.interestRate, this.interestRateLayout)) isValid=false
+        return isValid
+    }
+
+    /**Checks that a simple text field is not empty**/
+
+    private fun checkTextIsNotEmpty(editText: TextInputEditText, textLayout: TextInputLayout):Boolean{
+        if(editText.text.isNullOrEmpty()) {
+            textLayout.error = resources.getString(R.string.error_mandatory_field)
+            return false
+        }else{
+            textLayout.error=null
+            return true
+        }
     }
 }

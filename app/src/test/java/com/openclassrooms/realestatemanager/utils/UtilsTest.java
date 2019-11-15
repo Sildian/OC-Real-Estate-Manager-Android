@@ -72,4 +72,10 @@ public class UtilsTest {
         Locale.setDefault(Locale.US);
         assertEquals("1,000,000", Utils.getFormatedFigure(1000000));
     }
+
+    @Test
+    public void given_15500p345689_when_getFormatedFigure_then_check_result_15500p35(){
+        Locale.setDefault(Locale.US);
+        assertEquals("15,500.35", Utils.getFormatedFigure(15500.345689));
+    }
 }

@@ -6,11 +6,14 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Currency;
 import java.util.Date;
+import java.util.Locale;
 
 /**************************************************************************************************
  * Utilities
@@ -137,6 +140,17 @@ public class Utils {
 
     public static String getFormatedFigure(long figure){
         NumberFormat numberFormat=NumberFormat.getNumberInstance();
+        return numberFormat.format(figure);
+    }
+
+    /**Gets a formated figure with thousands and decimal separators
+     * @param figure : the figure (double)
+     * @return the formated figure (String)
+     */
+
+    public static String getFormatedFigure(double figure){
+        NumberFormat numberFormat=DecimalFormat.getNumberInstance();
+        numberFormat.setMaximumFractionDigits(2);
         return numberFormat.format(figure);
     }
 }
