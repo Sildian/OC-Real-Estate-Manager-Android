@@ -7,7 +7,6 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.openclassrooms.realestatemanager.model.coremodel.*
 import com.openclassrooms.realestatemanager.model.sqlite.dao.*
 import com.openclassrooms.realestatemanager.model.sqlite.dataconverters.DateConverter
-import com.openclassrooms.realestatemanager.model.sqlite.dataconverters.StringsListConverter
 
 /**************************************************************************************************
  * SQLite Database management
@@ -17,7 +16,7 @@ import com.openclassrooms.realestatemanager.model.sqlite.dataconverters.StringsL
         version=1,
         exportSchema = false)
 
-@TypeConverters(DateConverter::class, StringsListConverter::class)
+@TypeConverters(DateConverter::class)
 
 abstract class SQLiteDatabase:RoomDatabase() {
 

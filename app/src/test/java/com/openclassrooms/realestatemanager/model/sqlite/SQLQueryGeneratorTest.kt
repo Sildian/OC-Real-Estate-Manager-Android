@@ -47,9 +47,9 @@ class SQLQueryGeneratorTest {
 
     @Test
     fun given_realtorIdSoldStatus_when_generatePropertyQueryString_then_checkResult(){
-        val realtorId="wedgeAntilles"
+        val realtorId=1
         val sold=false
-        val expectedResult="SELECT * FROM Property WHERE realtorId='wedgeAntilles' AND sold=0;"
+        val expectedResult="SELECT * FROM Property WHERE realtorId=1 AND sold=0;"
         assertEquals(expectedResult, SQLQueryGenerator.generatePropertyQueryString(
                 realtorId=realtorId, sold=sold))
     }
@@ -57,8 +57,8 @@ class SQLQueryGeneratorTest {
     @Test
     fun given_realtorIdCountry_when_generatePropertyQueryString_then_checkResult(){
         val country="France"
-        val realtorId="wedgeAntilles"
-        val expectedResult="SELECT * FROM Property WHERE country='France' AND realtorId='wedgeAntilles';"
+        val realtorId=1
+        val expectedResult="SELECT * FROM Property WHERE country='France' AND realtorId=1;"
         assertEquals(expectedResult, SQLQueryGenerator.generatePropertyQueryString(
                 country=country, realtorId=realtorId))
     }

@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.model.sqlite.dao
 
+import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteQuery
@@ -26,4 +27,9 @@ interface PropertyDAO {
 
     @Update
     fun updateProperty(property: Property)
+
+    /**For content provider**/
+
+    @Query("SELECT * FROM Property")
+    fun getAllPropertiesFromContentProvider():Cursor
 }
