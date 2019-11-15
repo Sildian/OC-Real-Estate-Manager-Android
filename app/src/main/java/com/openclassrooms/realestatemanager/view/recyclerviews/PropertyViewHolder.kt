@@ -68,8 +68,7 @@ class PropertyViewHolder(
     }
 
     private fun updatePriceText(price:Int?){
-        val currency=this.view.resources.getString(R.string.currency)
-        val priceToDisplay=Utils.getFormatedFigure(price?.toLong() ?: 0)+" $currency"
+        val priceToDisplay=Utils.getFormatedFigure(price?.toLong() ?: 0)
         this.priceText.text = priceToDisplay
     }
 

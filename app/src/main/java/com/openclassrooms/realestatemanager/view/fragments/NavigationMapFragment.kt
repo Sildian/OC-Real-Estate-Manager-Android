@@ -280,8 +280,7 @@ class NavigationMapFragment : NavigationBaseFragment(),
         /*Updates price*/
 
         val price=property.price
-        val currency=view.resources.getString(R.string.currency)
-        val priceToDisplay=Utils.getFormatedFigure(price?.toLong() ?: 0)+" $currency"
+        val priceToDisplay=Utils.getFormatedFigure(price?.toLong() ?: 0)
         propertyPrice.text = priceToDisplay
     }
 

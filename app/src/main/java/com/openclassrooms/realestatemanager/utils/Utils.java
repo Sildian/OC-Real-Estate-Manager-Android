@@ -133,23 +133,26 @@ public class Utils {
         return diffMonths;
     }
 
-    /**Gets a formated figure with thousands separators
+    /**Gets a formated figure with thousands separators and currency ($)
      * @param figure : the figure (int)
      * @return the formated figure (String)
      */
 
     public static String getFormatedFigure(long figure){
-        NumberFormat numberFormat=NumberFormat.getNumberInstance();
+        NumberFormat numberFormat=DecimalFormat.getCurrencyInstance();
+        numberFormat.setCurrency(Currency.getInstance(Locale.US));
+        numberFormat.setMaximumFractionDigits(0);
         return numberFormat.format(figure);
     }
 
-    /**Gets a formated figure with thousands and decimal separators
+    /**Gets a formated figure with thousands, decimal separators and currency ($)
      * @param figure : the figure (double)
      * @return the formated figure (String)
      */
 
     public static String getFormatedFigure(double figure){
-        NumberFormat numberFormat=DecimalFormat.getNumberInstance();
+        NumberFormat numberFormat=DecimalFormat.getCurrencyInstance();
+        numberFormat.setCurrency(Currency.getInstance(Locale.US));
         numberFormat.setMaximumFractionDigits(2);
         return numberFormat.format(figure);
     }

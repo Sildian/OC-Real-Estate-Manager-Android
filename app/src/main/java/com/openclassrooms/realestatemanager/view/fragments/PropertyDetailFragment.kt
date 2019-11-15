@@ -186,13 +186,12 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
             this.adTitleText.text = property.adTitle
             val price=property.price
             if(property.typeId!=null) loadPropertyType(property.typeId!!.toInt())
-            val currency=getString(R.string.currency)
-            val priceToDisplay=Utils.getFormatedFigure(price?.toLong() ?: 0)+" $currency"
+            val priceToDisplay=Utils.getFormatedFigure(price?.toLong() ?: 0)
             this.priceText.text = priceToDisplay
             this.descriptionText.text = property.description
             val size=property.size
             val sizeUnit=resources.getString(R.string.size_unit)
-            val sizeToDisplay=Utils.getFormatedFigure(size?.toLong() ?: 0)+" $sizeUnit"
+            val sizeToDisplay=""+size?.toLong() +" "+ sizeUnit
             this.sizeText.text = sizeToDisplay
             this.nbRoomsText.text = property.nbRooms.toString()
             this.nbBedroomsText.text = property.nbBedrooms.toString()
