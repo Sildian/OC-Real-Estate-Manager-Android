@@ -41,7 +41,6 @@ abstract class SQLiteDatabase:RoomDatabase() {
         private const val CLASS_NAME_REALTOR="Realtor"
         private const val CLASS_NAME_PROPERTY_TYPE="PropertyType"
         private const val CLASS_NAME_EXTRA="Extra"
-        private const val FIELD_NAME_ID="id"
         private const val FIELD_NAME_NAME="name"
         private val DATA_REALTOR=listOf("Unknown")
         private val DATA_PROPERTY_TYPE=listOf(
@@ -72,22 +71,10 @@ abstract class SQLiteDatabase:RoomDatabase() {
             return object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
-                    prepopulateData(db, CLASS_NAME_REALTOR, FIELD_NAME_ID, FIELD_NAME_NAME, DATA_REALTOR)
+                    prepopulateData(db, CLASS_NAME_REALTOR, FIELD_NAME_NAME, DATA_REALTOR)
                     prepopulateData(db, CLASS_NAME_PROPERTY_TYPE, FIELD_NAME_NAME, DATA_PROPERTY_TYPE)
                     prepopulateData(db, CLASS_NAME_EXTRA, FIELD_NAME_NAME, DATA_EXTRA)
                 }
-            }
-        }
-
-        /**Populates an entity with an id and a value (id and values are the same)**/
-
-        private fun prepopulateData(db:SupportSQLiteDatabase, className:String,
-                                    fieldNameId:String, fieldNameName:String, values:List<String>){
-            val contentValues = ContentValues()
-            for(value in values){
-                contentValues.put(fieldNameId, value)
-                contentValues.put(fieldNameName, value)
-                db.insert(className, OnConflictStrategy.IGNORE, contentValues)
             }
         }
 

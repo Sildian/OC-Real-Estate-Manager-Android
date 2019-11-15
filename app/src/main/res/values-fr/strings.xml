@@ -15,12 +15,12 @@
     <string name="menu_list">Liste des biens</string>
     <string name="menu_map">Carte</string>
     <string name="menu_loan">Simulateur de prêt</string>
-    <string name="menu_log">Connexion \/ Déconnexion</string>
+    <string name="menu_realtor">Sélection agent</string>
     <string name="menu_navigation_drawer_open">Ouverture</string>
     <string name="menu_navigation_drawer_close">Fermeture</string>
 
     <!--Buttons-->
-    <string name="button_loan_calculate">Calcul</string>
+    <string name="button_calculate">Calcul</string>
 
     <!--Text infos-->
     <string name="info_no_property_exist">Aucun bien immobilier n\'est stocké dans la base de données pour le moment.\nPour ajouter votre premier bien, cliquez sur le bouton \'+\'.</string>
@@ -66,6 +66,9 @@
     <string name="label_loan_nb_years">Durée du prêt (années)</string>
     <string name="label_loan_interest_rate">Taux d\'intérêt</string>
     <string name="label_loan_monthly_payments">Mensualités</string>
+    <string name="label_realtor_new">Nouvel agent</string>
+    <string name="label_realtor_select">Sélection de l\'agent</string>
+    <string name="label_realtor_name">Nom de l\'agent</string>
 
     <!--Text error messages-->
     <string name="error_mandatory_field">Obligatoire</string>
@@ -83,6 +86,8 @@
     <string name="dialog_button_negative">Non</string>
     <string name="dialog_button_validate">Valider</string>
     <string name="dialog_button_cancel">Annuler</string>
+    <string name="dialog_title_realtor_request">Sélection de l\'agent immobilier</string>
+    <string name="dialog_message_realtor_request">Veuillez sélectionner ou créer un agent immobilier.</string>
     <string name="dialog_title_validation_issue">Attention!</string>
     <string name="dialog_message_input_not_valid">Certains champs ne sont pas valides.\nVeuillez vérifier ces champs et réessayer.</string>
     <string name="dialog_title_sundry_issue">Problème</string>

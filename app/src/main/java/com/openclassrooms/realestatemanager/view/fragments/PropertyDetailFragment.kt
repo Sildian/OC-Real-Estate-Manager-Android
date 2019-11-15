@@ -200,7 +200,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
             this.buildYearText.text = property.buildYear.toString()
             this.locationText.text = property.getFullAddressToDisplay()
             startLocationService(property.getFullAddressToFetchLocation())
-            loadRealtor(property.realtorId.toString())
+            loadRealtor(property.realtorId!!)
             this.adDateText.text = Utils.getStringFromDate(property.adDate)
             updateSoldStatus(property.sold, property.saleDate)
         })
@@ -239,7 +239,7 @@ class PropertyDetailFragment : PropertyBaseFragment(), PictureViewHolder.Listene
         })
     }
 
-    private fun loadRealtor(realtorId:String){
+    private fun loadRealtor(realtorId:Int){
         this.realtorViewModel.getRealtor(realtorId).observe(this, Observer {
             this.realtorText.text = it.name
         })

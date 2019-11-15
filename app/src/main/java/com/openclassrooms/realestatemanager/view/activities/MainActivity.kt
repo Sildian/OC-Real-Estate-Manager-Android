@@ -1,22 +1,32 @@
 package com.openclassrooms.realestatemanager.view.activities
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.model.coremodel.Realtor
 import com.openclassrooms.realestatemanager.model.support.PropertySearchSettings
 import com.openclassrooms.realestatemanager.view.fragments.*
+import com.openclassrooms.realestatemanager.viewmodel.RealtorViewModel
+import com.openclassrooms.realestatemanager.viewmodel.ViewModelFactory
+import com.openclassrooms.realestatemanager.viewmodel.ViewModelInjection
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.dialog_realtor_request.view.*
 import kotlinx.android.synthetic.main.navigation_drawer_header.view.*
 
 /**************************************************************************************************
@@ -93,6 +103,8 @@ class MainActivity : BaseActivity(),
     private var mainFragmentId= ID_FRAGMENT_NAVIGATION_LIST
     private var secondFragmentId= ID_FRAGMENT_PROPERTY_DETAIL
     private var settings:PropertySearchSettings?= null
+    private lateinit var viewModelFactory: ViewModelFactory
+    private lateinit var realtorViewModel: RealtorViewModel
 
     /*********************************************************************************************
      * Life cycle
@@ -102,11 +114,13 @@ class MainActivity : BaseActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initializeDataFromInstanceState(savedInstanceState)
+        initializeData()
         initializeToolbar()
         initializeNavigationDrawer()
         initializeNoPropertyText()
         initializeAddButton()
         showMainFragment(this.mainFragmentId)
+        requestRealtor()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -157,6 +171,8 @@ class MainActivity : BaseActivity(),
                 }
                 R.id.menu_navigation_drawer_loan->
                     openLoan()
+                R.id.menu_navigation_drawer_realtor->
+                    requestRealtor()
             }
 
             this.drawerLayout.closeDrawers()
@@ -178,6 +194,12 @@ class MainActivity : BaseActivity(),
         }
     }
 
+    private fun initializeData(){
+        this.viewModelFactory= ViewModelInjection.provideViewModelFactory(this)
+        this.realtorViewModel= ViewModelProviders.of(
+                this, this.viewModelFactory).get(RealtorViewModel::class.java)
+    }
+
     /*********************************************************************************************
      * UI Initialization
      ********************************************************************************************/
@@ -193,6 +215,7 @@ class MainActivity : BaseActivity(),
         toggle.syncState()
 
         this.navigationView.setNavigationItemSelectedListener(this)
+        this.userNameTextView.setText(R.string.info_user_not_connected)
     }
 
     @Suppress("PLUGIN_WARNING")
@@ -204,6 +227,87 @@ class MainActivity : BaseActivity(),
 
     private fun initializeAddButton(){
         this.addButton.setOnClickListener{ openPropertyEdit(null) }
+    }
+
+    /*********************************************************************************************
+     * Realtor management
+     ********************************************************************************************/
+
+    /**Shows a dialog requesting a realtor name.
+     * The user has the choice between selecting an existing realtor or creating a new one.**/
+
+    private fun requestRealtor(){
+
+        /*Prepares the UI for the dialog*/
+
+        val dialogView=layoutInflater.inflate(R.layout.dialog_realtor_request, null)
+        val newRealtorSwitch=dialogView.dialog_realtor_request_switch_new
+        val selectRealtorLayout=dialogView.dialog_realtor_request_realtor_select_layout
+        val selectRealtorText=dialogView.dialog_realtor_request_realtor_select
+        val createRealtorLayout=dialogView.dialog_realtor_request_realtor_new_layout
+        val createRealtorText=dialogView.dialog_realtor_request_realtor_new
+
+        this.realtorViewModel.getAllRealtors().observe(this, Observer {
+            val childView=R.layout.dropdown_menu_standard
+            val adapter= ArrayAdapter<Realtor>(this, childView, it)
+            selectRealtorText.setAdapter(adapter)
+        })
+
+        newRealtorSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked){
+                selectRealtorText.setText("")
+                selectRealtorLayout.visibility=View.GONE
+                createRealtorLayout.visibility=View.VISIBLE
+            }else{
+                createRealtorText.setText("")
+                createRealtorLayout.visibility=View.GONE
+                selectRealtorLayout.visibility=View.VISIBLE
+            }
+        }
+
+        /*Shows the dialog requesting a realtor*/
+
+        val dialog = AlertDialog.Builder(this)
+                .setTitle(resources.getString(R.string.dialog_title_realtor_request))
+                .setMessage(resources.getString(R.string.dialog_message_realtor_request))
+                .setView(dialogView)
+                .setCancelable(false)
+                .setPositiveButton(R.string.dialog_button_validate, null)
+                .create()
+        dialog.show()
+
+        /*Once the positive button is clicked, checks that the input is valid and updates the realtor's name*/
+
+        dialog.getButton(Dialog.BUTTON_POSITIVE).setOnClickListener {
+
+            if(newRealtorSwitch.isChecked){
+                if(createRealtorText.text.isNullOrEmpty()){
+                    createRealtorLayout.error=resources.getString(R.string.error_mandatory_field)
+                }else {
+                    createRealtorLayout.error=null
+                    updateRealtor(createRealtorText.text.toString(), true)
+                    dialog.dismiss()
+                }
+            }else{
+                if(selectRealtorText.text.isNullOrEmpty()){
+                    selectRealtorLayout.error=resources.getString(R.string.error_mandatory_field)
+                }else{
+                    selectRealtorLayout.error=null
+                    updateRealtor(selectRealtorText.text.toString(), false)
+                    dialog.dismiss()
+                }
+            }
+        }
+    }
+
+    /**Updates the realtor's name in the navigation drawer, and eventually creates a new realtor in the database**/
+
+    private fun updateRealtor(realtorName:String, isNewRealtor:Boolean){
+        this.userNameTextView.text=realtorName
+        if(isNewRealtor){
+            val realtorToCreate=Realtor(name=realtorName)
+            this.realtorViewModel.insertRealtor(realtorToCreate)
+        }
     }
 
     /*********************************************************************************************

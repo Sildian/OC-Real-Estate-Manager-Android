@@ -17,7 +17,7 @@ class RealtorViewModel(
 {
     fun getAllRealtors(): LiveData<List<Realtor>> = this.realtorRepository.getAllRealtors()
 
-    fun getRealtor(id:String):LiveData<Realtor> = this.realtorRepository.getRealtor(id)
+    fun getRealtor(id:Int):LiveData<Realtor> = this.realtorRepository.getRealtor(id)
 
     fun insertRealtor(realtor:Realtor){
         this.executor.execute { this.realtorRepository.insertRealtor(realtor) }

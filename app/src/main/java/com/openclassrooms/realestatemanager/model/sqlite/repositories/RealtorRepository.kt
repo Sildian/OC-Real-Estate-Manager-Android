@@ -12,7 +12,7 @@ class RealtorRepository (val realtorDAO: RealtorDAO){
 
     fun getAllRealtors(): LiveData<List<Realtor>> = this.realtorDAO.getAllRealtors()
 
-    fun getRealtor(id:String):LiveData<Realtor> = this.realtorDAO.getRealtor(id)
+    fun getRealtor(id:Int):LiveData<Realtor> = this.realtorDAO.getRealtor(id)
 
     fun insertRealtor(realtor:Realtor){
         this.realtorDAO.insertRealtor(realtor)

@@ -154,19 +154,19 @@ class SQLiteDatabaseTest{
     @Test
     fun given_realtorIdSoldStatus_when_generatePropertyQuery_then_checkResult(){
 
-        val realtor1=Realtor("wedgeAntilles", "Wedge Antilles")
-        val realtor2=Realtor("amiralAckbar", "Amiral Ackbar")
+        val realtor1=Realtor(name="Wedge Antilles")
+        val realtor2=Realtor(name="Amiral Ackbar")
         this.database.realtorDAO.insertRealtor(realtor1)
         this.database.realtorDAO.insertRealtor(realtor2)
 
-        val p1=Property(adTitle="Small flat", realtorId="wedgeAntilles", sold=false)
-        val p2=Property(adTitle="Beautiful flat", realtorId="amiralAckbar", sold=true)
-        val p3=Property(adTitle="House", realtorId="wedgeAntilles", sold=true)
+        val p1=Property(adTitle="Small flat", realtorId=1, sold=false)
+        val p2=Property(adTitle="Beautiful flat", realtorId=2, sold=true)
+        val p3=Property(adTitle="House", realtorId=1, sold=true)
         this.database.propertyDAO.insertProperty(p1)
         this.database.propertyDAO.insertProperty(p2)
         this.database.propertyDAO.insertProperty(p3)
 
-        val realtorId="wedgeAntilles"
+        val realtorId=1
         val sold=false
 
         val properties=LiveDataTestUtil.getValue(
@@ -180,20 +180,20 @@ class SQLiteDatabaseTest{
     @Test
     fun given_realtorIdCountry_when_generatePropertyQuery_then_checkResult(){
 
-        val realtor1=Realtor("wedgeAntilles", "Wedge Antilles")
-        val realtor2=Realtor("amiralAckbar", "Amiral Ackbar")
+        val realtor1=Realtor(name= "Wedge Antilles")
+        val realtor2=Realtor(name="Amiral Ackbar")
         this.database.realtorDAO.insertRealtor(realtor1)
         this.database.realtorDAO.insertRealtor(realtor2)
 
-        val p1=Property(adTitle="Small flat", realtorId="wedgeAntilles", country = "Yavin")
-        val p2=Property(adTitle="Beautiful flat", realtorId="amiralAckbar", country="Mon Calamari")
-        val p3=Property(adTitle="House", realtorId="wedgeAntilles", country = "Dantouine")
+        val p1=Property(adTitle="Small flat", realtorId=1, country = "Yavin")
+        val p2=Property(adTitle="Beautiful flat", realtorId=2, country="Mon Calamari")
+        val p3=Property(adTitle="House", realtorId=1, country = "Dantouine")
         this.database.propertyDAO.insertProperty(p1)
         this.database.propertyDAO.insertProperty(p2)
         this.database.propertyDAO.insertProperty(p3)
 
         val country="Dantouine"
-        val realtorId="wedgeAntilles"
+        val realtorId=1
 
         val properties=LiveDataTestUtil.getValue(
                 this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
@@ -244,7 +244,7 @@ class SQLiteDatabaseTest{
 
     @Test
     fun given_ObiwanKenobi_when_getAllRealtors_then_check_results(){
-        val jedi= Realtor("MASTER01", "Obiwan Kenobi")
+        val jedi= Realtor(name="Obiwan Kenobi")
         this.database.realtorDAO.insertRealtor(jedi)
         val realtors=LiveDataTestUtil.getValue(this.database.realtorDAO.getAllRealtors())
         assertEquals("Obiwan Kenobi", realtors[0].name)
@@ -252,9 +252,9 @@ class SQLiteDatabaseTest{
 
     @Test
     fun given_ObiwanKenobi_when_getRealtor_then_check_result(){
-        val jedi= Realtor("MASTER01", "Obiwan Kenobi")
+        val jedi= Realtor(name="Obiwan Kenobi")
         this.database.realtorDAO.insertRealtor(jedi)
-        val realtor=LiveDataTestUtil.getValue(this.database.realtorDAO.getRealtor("MASTER01"))
+        val realtor=LiveDataTestUtil.getValue(this.database.realtorDAO.getRealtor(1))
         assertEquals("Obiwan Kenobi", realtor.name)
     }
 

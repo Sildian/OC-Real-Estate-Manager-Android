@@ -122,6 +122,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/components_margin_medium"
-        android:text="@string/button_loan_calculate"/>
+        android:text="@string/button_calculate"/>
 
 </LinearLayout>

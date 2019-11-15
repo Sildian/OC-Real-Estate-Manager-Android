@@ -515,7 +515,7 @@ class PropertyEditFragment : PropertyBaseFragment(), PictureViewHolder.Listener 
         })
     }
 
-    private fun loadPropertyRealtor(realtorId:String){
+    private fun loadPropertyRealtor(realtorId:Int){
         this.realtorViewModel.getRealtor(realtorId).observe(this, Observer{
             this.realtorTextDropDown.setText(it.toString(), false)
             this.realtorTextDropDown.tag=it

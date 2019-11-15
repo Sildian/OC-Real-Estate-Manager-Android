@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Realtor (
-        @PrimaryKey val id:String="",
+        @PrimaryKey(autoGenerate = true) val id:Int?=null,
         val name:String?=null,
         val pictureUrl:String?=null
 ){

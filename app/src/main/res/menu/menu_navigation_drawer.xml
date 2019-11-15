@@ -18,9 +18,9 @@
             android:title="@string/menu_loan">
         </item>
         <item
-            android:id="@+id/menu_navigation_drawer_log"
-            android:icon="@drawable/ic_log_white"
-            android:title="@string/menu_log">
+            android:id="@+id/menu_navigation_drawer_realtor"
+            android:icon="@drawable/ic_realtor_white"
+            android:title="@string/menu_realtor">
         </item>
     </group>
 </menu>

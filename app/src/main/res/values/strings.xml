@@ -16,12 +16,12 @@
     <string name="menu_list">Properties</string>
     <string name="menu_map">Map</string>
     <string name="menu_loan">Loan simulator</string>
-    <string name="menu_log">Log in \/ out</string>
+    <string name="menu_realtor">Realtor selection</string>
     <string name="menu_navigation_drawer_open">Open</string>
     <string name="menu_navigation_drawer_close">Close</string>
 
     <!--Buttons-->
-    <string name="button_loan_calculate">Calculate</string>
+    <string name="button_calculate">Calculate</string>
 
     <!--Text infos-->
     <string name="info_no_property_exist">No property exist in the database yet.\nCreate your first property by clicking on the \'+\' button.</string>
@@ -67,6 +67,9 @@
     <string name="label_loan_nb_years">Loan duration (years)</string>
     <string name="label_loan_interest_rate">Interest rate</string>
     <string name="label_loan_monthly_payments">Monthly payments</string>
+    <string name="label_realtor_new">New realtor</string>
+    <string name="label_realtor_select">Select realtor</string>
+    <string name="label_realtor_name">Realtor name</string>
 
     <!--Text error messages-->
     <string name="error_mandatory_field">Mandatory</string>
@@ -84,6 +87,8 @@
     <string name="dialog_button_negative">No</string>
     <string name="dialog_button_validate">Validate</string>
     <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_title_realtor_request">Realtor selection</string>
+    <string name="dialog_message_realtor_request">Please select or create a realtor.</string>
     <string name="dialog_title_validation_issue">Caution!</string>
     <string name="dialog_message_input_not_valid">Some fields are not valid.\nPlease check these fields and try again.</string>
     <string name="dialog_title_sundry_issue">Issue!</string>

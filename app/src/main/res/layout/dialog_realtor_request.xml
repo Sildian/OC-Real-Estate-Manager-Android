@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Switch
+        android:id="@+id/dialog_realtor_request_switch_new"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/components_margin_medium"
+        android:text="@string/label_realtor_new"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dialog_realtor_request_realtor_select_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_realtor_select"
+        style="@style/TextInputLayoutThemeDropdownMenu"
+        android:layout_margin="@dimen/components_margin_medium"
+        app:errorEnabled="true">
+
+        <AutoCompleteTextView
+            android:id="@+id/dialog_realtor_request_realtor_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_body"
+            android:editable="false"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dialog_realtor_request_realtor_new_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_realtor_name"
+        android:layout_margin="@dimen/components_margin_medium"
+        app:counterEnabled="true"
+        app:counterMaxLength="30"
+        app:errorEnabled="true"
+        android:visibility="gone">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialog_realtor_request_realtor_new"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:textSize="@dimen/text_size_body"
+            android:maxLength="30"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

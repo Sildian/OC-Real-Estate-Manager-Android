@@ -16,7 +16,7 @@ data class Property(
         var adTitle:String?=null,
         @ColumnInfo(name="typeId") var typeId:Int?=null,
         var price:Int?=null,
-        @ColumnInfo(name="realtorId") var realtorId:String?=null,
+        @ColumnInfo(name="realtorId") var realtorId:Int?=null,
         var mainPicturePath:String?=null,
         var description:String?=null,
         var size:Int?=null,

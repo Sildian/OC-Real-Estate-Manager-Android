@@ -27,7 +27,8 @@
             android:layout_margin="@dimen/components_margin_medium"
             android:layout_gravity="center_vertical"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_body" />
+            android:textSize="@dimen/text_size_body"
+            android:text="@string/info_user_not_connected"/>
 
     </LinearLayout>
 

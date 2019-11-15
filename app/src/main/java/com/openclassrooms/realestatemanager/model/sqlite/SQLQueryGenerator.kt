@@ -20,7 +20,7 @@ object SQLQueryGenerator {
             minNbRooms:Int?=null, maxNbRooms:Int?=null,
             extrasIds:List<Int?> = emptyList(),
             city:String?=null, state:String?=null, country:String?=null,
-            realtorId:String?=null,
+            realtorId:Int?=null,
             adTitle:String?=null,
             minNbPictures:Int?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
@@ -46,7 +46,7 @@ object SQLQueryGenerator {
             minNbRooms:Int?=null, maxNbRooms:Int?=null,
             extrasIds:List<Int?> =emptyList(),
             city:String?=null, state:String?=null, country:String?=null,
-            realtorId:String?=null,
+            realtorId:Int?=null,
             adTitle:String?=null,
             minNbPictures:Int?=null,
             minAdDate:Date?=null, maxAdDate:Date?=null,
@@ -139,6 +139,14 @@ object SQLQueryGenerator {
         var result=""
         if(!criteria.isNullOrEmpty()){
             result="$fieldName='$criteria'"
+        }
+        return result
+    }
+
+    fun generateSimpleFilter(fieldName:String, criteria:Int?):String{
+        var result=""
+        if(criteria!=null){
+            result="$fieldName=$criteria"
         }
         return result
     }
