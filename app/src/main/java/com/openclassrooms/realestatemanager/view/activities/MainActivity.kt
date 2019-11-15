@@ -76,7 +76,6 @@ class MainActivity : BaseActivity(),
     private val navigationView by lazy {activity_main_navigation_view}          //Navigation view (side)
     private val navigationHeader by lazy{                                       //Navigation header (side)
         layoutInflater.inflate(R.layout.navigation_drawer_header, this.navigationView)}
-    private val userPictureImageView by lazy{navigationHeader.navigation_drawer_header_user_picture}    //User picture in navigationHeader
     private val userNameTextView by lazy {navigationHeader.navigation_drawer_header_user_name}          //User name in navigationHeader
 
     /**Coordinator layout**/
@@ -103,6 +102,7 @@ class MainActivity : BaseActivity(),
     private var mainFragmentId= ID_FRAGMENT_NAVIGATION_LIST
     private var secondFragmentId= ID_FRAGMENT_PROPERTY_DETAIL
     private var settings:PropertySearchSettings?= null
+    private var realtorName:String?=null
     private lateinit var viewModelFactory: ViewModelFactory
     private lateinit var realtorViewModel: RealtorViewModel
 
@@ -120,11 +120,12 @@ class MainActivity : BaseActivity(),
         initializeNoPropertyText()
         initializeAddButton()
         showMainFragment(this.mainFragmentId)
-        requestRealtor()
+        initializeRealtorName()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        outState.putString(KEY_BUNDLE_REALTOR_NAME, this.realtorName)
         outState.putInt(KEY_BUNDLE_NAVIGATION_FRAGMENT_ID, this.mainFragmentId)
         outState.putInt(KEY_BUNDLE_PROPERTY_FRAGMENT_ID, this.secondFragmentId)
         outState.putParcelable(KEY_BUNDLE_PROPERTY_SETTINGS, this.settings)
@@ -186,6 +187,7 @@ class MainActivity : BaseActivity(),
 
     private fun initializeDataFromInstanceState(savedInstanceState: Bundle?){
         if(savedInstanceState!=null){
+            this.realtorName=savedInstanceState.getString(KEY_BUNDLE_REALTOR_NAME)
             this.mainFragmentId=savedInstanceState.getInt(KEY_BUNDLE_NAVIGATION_FRAGMENT_ID)
             this.secondFragmentId=savedInstanceState.getInt(KEY_BUNDLE_PROPERTY_FRAGMENT_ID)
             if(savedInstanceState.getParcelable<PropertySearchSettings>(KEY_BUNDLE_PROPERTY_SETTINGS)!=null) {
@@ -198,6 +200,14 @@ class MainActivity : BaseActivity(),
         this.viewModelFactory= ViewModelInjection.provideViewModelFactory(this)
         this.realtorViewModel= ViewModelProviders.of(
                 this, this.viewModelFactory).get(RealtorViewModel::class.java)
+    }
+
+    private fun initializeRealtorName(){
+        if(this.realtorName==null){
+            requestRealtor()
+        }else{
+            updateRealtor(this.realtorName.toString(), false)
+        }
     }
 
     /*********************************************************************************************

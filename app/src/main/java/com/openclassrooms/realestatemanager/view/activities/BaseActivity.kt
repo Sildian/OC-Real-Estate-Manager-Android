@@ -20,6 +20,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
         /**Bundles to transfer data within intents**/
 
+        const val KEY_BUNDLE_REALTOR_NAME="KEY_BUNDLE_REALTOR_NAME"
         const val KEY_BUNDLE_PROPERTY_ID="KEY_BUNDLE_PROPERTY_ID"
         const val KEY_BUNDLE_PROPERTY_SETTINGS="KEY_BUNDLE_PROPERTY_SETTINGS"
     }
