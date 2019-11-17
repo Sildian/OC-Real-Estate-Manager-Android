@@ -76,8 +76,6 @@
     <string name="error_forbidden_sale_date">Si non vendu, interdit</string>
 
     <!--Toasts / Snackbars-->
-    <string name="toast_message_firebase_user_connected">Vous êtes connecté en tant que</string>
-    <string name="toast_message_firebase_user_disconnected">Vous êtes déconnecté.</string>
     <string name="toast_message_property_saved">Le bien immobilier est sauvegardé.</string>
 
     <!--Dialogs-->

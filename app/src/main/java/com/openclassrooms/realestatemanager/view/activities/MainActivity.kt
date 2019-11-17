@@ -99,8 +99,8 @@ class MainActivity : BaseActivity(),
      * Data
      ********************************************************************************************/
 
-    private var mainFragmentId= ID_FRAGMENT_NAVIGATION_LIST
-    private var secondFragmentId= ID_FRAGMENT_PROPERTY_DETAIL
+    private var navigationFragmendId= ID_FRAGMENT_NAVIGATION_LIST
+    private var propertyFragmentId= ID_FRAGMENT_PROPERTY_DETAIL
     private var settings:PropertySearchSettings?= null
     private var realtorName:String?=null
     private lateinit var viewModelFactory: ViewModelFactory
@@ -119,15 +119,19 @@ class MainActivity : BaseActivity(),
         initializeNavigationDrawer()
         initializeNoPropertyText()
         initializeAddButton()
-        showMainFragment(this.mainFragmentId)
+        showMainFragment(this.navigationFragmendId)
         initializeRealtorName()
     }
+
+    /*********************************************************************************************
+     * Other activity events
+     ********************************************************************************************/
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(KEY_BUNDLE_REALTOR_NAME, this.realtorName)
-        outState.putInt(KEY_BUNDLE_NAVIGATION_FRAGMENT_ID, this.mainFragmentId)
-        outState.putInt(KEY_BUNDLE_PROPERTY_FRAGMENT_ID, this.secondFragmentId)
+        outState.putInt(KEY_BUNDLE_NAVIGATION_FRAGMENT_ID, this.navigationFragmendId)
+        outState.putInt(KEY_BUNDLE_PROPERTY_FRAGMENT_ID, this.propertyFragmentId)
         outState.putParcelable(KEY_BUNDLE_PROPERTY_SETTINGS, this.settings)
     }
 
@@ -163,12 +167,12 @@ class MainActivity : BaseActivity(),
 
             when(item.itemId){
                 R.id.menu_navigation_drawer_list->{
-                    this.mainFragmentId= ID_FRAGMENT_NAVIGATION_LIST
-                    showMainFragment(this.mainFragmentId)
+                    this.navigationFragmendId= ID_FRAGMENT_NAVIGATION_LIST
+                    showMainFragment(this.navigationFragmendId)
                 }
                 R.id.menu_navigation_drawer_map->{
-                    this.mainFragmentId= ID_FRAGMENT_NAVIGATION_MAP
-                    showMainFragment(this.mainFragmentId)
+                    this.navigationFragmendId= ID_FRAGMENT_NAVIGATION_MAP
+                    showMainFragment(this.navigationFragmendId)
                 }
                 R.id.menu_navigation_drawer_loan->
                     openLoan()
@@ -188,8 +192,8 @@ class MainActivity : BaseActivity(),
     private fun initializeDataFromInstanceState(savedInstanceState: Bundle?){
         if(savedInstanceState!=null){
             this.realtorName=savedInstanceState.getString(KEY_BUNDLE_REALTOR_NAME)
-            this.mainFragmentId=savedInstanceState.getInt(KEY_BUNDLE_NAVIGATION_FRAGMENT_ID)
-            this.secondFragmentId=savedInstanceState.getInt(KEY_BUNDLE_PROPERTY_FRAGMENT_ID)
+            this.navigationFragmendId=savedInstanceState.getInt(KEY_BUNDLE_NAVIGATION_FRAGMENT_ID)
+            this.propertyFragmentId=savedInstanceState.getInt(KEY_BUNDLE_PROPERTY_FRAGMENT_ID)
             if(savedInstanceState.getParcelable<PropertySearchSettings>(KEY_BUNDLE_PROPERTY_SETTINGS)!=null) {
                 this.settings = savedInstanceState.getParcelable(KEY_BUNDLE_PROPERTY_SETTINGS)!!
             }
@@ -313,6 +317,7 @@ class MainActivity : BaseActivity(),
     /**Updates the realtor's name in the navigation drawer, and eventually creates a new realtor in the database**/
 
     private fun updateRealtor(realtorName:String, isNewRealtor:Boolean){
+        this.realtorName=realtorName
         this.userNameTextView.text=realtorName
         if(isNewRealtor){
             val realtorToCreate=Realtor(name=realtorName)
@@ -325,7 +330,9 @@ class MainActivity : BaseActivity(),
      ********************************************************************************************/
 
     fun showSnackbar(message:String){
-        Snackbar.make(this.coordinatorLayout, message, Snackbar.LENGTH_LONG).show()
+        val snackbar=Snackbar.make(this.coordinatorLayout, message, Snackbar.LENGTH_LONG)
+        snackbar.anchorView=this.addButton
+        snackbar.show()
     }
 
     /*********************************************************************************************
@@ -461,7 +468,7 @@ class MainActivity : BaseActivity(),
     @Suppress("UNUSED_PARAMETER")
     private fun handlePropertyEditResult(resultCode: Int, data: Intent?){
         if(resultCode==Activity.RESULT_OK){
-            Snackbar.make(this.coordinatorLayout, R.string.toast_message_property_saved, Snackbar.LENGTH_LONG).show()
+            showSnackbar(resources.getString(R.string.toast_message_property_saved))
         }
     }
 

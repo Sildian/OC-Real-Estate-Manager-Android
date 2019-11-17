@@ -77,8 +77,6 @@
     <string name="error_forbidden_sale_date">If not sold, forbidden</string>
 
     <!--Toasts / Snackbars-->
-    <string name="toast_message_firebase_user_connected">You\'re now connected as</string>
-    <string name="toast_message_firebase_user_disconnected">You\'re disconnected.</string>
     <string name="toast_message_property_saved">The property is saved.</string>
 
     <!--Dialogs-->
