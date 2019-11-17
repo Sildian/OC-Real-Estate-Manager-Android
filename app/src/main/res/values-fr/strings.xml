@@ -89,7 +89,7 @@
     <string name="dialog_title_validation_issue">Attention!</string>
     <string name="dialog_message_input_not_valid">Certains champs ne sont pas valides.\nVeuillez vérifier ces champs et réessayer.</string>
     <string name="dialog_title_sundry_issue">Problème</string>
-    <string name="dialog_message_no_network">Le réseau n\'est pas disponible.\nVous pouvez travailler hors ligne si vous le souhaitez.</string>
+    <string name="dialog_message_no_network">Le réseau n\'est pas disponible.\nVeuillez réessayer plus tard.</string>
     <string name="dialog_message_picture_not_loaded">Une erreur est survenue au moment de charger l\'image.</string>
     <string name="dialog_message_location_not_found">La localisation n\'a pu être trouvée. Veuillez réessayer plus tard.</string>
     <string name="dialog_title_permission_request">Permission</string>

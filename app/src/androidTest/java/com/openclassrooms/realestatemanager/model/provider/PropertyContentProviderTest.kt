@@ -23,7 +23,7 @@ class PropertyContentProviderTest{
     }
 
     @Test
-    fun truc(){
+    fun given_nothing_when_query_then_checkResultIsNotNull(){
         val cursor = this.contentResolver.query(ContentUris.withAppendedId(
                 PropertyContentProvider.URI_PROPERTY, 1), null, null, null, null)
         assertNotNull(cursor)

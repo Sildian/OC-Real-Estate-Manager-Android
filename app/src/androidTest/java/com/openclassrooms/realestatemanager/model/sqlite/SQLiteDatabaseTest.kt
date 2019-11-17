@@ -141,14 +141,13 @@ class SQLiteDatabaseTest{
         this.database.propertyDAO.insertProperty(p3)
 
         val typeIds=listOf(1, 3)
-        val minNbRooms=3
+        val minNbRooms=4
         val properties=LiveDataTestUtil.getValue(
                 this.database.propertyDAO.getProperties(SQLQueryGenerator.generatePropertyQuery(
                         typeIds=typeIds, minNbRooms = minNbRooms)))
 
-        assertEquals(2, properties.size)
-        assertEquals("Beautiful flat", properties[0].adTitle)
-        assertEquals("House", properties[1].adTitle)
+        assertEquals(1, properties.size)
+        assertEquals("House", properties[0].adTitle)
     }
 
     @Test

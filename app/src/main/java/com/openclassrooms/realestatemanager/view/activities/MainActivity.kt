@@ -99,10 +99,21 @@ class MainActivity : BaseActivity(),
      * Data
      ********************************************************************************************/
 
+    /**Fragments ids**/
+
     private var navigationFragmendId= ID_FRAGMENT_NAVIGATION_LIST
     private var propertyFragmentId= ID_FRAGMENT_PROPERTY_DETAIL
+
+    /**Property search settings**/
+
     private var settings:PropertySearchSettings?= null
+
+    /**Realtor name**/
+
     private var realtorName:String?=null
+
+    /**ViewModels**/
+
     private lateinit var viewModelFactory: ViewModelFactory
     private lateinit var realtorViewModel: RealtorViewModel
 
